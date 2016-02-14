@@ -35,3 +35,8 @@ a:hover .header-profile-image {
 .has-error .help-inline.error-text {
   display: inline;
 }
+h1{
+  font-family: 'Pacifico';
+  font-size: 4em;
+  text-shadow: 4px 4px 4px #aaa;
+}

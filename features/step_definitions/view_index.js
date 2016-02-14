@@ -8,7 +8,7 @@ module.exports = function(){
     });
     
     this.Then(/^I should see "(.*)"$/, function(title, callback){
-        var pageTitle = this.browser.text('h2');
+        var pageTitle = this.browser.text('h1');
         this.expect(pageTitle).to.equal(title);
         callback();
     });
