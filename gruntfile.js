@@ -9,9 +9,11 @@ var _ = require('lodash'),
   testConfig = require('./config/env/test'),
   fs = require('fs'),
   path = require('path');
+  
 
 module.exports = function (grunt) {
   // Project Configuration
+  
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
     env: {
@@ -192,8 +194,16 @@ module.exports = function (grunt) {
           return !fs.existsSync('config/env/local-development.js');
         }
       }
+    },
+    cucumberjs: {
+      options: {
+        format: 'progress'
+      },
+      features : ['features/*.feature']
     }
   });
+  
+ 
 
   grunt.event.on('coverage', function(lcovFileContents, done) {
     // Set coverage config so karma-coverage knows to run coverage
@@ -209,7 +219,7 @@ module.exports = function (grunt) {
   // Load NPM tasks
   require('load-grunt-tasks')(grunt);
   grunt.loadNpmTasks('grunt-protractor-coverage');
-
+  grunt.loadNpmTasks('grunt-cucumberjs');
   // Make sure upload directory exists
   grunt.task.registerTask('mkdir:upload', 'Task that makes sure upload directory exists.', function () {
     // Get the callback
@@ -219,6 +229,8 @@ module.exports = function (grunt) {
 
     done();
   });
+  
+  
 
   // Connect to the MongoDB instance and load the models
   grunt.task.registerTask('mongoose', 'Task that connects to the MongoDB instance and loads the application models.', function () {
@@ -287,4 +299,6 @@ module.exports = function (grunt) {
 
   // Run the project in production mode
   grunt.registerTask('prod', ['build', 'env:prod', 'mkdir:upload', 'copy:localConfig', 'concurrent:default']);
+  
+  //grunt.registerTask('cucumberjs', ['cucumberjs']);
 };

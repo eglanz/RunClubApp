@@ -17,6 +17,7 @@ var _ = require('lodash'),
     }
   }),
   pngquant = require('imagemin-pngquant'),
+  cucumber = require('gulp-cucumber'),
   path = require('path'),
   endOfLine = require('os').EOL,
   argv = require('yargs').argv,
@@ -48,6 +49,13 @@ gulp.task('nodemon', function () {
     ext: 'js,html',
     watch: _.union(defaultAssets.server.views, defaultAssets.server.allJS, defaultAssets.server.config)
   });
+});
+
+gulp.task('cucumber', function(){
+   return gulp.src('features/*').pipe(cucumber({
+       'steps': 'features/step_definitions/*.js',
+       'format': 'summary'
+   }));
 });
 
 // Watch Files For Changes
