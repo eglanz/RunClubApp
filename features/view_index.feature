@@ -4,4 +4,4 @@ Feature: User can view index page
   
   Scenario: User navigates to index page
     When I go to the url
-    Then I should see "Welcome to Homepage"
+    Then I should see "Welcome to RunNet"
