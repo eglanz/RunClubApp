@@ -11,6 +11,9 @@ angular.module('core').controller('HeaderController', ['$scope', '$state', 'Auth
 
     // Get the account menu
     $scope.accountMenu = Menus.getMenu('account').items[0];
+    
+    // Create add admin menu
+    //$scope.adminMenu = Menus.addMenuItem($scope.menu, {'roles':['user']})
 
     // Toggle the menu items
     $scope.isCollapsed = false;

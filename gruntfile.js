@@ -18,13 +18,16 @@ module.exports = function (grunt) {
     pkg: grunt.file.readJSON('package.json'),
     env: {
       test: {
-        NODE_ENV: 'test'
+        NODE_ENV: 'test',    
+        MONGO_SEED: 'true'
       },
       dev: {
-        NODE_ENV: 'development'
+        NODE_ENV: 'development',
+        MONGO_SEED: 'true'
       },
       prod: {
-        NODE_ENV: 'production'
+        NODE_ENV: 'production',
+        MONGO_SEED: 'true'
       }
     },
     watch: {
