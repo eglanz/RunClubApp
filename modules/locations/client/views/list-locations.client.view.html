@@ -1,0 +1,8 @@
+<section>
+  <map center="[0,0]" zoom="1">
+    <marker ng-repeat='article in articles' position='[{{article.lat}},{{article.lon}}]' visible="true" on-click="gotolink(event,article)"></marker>
+  </map>
+  <p class="list-group-item-text" data-ng-bind="article.lat"></p>
+  <p class="list-group-item-text" data-ng-bind="article.lon"></p>
+</section>
+
