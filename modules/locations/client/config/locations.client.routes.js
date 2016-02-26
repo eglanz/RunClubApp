@@ -25,7 +25,7 @@
       })
       .state('locations.create', {
         url: '/create',
-        templateUrl: 'modules/locations/client/views/form-location.client.view.html',
+        templateUrl: 'modules/locations/client/views/create-location.client.view.html',
         controller: 'LocationsController',
         controllerAs: 'vm',
         resolve: {
