@@ -14,12 +14,6 @@ var LocationSchema = new Schema({
     type: Date,
     default: Date.now
   },
-  title: {
-    type: String,
-    default: '',
-    trim: true,
-    required: 'Title cannot be blank'
-  },
   lat:{
     type: Number,
     default: 0,

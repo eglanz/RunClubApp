@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Place Autocomplete</title>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    <style>
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+      #map {
+        height: 100%;
+      }
+      .controls {
+        margin-top: 10px;
+        border: 1px solid transparent;
+        border-radius: 2px 0 0 2px;
+        box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        height: 32px;
+        outline: none;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+      }
+
+      #pac-input {
+        background-color: #fff;
+        font-family: Roboto;
+        font-size: 15px;
+        font-weight: 300;
+        margin-left: 12px;
+        padding: 0 11px 0 13px;
+        text-overflow: ellipsis;
+        width: 300px;
+      }
+
+      #pac-input:focus {
+        border-color: #4d90fe;
+      }
+
+      .pac-container {
+        font-family: Roboto;
+      }
+
+      #type-selector {
+        color: #fff;
+        background-color: #4d90fe;
+        padding: 5px 11px 0px 11px;
+      }
+
+      #type-selector label {
+        font-family: Roboto;
+        font-size: 13px;
+        font-weight: 300;
+      }
+    </style>
+  </head>
+  <body>
+    <input id="pac-input" class="controls" type="text"
+        placeholder="Enter a location">
+    <div id="type-selector" class="controls">
+      
+      <input type="button" name="type" value="Finalize Route" id="finalizeRoute">
+
+    </div>
+    <div id="map"></div>
+    <div>
+      asldkfjas
+      asdflasjd
+      asdfasdf
+      <br>
+      <br>
+      <br>
+      <div id="directionsPanel" style="float:right;width:30%;height 100%"> directionpanel</div>
+    </div>
+    
+
+
+    <script>
+      // This example requires the Places library. Include the libraries=places
+      // parameter when you first load the API. For example:
+      // <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places">
+      
+      
+      function initMap() {
+        
+        var button = document.getElementById("finalizeRoute");
+        button.addEventListener("click", finalizeRoute);
+        var labels = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        var labelIndex = 0;
+        var routeArray =[];
+        
+        var directionsDisplay;
+        var directionsService = new google.maps.DirectionsService();
+        directionsDisplay = new google.maps.DirectionsRenderer();
+        
+
+        var map = new google.maps.Map(document.getElementById('map'), {
+          center: {lat: -33.8688, lng: 151.2195},
+          zoom: 13
+        });
+        directionsDisplay.setMap(map);
+        directionsDisplay.setPanel(document.getElementById("directionsPanel"));
+        var input = /** @type {!HTMLInputElement} */(
+            document.getElementById('pac-input'));
+
+        var types = document.getElementById('type-selector');
+        map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+        map.controls[google.maps.ControlPosition.TOP_LEFT].push(types);
+
+        var autocomplete = new google.maps.places.Autocomplete(input);
+        autocomplete.bindTo('bounds', map);
+
+        var infowindow = new google.maps.InfoWindow();
+        var marker = new google.maps.Marker({
+          map: map,
+          anchorPoint: new google.maps.Point(0, -29)
+        });
+
+        autocomplete.addListener('place_changed', function() {
+          infowindow.close();
+          marker.setVisible(false);
+          var place = autocomplete.getPlace();
+          if (!place.geometry) {
+            window.alert("Autocomplete's returned place contains no geometry");
+            return;
+          }
+
+          // If the place has a geometry, then present it on a map.
+          if (place.geometry.viewport) {
+            map.fitBounds(place.geometry.viewport);
+          } else {
+            map.setCenter(place.geometry.location);
+            map.setZoom(17);  // Why 17? Because it looks good.
+          }
+
+          addMarker(place.geometry.location, map);
+          //srouteArray.push(place.geometry.location);
+
+          var address = '';
+          if (place.address_components) {
+            address = [
+              (place.address_components[0] && place.address_components[0].short_name || ''),
+              (place.address_components[1] && place.address_components[1].short_name || ''),
+              (place.address_components[2] && place.address_components[2].short_name || '')
+            ].join(' ');
+          }
+
+          infowindow.setContent('<div><strong>' + place.name + '</strong><br>' + address);
+          infowindow.open(map, marker);
+        });
+
+        
+         // This event listener calls addMarker() when the map is clicked.
+        google.maps.event.addListener(map, 'click', function(event) {
+          addMarker(event.latLng, map);
+        });
+        
+              // Adds a marker to the map.
+      function addMarker(location, map) {
+        // Add the marker at the clicked location, and add the next-available label
+        // from the array of alphabetical characters.
+        var marker = new google.maps.Marker({
+          position: location,
+          label: labels[labelIndex++ % labels.length],
+          map: map
+        });
+        //routeArray.push(marker);
+        routeArray.push(location);
+        //alert(location);
+       }
+       
+      function finalizeRoute() {
+        //alert("Hello World");
+        calcRoute();
+        
+      }
+      
+      function calcRoute() {
+        if(routeArray.length >= 2)
+        {
+          
+          var haight = new google.maps.LatLng(37.7699298, -122.4469157);
+          var oceanBeach = new google.maps.LatLng(37.7683909618184, -122.51089453697205);
+         /* var request = {
+            //origin: routeArray[0],
+            //destination: routeArray[1],
+            origin: haight,
+            destination, oceanBeach,
+            // Note that Javascript allows us to access the constant
+            // using square brackets and a string value as its
+            // "property."
+            travelMode: google.maps.TravelMode.WALKING,
+            provideRouteAlternatives: false,
+            unitSystem: google.maps.UnitSystem.IMPERIAL
+            //waypoints[],
+        };*/
+        /* var request = {
+           origin: haight,
+           destination: oceanBeach,
+           travelMode: google.maps.TravelMode.WALKING
+         };*/
+         var start = routeArray[0];
+         var getPoints = routeArray.slice(1, routeArray.length-1);
+         var wayPointsVal = [];
+
+         for (var i = 0; i < getPoints.length; i++) 
+         {
+           wayPointsVal.push({
+             location: getPoints[i],
+             stopover: false
+           });
+         }
+                 
+         var end = routeArray[routeArray.length-1];
+         var request = {
+           origin: start,
+           destination: end,
+           travelMode: google.maps.TravelMode.WALKING, 
+           waypoints: wayPointsVal,
+           optimizeWaypoints: false,
+           provideRouteAlternatives: false//,
+           //unitSystem: UnitSystem.IMPERIAL
+         };
+      // Note 
+      //only 8 waypoints for free
+      //https://developers.google.com/maps/documentation/javascript/directions
+        directionsService.route(request, function(response, status) {
+          if (status == google.maps.DirectionsStatus.OK) {
+            directionsDisplay.setDirections(response);
+            directionsDisplay.setMap(map);
+            directionsDisplay.setPanel(document.getElementById("directionsPanel"));
+            //alert('ok');
+          }
+          else
+          {
+            alert('Too many points selected.');
+        
+          }
+        });
+      }
+      else
+      {
+        
+        alert("You must choose at least 2 points.");
+      }
+  }
+      
+
+}
+      //google.maps.event.addDomListener(window, 'load', initialize);
+    </script>
+    <script src="https://maps.googleapis.com/maps/api/js?&callback=initMap&libraries=places,drawing"
+        async defer></script>
+  </body>
+</html>

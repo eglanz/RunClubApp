@@ -1,6 +1,6 @@
 <h1>Paul</h1>
 <div>
-  <map center="[0,0]" zoom="1">
+  <map center="[41.66,-92.533]" zoom="12">
     <marker ng-repeat='location in locations' position='[{{location.lat}},{{location.lon}}]' visible="true" on-click="gotolink(event,location)"></marker>
   </map>
   <p class="list-group-item-text" data-ng-bind="location.lat"></p>
