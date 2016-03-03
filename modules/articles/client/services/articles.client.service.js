@@ -3,7 +3,8 @@
 
   angular
     .module('articles.services')
-    .factory('ArticlesService', ArticlesService);
+    .factory('ArticlesService', ArticlesService)
+    .factory('ArticlesService2', ArticlesService2);
 
   ArticlesService.$inject = ['$resource'];
 
@@ -14,6 +15,11 @@
       update: {
         method: 'PUT'
       }
+    });
+  }
+  
+  function ArticlesService2($resource){
+    return $resource('api/articles/jar',{
     });
   }
 })();

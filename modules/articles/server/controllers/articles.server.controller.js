@@ -77,6 +77,19 @@ exports.delete = function (req, res) {
   });
 };
 
+exports.jar = function(req, res){
+  var exec = require('child_process').exec;
+  var child = exec('java -jar RunClubRec.jar train.csv test.csv',
+    function (error, stdout, stderr){
+      console.log('Output -> ' + stdout);
+      if(error !== null){
+        console.log("Error -> "+error);
+      }
+      res.json(stdout);
+      //res.data("cat", stdout);
+  });
+}
+
 /**
  * List of Articles
  */

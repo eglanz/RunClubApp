@@ -11,11 +11,14 @@
     var vm = this;
 
     vm.article = article;
+    vm.getJar = $scope.jar;
     vm.authentication = Authentication;
     vm.error = null;
     vm.form = {};
     vm.remove = remove;
     vm.save = save;
+    vm.jar = jar;
+   // vm.change_button;
 
     // Remove existing Article
     function remove() {
@@ -23,6 +26,11 @@
         vm.article.$remove($state.go('articles.list'));
       }
     }
+    
+    function jar(){
+      console.log("YAY");
+    }
+
 
     // Save Article
     function save(isValid) {
