@@ -156,6 +156,9 @@
         routeArray = [];
         polyline.setMap(null);
         polyline.setPath([]);
+        labelIndex=0;
+        vm.location.length = 0;
+        length.value = 0 + " miles"
       }
       
       function calcRoute() {
