@@ -10,28 +10,61 @@
 
   function LocationsController($scope, $state, location, Authentication) {
     var vm = this;
-    
-    
-    
-    
-    
-    
-    
-    
-    
+    vm.location = location;
+    vm.authentication = Authentication;
+    vm.error = null;
+    vm.form = {};
+    vm.remove = remove;
+    vm.save = save;
+    vm.location.content = '';
+
+    // Remove existing Location
+    function remove() {
+      if (confirm('Are you sure you want to delete?')) {
+        vm.location.$remove($state.go('location.list'));
+      }
+    }
+
+    // Save Location
+    function save(isValid) {
+      if (!isValid) {
+        $scope.$broadcast('show-errors-check-validity', 'vm.form.locationForm');
+        return false;
+      }
+
+      // TODO: move create/update logic to service
+      if (vm.location._id) {
+        vm.location.$update(successCallback, errorCallback);
+      } else {
+        vm.location.$save(successCallback, errorCallback);
+      }
+
+      function successCallback(res) {
+        $state.go('locations.view', {
+          locationId: res._id
+        });
+      }
+
+      function errorCallback(res) {
+        vm.error = res.data.message;
+      }    
+    }
     
     $scope.$on('mapInitialized', function(event,map) {
         
-    var button = document.getElementById("finalizeRoute");
-    button.addEventListener("click", finalizeRoute);
+    map.setCenter(new google.maps.LatLng(41.659278, -91.535411));
+    var button = document.getElementById("resetRoute");
+    button.addEventListener("click", resetRoute);
     var labels = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
     var labelIndex = 0;
     var routeArray =[];
+    var markerArray = [];
     var polyline = new google.maps.Polyline({
       path: [],
       strokeColor: '#0000FF',
       strokeWeight: 3
     });
+    //$scope.form.content = polyline.path;
         
     var directionsDisplay;
     var directionsService = new google.maps.DirectionsService();
@@ -100,23 +133,30 @@
           label: labels[labelIndex++ % labels.length],
           map: map
         });
-        //routeArray.push(marker);
+        markerArray.push(marker);
         routeArray.push(location);
-        //alert(location);
-        if(routeArray.length == 2)
+        if(routeArray.length === 2)
         {
           calcRoute();
         }
        }
        
-      function finalizeRoute() {
-        //alert("Hello World");
-        //calcRoute();
+      function resetRoute() {
+        setMapOnAll(null);
         
+      }
+      function setMapOnAll(map) {
+        for (var i = 0; i < markerArray.length; i++) {
+          markerArray[i].setMap(map);
+        }
+        markerArray = [];
+        routeArray = [];
+        polyline.setMap(null);
+        polyline.setPath([]);
       }
       
       function calcRoute() {
-        if(routeArray.length == 2)
+        if(routeArray.length === 2)
         {
          var start = routeArray[0];
          var end = routeArray[routeArray.length-1];
@@ -127,7 +167,6 @@
            provideRouteAlternatives: false
           };
          routeArray.shift();
-
         directionsService.route(request, function(response, status) {
           if (status === google.maps.DirectionsStatus.OK) 
           {
@@ -145,12 +184,14 @@
             }
 
             polyline.setMap(map);
+            var encodeString = google.maps.geometry.encoding.encodePath(polyline.getPath());
+            vm.location.content = encodeString;
             
-            //alert('ok');
           }
           else
           {
-            alert('Too many points selected.');
+            //TODO handle this correctly, should this allow them to enter a different location?
+            alert('Incorrect.');
         
           }
         });
@@ -164,138 +205,6 @@
       
 
 });
-      //google.maps.event.addDomListener(window, 'load', initialize);  
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    /*var autocomplete;
-    var txt; // Declare variables
-    var marker;
-    var globalMap;
-    
-    
-    document.getElementById ('but').addEventListener ('click', addItem, false);
-
-    vm.location = location;
-    vm.authentication = Authentication;
-    vm.error = null;
-    vm.form = {};
-    vm.remove = remove;
-    vm.save = save;
-
-
-    $scope.$on('mapInitialized', function(event,map) {
-      marker = map.markers[0];
-      globalMap = map;
-          // This event listener will call addMarker() when the map is clicked.
-      globalMap.addListener('click', function(event) {
-        addMarker(event.latLng);
-      });
-      autocomplete = new google.maps.places.Autocomplete(
-      /** @type {HTMLInputElement} (document.getElementById('textInput')),
-      { types: ['geocode'] });
-      // When the user selects an address from the dropdown,
-      //populate the address fields in the form.
-       google.maps.event.addListener(autocomplete, 'place_changed', function() {
-      fillInAddress();
-      });
-    });
-    
-    function addItem() {  
-      var txt = document.getElementById('textInput').value;
-      marker[marker.length] = txt;
-      var geocoder = new google.maps.Geocoder();
-      geocodeAddress(geocoder, globalMap);
-      document.getElementById('textInput').value = '';
-    }
-    
-    function geocodeAddress(geocoder, resultsMap) {
-      var address = document.getElementById('textInput').value;
-      geocoder.geocode({ 'address': address }, function(results, status) {
-        if (status === google.maps.GeocoderStatus.OK) {
-          resultsMap.setCenter(results[0].geometry.location);
-          var marker2 = new google.maps.Marker({
-            map: resultsMap,
-            position: results[0].geometry.location
-          });
-        } else {
-          alert('Geocode was not successful for the following reason: ' + status);
-        }
-      });
-    }
-    
-
-
-
-     // [START region_fillform]
-    function fillInAddress() {
-    // Get the place details from the autocomplete object.
-      var place = autocomplete.getPlace();
-    }
-    
-
-
-    // Adds a marker to the map and push to the array.
-    function addMarker(location) {
-    var mark = new google.maps.Marker({
-     position: location,
-     map: globalMap
-     });
-     marker.push(mark);
-    }   
-
-
-
-
-
-
-
-
-    // Remove existing Location
-    function remove() {
-      if (confirm('Are you sure you want to delete?')) {
-        vm.location.$remove($state.go('locations.list'));
-      }
-    }
-
-    // Save Location
-    function save(isValid) {
-      if (!isValid) {
-        $scope.$broadcast('show-errors-check-validity', 'vm.form.locationForm');
-        return false;
-      }
-
-      // TODO: move create/update logic to service
-      if (vm.location._id) {
-        vm.location.$update(successCallback, errorCallback);
-      } else {
-        vm.location.$save(successCallback, errorCallback);
-      }
-
-      function successCallback(res) {
-        $state.go('locations.view', {
-          locationId: res._id,
-          lat: 42,
-          lon: -91
-        });
-      }
-
-      function errorCallback(res) {
-        vm.error = res.data.message;
-      }
-    }*/
   }
   
 })();

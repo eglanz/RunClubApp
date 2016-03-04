@@ -1,11 +1,24 @@
 <section>
-  <map zoom ='9'>
-     <marker position="[0,0]" visible="true"> </marker>
-     <!-- a initial position must be set because it will prompt the users current geolocation and set it to that -->
+  <br>
+  
+<p id="demo"></p>
+  <map zoom ='16' id="view">
   </map>
-  Latitude: 
-  <p class="lead" data-ng-bind="location.lat"></p>
-  Longitude: 
-  <p class="lead" data-ng-bind="location.lon"></p>
 </section>
-
+<section>
+  <div class="page-header">
+    <h1 ng-bind="vm.location.name"></h1>
+  </div>
+  <table style="width:100%">
+        <tr>
+          <td><p>Hills</p>
+          <h4 class="list-group-item-heading" ng-bind="vm.location.hills"></h4></td>
+          <td><p>Scenery</p>
+          <h4 class="list-group-item-heading" ng-bind="vm.location.scenic"></h4></td>		
+          <td><p>Traffic</p>
+          <h4 class="list-group-item-heading" ng-bind="vm.location.traffic"></h4></td>
+          <td><p>Overall Rating</p>
+          <h4 class="list-group-item-heading" ng-bind="vm.location.overall"></h4></td>
+        </tr>
+      </table>
+</section>

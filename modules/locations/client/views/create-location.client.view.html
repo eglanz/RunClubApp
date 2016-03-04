@@ -1,39 +1,6 @@
-<!--<section>
-        <map center="[{{lat}},{{lon}}]" zoom ='5'>
-            <marker position="[{{lat}},{{lon}}]" visible="true"></marker>
-        </map>
-        
-        <div class="form-group">
-                <label class="control-label" for="content">Latitude</label>
-                        <div class="controls">
-                                <textarea name="lat" data-ng-model="lat" id="lat" class="form-control" cols="10" rows="1" placeholder="Latitude"></textarea>
-                        </div>
-                        </div>
-        
-        <div class="form-group">
-                <label class="control-label" for="content">Longitude</label>
-                        <div class="controls">
-                                <textarea name="lon" data-ng-model="lon" id="lon" class="form-control" cols="10" rows="1" placeholder="Longitude"></textarea>
-                        </div>
-        </div>
-        <div id="locationField">
-	  <input id="textInput" placeholder="Enter your address"
-             onFocus="geolocate()" type="text"></input>
-      </div>
-      
-       <br>
-      <br>
-      <br>
-
-      <button id="but" >Add</button>
-      
-      <ul id="list">
-      </ul>
-      <br>
-      <br>
-</section>-->
-
-
+<br>
+<br>
+<br>
 <title>Place Autocomplete</title>
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
     <meta charset="utf-8">
@@ -92,7 +59,7 @@
         placeholder="Enter a location">
     <div id="type-selector" class="controls">
       
-      <input type="button" name="type" value="Finalize Route" id="finalizeRoute">
+      <input type="button" name="type" value="Reset Route" id="resetRoute">
 
     </div>
     <map  ></map>
@@ -101,5 +68,58 @@
       <br>
       <br>
       <br>
-      <div id="directionsPanel" style="float:right;width:30%;height 100%"> directionpanel</div>
-    </div>
+      <form name="vm.form.locationForm" class="form-horizontal" ng-submit="vm.save(vm.form.locationForm.$valid)" novalidate>
+      <fieldset>
+        <div class="form-group" show-errors>
+          <label class="control-label" for="name" >Route Name</label>
+          <input name="name" type="text" ng-model="vm.location.name" id="name" class="form-control" placeholder="Name" required>
+          <div ng-messages="vm.form.locationForm.name.$error" role="alert">
+            <p class="help-block error-text" ng-message="required">Route name is required.</p>
+          </div>
+        </div>
+        <div class="form-group" show-errors>
+          <label class="control-label" for="hills" >Hills</label>
+          <input name="hills" max="5" min="1" defaultValue="3" type="number" ng-model="vm.location.hills" id="hills" class="form-control" required>
+          <div ng-messages="vm.form.locationForm.hills.$error" role="alert">
+            <p class="help-block error-text" ng-message="required">Rating is required.</p>
+          </div>
+        </div>
+        <div class="form-group" show-errors>
+          <label class="control-label" for="scenic" >Scenery</label>
+          <input name="scenic" max="5" min="1" defaultValue="3" type="number" ng-model="vm.location.scenic" id="scenic" class="form-control" required>
+          <div ng-messages="vm.form.locationForm.scenic.$error" role="alert">
+            <p class="help-block error-text" ng-message="required">Rating is required.</p>
+          </div>
+        </div>
+        <div class="form-group" show-errors>
+          <label class="control-label" for="traffic" >Traffic</label>
+          <input name="traffic" max="5" min="1" defaultValue="3" type="number" ng-model="vm.location.traffic" id="traffic" class="form-control" required>
+          <div ng-messages="vm.form.locationForm.traffic.$error" role="alert">
+            <p class="help-block error-text" ng-message="required">Rating is required.</p>
+          </div>
+        </div>
+        <div class="form-group" show-errors>
+          <label class="control-label" for="overall" >Overall Rating</label>
+          <input name="overall" max="5" min="1" defaultValue="3" type="number" ng-model="vm.location.overall" id="overall" class="form-control" required>
+          <div ng-messages="vm.form.locationForm.overall.$error" role="alert">
+            <p class="help-block error-text" ng-message="required">Rating is required.</p>
+          </div>
+        </div>
+        <!--<div class="form-group">
+          <label class="control-label" for="content">Content</label>
+          <textarea name="content" data-ng-model="vm.article.content" id="content" class="form-control" cols="30" rows="10" placeholder="Content"></textarea>
+        </div>-->
+        <!--<div class="form-group">
+          <input name="content" type="text" ng-model="vm.location.content" id="content" class="form-control" placeholder={{location.polyLine}} required>
+          <div ng-messages="vm.form.locationForm.content.$error" role="alert">
+            <p class="help-block error-text" ng-message="required">Content is required.</p>
+          </div>
+        </div>-->
+        <div class="form-group">
+          <button type="submit" class="btn btn-default">{{ 'Create'}}</button>
+        </div>
+        <div ng-show="vm.error" class="text-danger">
+          <strong ng-bind="vm.error"></strong>
+        </div>
+      </fieldset>
+    </form>

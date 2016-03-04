@@ -24,7 +24,8 @@
     // Add the dropdown create item
     Menus.addSubMenuItem('topbar', 'locations', {
       title: 'Create Location',
-      state: 'locations.create'
+      state: 'locations.create',
+      roles: ['*']
     });
   }
 })();

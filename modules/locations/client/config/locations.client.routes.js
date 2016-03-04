@@ -52,13 +52,14 @@
       .state('locations.view', {
         url: '/:locationId',
         templateUrl: 'modules/locations/client/views/view-location.client.view.html',
-        controller: 'LocationsController',
+        //controller: 'LocationsController',
+        controller: 'LocationsViewController',
         controllerAs: 'vm',
         resolve: {
           locationResolve: getLocation
         },
         data:{
-          pageTitle: 'location {{ locationResolve.title }}'
+          pageTitle: 'location {{ locationResolve.name }}'
         }
       });
   }

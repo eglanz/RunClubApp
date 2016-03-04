@@ -11,6 +11,7 @@
     var vm = this;
 
     vm.locations = LocationsService.query();
+
   }
 })();
 
