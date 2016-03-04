@@ -20,6 +20,7 @@
       console.log("HEY!");
       vm.text = "WHAT";
       vm.text = ArticlesService2.get();
+      vm.text = JSON.stringify(vm.articles);
     }
   }
   

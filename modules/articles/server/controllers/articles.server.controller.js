@@ -7,6 +7,8 @@ var path = require('path'),
   mongoose = require('mongoose'),
   Article = mongoose.model('Article'),
   errorHandler = require(path.resolve('./modules/core/server/controllers/errors.server.controller'));
+  
+var fs = require('fs');
 
 /**
  * Create an article
@@ -78,8 +80,51 @@ exports.delete = function (req, res) {
 };
 
 exports.jar = function(req, res){
+  var articles = Article.find({}).select('content title');
+  //console.log(articles);
+ // articles.select("content", "title");
+  var foundArticles;
+  articles.exec(function (err, docs) {
+  // called when the `query.complete` or `query.error` are called
+  // internally
+    console.log(docs);
+
+    
+    var file = "TrainTest.csv";
+    foundArticles = "Id,Hills,Scenic,Traffic,Overall\nRoute 1,5,3,4,0\nRoute 2,2,2,2,0\nRoute 3,5,1,1,0\nRoute 4,2,2,2,0\nRoute 5,4,4,4,0\n";
+
+  
+    fs.writeFileSync(file, foundArticles, 'utf8', (err) => {
+      if (err) throw err;
+      console.log('It\'s saved!');
+    });
+    
+  });
+  
+  
+  var article = Article.where('title', 'Steve Pre back from the Dead?').select('content title');
+  var foundArticle;
+  article.exec(function (err, doc) {
+  // called when the `query.complete` or `query.error` are called
+  // internally
+    console.log(doc);
+    foundArticle = JSON.stringify(doc);
+    
+    var file2 = "TestTest.csv";
+    foundArticle = "Id,Hills,Scenic,Traffic,Overall\nRoute 2,5,3,4,0\n";
+    
+    fs.writeFileSync(file2, foundArticle, 'utf8', (err) => {
+      if (err) throw err;
+      console.log('It\'s saved!');
+    });
+    
+  });
+  
+  
+  
+  
   var exec = require('child_process').exec;
-  var child = exec('java -jar RunClubRec.jar train.csv test.csv',
+  var child = exec('java -jar RunClubRecommender.jar TrainTest.csv TestTest.csv',
     function (error, stdout, stderr){
       console.log('Output -> ' + stdout);
       if(error !== null){
@@ -88,6 +133,7 @@ exports.jar = function(req, res){
       res.json(stdout);
       //res.data("cat", stdout);
   });
+  
 }
 
 /**
