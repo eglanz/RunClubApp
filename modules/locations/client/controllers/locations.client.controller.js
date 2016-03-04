@@ -17,6 +17,7 @@
     vm.remove = remove;
     vm.save = save;
     vm.location.content = '';
+    vm.location.length = 0;
 
     // Remove existing Location
     function remove() {
@@ -64,6 +65,8 @@
       strokeColor: '#0000FF',
       strokeWeight: 3
     });
+    var length = document.getElementById("length");
+    
     //$scope.form.content = polyline.path;
         
     var directionsDisplay;
@@ -186,7 +189,9 @@
             polyline.setMap(map);
             var encodeString = google.maps.geometry.encoding.encodePath(polyline.getPath());
             vm.location.content = encodeString;
+            vm.location.length = (google.maps.geometry.spherical.computeLength(polyline.getPath()) *  0.00062137).toFixed(2);;
             
+            length.value = vm.location.length + " miles";
           }
           else
           {
