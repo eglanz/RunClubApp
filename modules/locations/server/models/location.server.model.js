@@ -27,7 +27,8 @@ var LocationSchema = new Schema({
   name: {
     type: String,
     default: '',
-    trim: true
+    trim: true,
+    required: 'Name cannot be empty'
   },
   content: {
     type: String,

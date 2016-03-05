@@ -138,7 +138,7 @@ describe('Location CRUD tests', function () {
           .expect(400)
           .end(function (locationSaveErr, locationSaveRes) {
             // Set message assertion
-            (locationSaveRes.body.message).should.match('Title cannot be blank');
+            (locationSaveRes.body.message).should.match('Name cannot be empty');
 
             // Handle location save error
             done(locationSaveErr);
