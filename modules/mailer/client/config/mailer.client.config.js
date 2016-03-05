@@ -11,7 +11,7 @@
     // Add the dropdown list item
     Menus.addSubMenuItem('topbar', 'admin', {
       title: 'Send Mass Email',
-      state: 'admin.mailer-create',
+      state: 'mailer-create',
       roles: ['admin']
     });
   }

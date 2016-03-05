@@ -1,5 +1,5 @@
 <section>
-  <div class="page-header">
+  <div class="page-header" ng-controller="MailerController">
     <h1>Send Mass Email</h1>
   </div>
   <div class="col-md-12">
@@ -14,7 +14,10 @@
         </div>
         <div class="form-group">
           <label class="control-label" for="content">Content</label>
-          <textarea name="content" ng-model="vm.message.content" id="content" class="form-control" cols="30" rows="10" placeholder="Content"></textarea>
+          <textarea name="content" ng-model="vm.message.content" id="content" class="form-control" cols="30" rows="10" placeholder="Content" required></textarea>
+          <div ng-messages="vm.form.massMailForm.content.$error" role="alert">
+            <p class="help-block error-text" ng-message="required">Message must have content.</p>
+          </div>
         </div>
         <div class="form-group">
           <button type="submit" class="btn btn-default">Send</button>
