@@ -13,6 +13,7 @@
   "unused": false, // Warn unused variables.
   "strict": true, // Require `use strict` pragma in every file.
   "globals": { // Globals variables.
+    "google": true,
     "angular": true,
     "io": true,
     "ApplicationConfiguration": true

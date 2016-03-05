@@ -11,7 +11,7 @@ var should = require('should'),
 /**
  * Globals
  */
-var user, location;
+var userGlobal, locationGlobal;
 
 /**
  * Unit tests
@@ -19,7 +19,7 @@ var user, location;
 describe('Location Model Unit Tests:', function () {
 
   beforeEach(function (done) {
-    user = new User({
+    userGlobal = new User({
       firstName: 'Full',
       lastName: 'Name',
       displayName: 'Full Name',
@@ -28,8 +28,8 @@ describe('Location Model Unit Tests:', function () {
       password: 'M3@n.jsI$Aw3$0m3'
     });
 
-    user.save(function () {
-      location = new Location({
+    userGlobal.save(function () {
+      locationGlobal = new Location({
         name: 'Chicago',
         content: 'egi~FhfcvOajCcyA',
         length: 1.1,
@@ -37,7 +37,7 @@ describe('Location Model Unit Tests:', function () {
         scenic: 3,
         traffic: 4,
         overall:3,
-        user: user
+        user: userGlobal
       });
 
       done();
@@ -47,24 +47,24 @@ describe('Location Model Unit Tests:', function () {
   describe('Method Save', function () {
     it('should be able to save without problems', function (done) {
       this.timeout(10000);
-      return location.save(function (err) {
+      return locationGlobal.save(function (err) {
         should.not.exist(err);
         done();
       });
     });
 
     it('should be able to show an error when try to save without name', function (done) {
-      location.name = '';
+      locationGlobal.name = '';
 
-      return location.save(function (err) {
+      return locationGlobal.save(function (err) {
         should.exist(err);
         done();
       });
     });
     it('should be able to show an error when try to save without content', function (done) {
-      location.content = null;
+      locationGlobal.content = null;
 
-      return location.save(function (err) {
+      return locationGlobal.save(function (err) {
         should.exist(err);
         done();
       });

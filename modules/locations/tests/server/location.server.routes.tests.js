@@ -11,7 +11,7 @@ var should = require('should'),
 /**
  * Globals
  */
-var app, agent, credentials, user, location;
+var app, agent, credentials, userGlobal, locationGlobal;
 
 /**
  * Location routes tests
@@ -34,7 +34,7 @@ describe('Location CRUD tests', function () {
     };
 
     // Create a new user
-    user = new User({
+    userGlobal = new User({
       firstName: 'Full',
       lastName: 'Name',
       displayName: 'Full Name',
@@ -45,8 +45,8 @@ describe('Location CRUD tests', function () {
     });
 
     // Save a user to the test db and create new location
-    user.save(function () {
-      location = {
+    userGlobal.save(function () {
+      locationGlobal = {
         name: 'Chicago',
         content: 'egi~FhfcvOajCcyA',
         length: 1.1,
@@ -54,7 +54,7 @@ describe('Location CRUD tests', function () {
         scenic: 3,
         traffic: 4,
         overall:3,
-        user: user
+        user: userGlobal
       };
 
       done();
@@ -72,11 +72,11 @@ describe('Location CRUD tests', function () {
         }
 
         // Get the userId
-        var userId = user.id;
+        var userId = userGlobal.id;
 
         // Save a new location
         agent.post('/api/locations')
-          .send(location)
+          .send(locationGlobal)
           .expect(200)
           .end(function (locationSaveErr, locationSaveRes) {
             // Handle location save error
@@ -108,7 +108,7 @@ describe('Location CRUD tests', function () {
 
   it('should not be able to save a location if not logged in', function (done) {
     agent.post('/api/locations')
-      .send(location)
+      .send(locationGlobal)
       .expect(403)
       .end(function (locationSaveErr, locationSaveRes) {
         // Call the assertion callback
@@ -118,7 +118,7 @@ describe('Location CRUD tests', function () {
 
   it('should not be able to save a location if no name is provided', function (done) {
     // Invalidate title field
-    location.name = '';
+    locationGlobal.name = '';
 
     agent.post('/api/auth/signin')
       .send(credentials)
@@ -130,11 +130,11 @@ describe('Location CRUD tests', function () {
         }
 
         // Get the userId
-        var userId = user.id;
+        var userId = userGlobal.id;
 
         // Save a new location
         agent.post('/api/locations')
-          .send(location)
+          .send(locationGlobal)
           .expect(400)
           .end(function (locationSaveErr, locationSaveRes) {
             // Set message assertion
@@ -196,7 +196,7 @@ describe('Location CRUD tests', function () {
 
   it('should be able to get a list of locations if not signed in', function (done) {
     // Create new location model instance
-    var locationObj = new Location(location);
+    var locationObj = new Location(locationGlobal);
 
     // Save the location
     locationObj.save(function () {
@@ -215,14 +215,14 @@ describe('Location CRUD tests', function () {
 
   it('should be able to get a single location if not signed in', function (done) {
     // Create new location model instance
-    var locationObj = new Location(location);
+    var locationObj = new Location(locationGlobal);
 
     // Save the location
     locationObj.save(function () {
       request(app).get('/api/locations/' + locationObj._id)
         .end(function (req, res) {
           // Set assertion
-          res.body.should.be.instanceof(Object).and.have.property('name', location.name);
+          res.body.should.be.instanceof(Object).and.have.property('name', locationGlobal.name);
 
           // Call the assertion callback
           done();
@@ -358,7 +358,7 @@ describe('Location CRUD tests', function () {
 
           // Save a new location
           agent.post('/api/locations')
-            .send(location)
+            .send(locationGlobal)
             .expect(200)
             .end(function (locationSaveErr, locationSaveRes) {
               // Handle location save error
@@ -367,7 +367,7 @@ describe('Location CRUD tests', function () {
               }
 
               // Set assertions on new location
-              (locationSaveRes.body.name).should.equal(location.name);
+              (locationSaveRes.body.name).should.equal(locationGlobal.name);
               should.exist(locationSaveRes.body.user);
               should.equal(locationSaveRes.body.user._id, orphanId);
 
@@ -394,7 +394,7 @@ describe('Location CRUD tests', function () {
 
                         // Set assertions
                         (locationInfoRes.body._id).should.equal(locationSaveRes.body._id);
-                        (locationInfoRes.body.name).should.equal(location.name);
+                        (locationInfoRes.body.name).should.equal(locationGlobal.name);
                         should.equal(locationInfoRes.body.user, undefined);
 
                         // Call the assertion callback
@@ -409,8 +409,8 @@ describe('Location CRUD tests', function () {
 
   it('should be able to get a single location if signed in and verify the custom "isCurrentUserOwner" field is set to "true"', function (done) {
     // Create new location model instance
-    location.user = user;
-    var locationObj = new Location(location);
+    locationGlobal.user = userGlobal;
+    var locationObj = new Location(locationGlobal);
 
     // Save the location
     locationObj.save(function () {
@@ -424,11 +424,11 @@ describe('Location CRUD tests', function () {
           }
 
           // Get the userId
-          var userId = user.id;
+          var userId = userGlobal.id;
 
           // Save a new location
           agent.post('/api/locations')
-            .send(location)
+            .send(locationGlobal)
             .expect(200)
             .end(function (locationSaveErr, locationSaveRes) {
               // Handle location save error
@@ -447,7 +447,7 @@ describe('Location CRUD tests', function () {
 
                   // Set assertions
                   (locationInfoRes.body._id).should.equal(locationSaveRes.body._id);
-                  (locationInfoRes.body.name).should.equal(location.name);
+                  (locationInfoRes.body.name).should.equal(locationGlobal.name);
 
                   // Assert that the "isCurrentUserOwner" field is set to true since the current User created it
                   (locationInfoRes.body.isCurrentUserOwner).should.equal(true);
@@ -462,14 +462,14 @@ describe('Location CRUD tests', function () {
 
   it('should be able to get a single location if not signed in and verify the custom "isCurrentUserOwner" field is set to "false"', function (done) {
     // Create new location model instance
-    var locationObj = new Location(location);
+    var locationObj = new Location(locationGlobal);
 
     // Save the location
     locationObj.save(function () {
       request(app).get('/api/locations/' + locationObj._id)
         .end(function (req, res) {
           // Set assertion
-          res.body.should.be.instanceof(Object).and.have.property('name', location.name);
+          res.body.should.be.instanceof(Object).and.have.property('name', locationGlobal.name);
           // Assert the custom field "isCurrentUserOwner" is set to false for the un-authenticated User
           res.body.should.be.instanceof(Object).and.have.property('isCurrentUserOwner', false);
           // Call the assertion callback
@@ -513,11 +513,11 @@ describe('Location CRUD tests', function () {
           }
 
           // Get the userId
-          var userId = user._id;
+          var userId = userGlobal._id;
 
           // Save a new location
           agent.post('/api/locations')
-            .send(location)
+            .send(locationGlobal)
             .expect(200)
             .end(function (locationSaveErr, locationSaveRes) {
               // Handle location save error
@@ -526,7 +526,7 @@ describe('Location CRUD tests', function () {
               }
 
               // Set assertions on new location
-              (locationSaveRes.body.name).should.equal(location.name);
+              (locationSaveRes.body.name).should.equal(locationGlobal.name);
               should.exist(locationSaveRes.body.user);
               should.equal(locationSaveRes.body.user._id, userId);
 
@@ -551,7 +551,7 @@ describe('Location CRUD tests', function () {
 
                       // Set assertions
                       (locationInfoRes.body._id).should.equal(locationSaveRes.body._id);
-                      (locationInfoRes.body.name).should.equal(location.name);
+                      (locationInfoRes.body.name).should.equal(locationGlobal.name);
                       // Assert that the custom field "isCurrentUserOwner" is set to false since the current User didn't create it
                       (locationInfoRes.body.isCurrentUserOwner).should.equal(false);
 
