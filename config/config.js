@@ -207,6 +207,15 @@ var initGlobalConfig = function () {
     getGlobbedPaths: getGlobbedPaths,
     validateSessionSecret: validateSessionSecret
   };
+  
+  config.mailer.from = 'email address';
+  config.mailer.options = {
+    service: 'gmail',
+    auth: {
+      user: 'username',
+      pass: 'password'
+    }
+  };
 
   return config;
 };

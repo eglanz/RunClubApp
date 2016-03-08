@@ -27,14 +27,17 @@ exports.massMailer = function(req,res) {
       // send mail content to all users that want to receive mass emails
       var email = {
         from: req.user.email,
+        //from: 'jacob.luojie@gmail.com',
         subject: req.body.subject,
         text: req.body.content
       };
         
       for (var i = 0; i < users.length; i++) {
-        email.to = users[i].email;
-        console.log("email object: " + JSON.stringify(email));
-        smtpTransport.sendMail(email, emailCallback());
+        if (users[i].email !== 'admin@localhost.com' && users[i].email !== 'user@localhost.com') {
+          email.to = users[i].email;
+          console.log("email object: " + JSON.stringify(email));
+          smtpTransport.sendMail(email, emailCallback());
+        }
       }
     }
   });

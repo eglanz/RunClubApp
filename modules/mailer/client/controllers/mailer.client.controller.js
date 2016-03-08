@@ -32,11 +32,13 @@
         // include name of sender somehow
         
         Mailer.massMailer({},{ content: vm.message.content, subject: vm.message.subject },successCallback,errorCallback);
+        alert("Mail sent.");
+        $state.go('home', $state.previous.params);
       }
       
       function successCallback(res) {
         console.log("Success Callback");
-        $state.go($state.previous.state.name || 'home', $state.previous.params);
+        //$state.go($state.previous.state.name || 'home', $state.previous.params);
       }
 
       function errorCallback(res) {
