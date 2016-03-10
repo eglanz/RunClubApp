@@ -39,6 +39,7 @@ exports.massMailer = function(req,res) {
           smtpTransport.sendMail(email, emailCallback());
         }
       }
+      res.json(1);
     }
   });
 };
