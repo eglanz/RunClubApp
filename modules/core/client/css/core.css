@@ -40,3 +40,7 @@ h1{
   font-size: 4em;
   text-shadow: 4px 4px 4px #aaa;
 }
+.btn-toolbar > .btn, .btn-toolbar > .btn-group, .btn-toolbar > .input-group {
+    margin-left: 10px;
+    float: none;
+}
