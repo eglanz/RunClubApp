@@ -104,26 +104,20 @@ exports.jar = function(req, res){
   }else if(req.params.miles == 2 || req.params.miles == '2'){
     locations = Location.where('length').gt(5.99).select('name hills scenic traffic overall');
   }
-  
-  //console.log(locations);
-  //console.log(articles);
- // articles.select("content", "title");
+
   var foundLocations = "Id,Hills,Scenic,Traffic,Overall\n";
   var foundLocation;
   locations.exec(function (err, docs) {
   // called when the `query.complete` or `query.error` are called
   // internally
-    //console.log(docs);
-    console.log("HEREEEEEEEEEEEEEEEEEEEE:\n");
-   // console.log(req.params.miles+'\n');
+
     for(var it in docs){
-      //console.log("IT:"+docs[it].name+"\n");
       foundLocations += docs[it].name+','+docs[it].hills+','+docs[it].scenic+','+docs[it].traffic+','+docs[it].overall+'\n';
     }
     
     var file = "TrainTest.csv";
-    //foundLocations = "Id,Hills,Scenic,Traffic,Overall\nRoute 1,5,3,4,0\nRoute 2,2,2,2,0\nRoute 3,5,1,1,0\nRoute 4,2,2,2,0\nRoute 5,4,4,4,0\n";
-    console.log(foundLocations);
+
+
     var foundLocation;
   
     fs.writeFileSync(file, foundLocations, 'utf8', (err) => {
@@ -141,11 +135,7 @@ exports.jar = function(req, res){
     });
     
   });
-  
-   Location.find().sort('-created').populate('user', 'displayName').exec(function (err, locations) {
-    console.log("LOCATIONS: \n", locations);
-  });
-  
+
   
   var exec = require('child_process').exec;
   var child = exec('java -jar RunClubRec.jar TrainTest.csv TestTest.csv',
@@ -158,7 +148,7 @@ exports.jar = function(req, res){
       if(error !== null){
         console.log("Error -> "+error);
       }
-      console.log("OUTPUT:\n"+output);
+
       
       var array_output = output.split('\n');
 
@@ -167,12 +157,12 @@ exports.jar = function(req, res){
         Location.findOne({'name' : array_output[0]}).populate('user', 'displayName').exec(function(err,loc){
             if(loc != null){
             outputJson.push(loc);
-            console.log("HERE:\n"+JSON.stringify(outputJson));}
+           }
           
         });
       }
      
-      resolve("YAY");
+      resolve("Resolved");
       });
       
       promise.then(function(result) {
@@ -180,7 +170,7 @@ exports.jar = function(req, res){
         return Location.findOne({'name' : array_output[1]}).populate('user', 'displayName').exec(function(err,loc){
             if(loc != null){
             outputJson.push(loc);
-            console.log("HERE:\n"+JSON.stringify(outputJson));}
+            }
           
         });
       }
@@ -189,7 +179,7 @@ exports.jar = function(req, res){
         return Location.findOne({'name' : array_output[2]}).populate('user', 'displayName').exec(function(err,loc){
             if(loc != null){
             outputJson.push(loc);
-            console.log("HERE:\n"+JSON.stringify(outputJson));}
+            }
           
         });
       }
@@ -198,7 +188,7 @@ exports.jar = function(req, res){
         return Location.findOne({'name' : array_output[3]}).populate('user', 'displayName').exec(function(err,loc){
             if(loc != null){
             outputJson.push(loc);
-            console.log("HERE:\n"+JSON.stringify(outputJson));}
+           }
           
         });
       }
@@ -207,23 +197,15 @@ exports.jar = function(req, res){
        return Location.findOne({'name' : array_output[4]}).populate('user', 'displayName').exec(function(err,loc){
            if(loc != null){
             outputJson.push(loc);
-            console.log("HERE:\n"+JSON.stringify(outputJson));}
+            }
           
         });
       }
       }).then(function(){
           var locations = JSON.stringify(outputJson);
-        console.log("AT END:\n"+locations);
-
-        res.json(outputJson);
+          res.json(outputJson);
       });
-      
-      
-      //var outString = outputJson.stringify();
-     // console.log("JSON:\n"+outString);
-      //var jsonO = JSON.parse(outString);
-      
-      //res.data("cat", stdout);
+
       
   });
   
