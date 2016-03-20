@@ -36,6 +36,11 @@ a:hover .header-profile-image {
   display: inline;
 }
 h1{
+  font-family: 'Anton';
+  font-size: 4em;
+  
+}
+h1.main{
   font-family: 'Pacifico';
   font-size: 4em;
   text-shadow: 4px 4px 4px #aaa;
