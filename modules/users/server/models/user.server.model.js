@@ -65,22 +65,22 @@ var UserSchema = new Schema({
   },
   hills: {
     type: Number,
-    default: 0,
+    default: 5,
     trim: true
   },
   scenic: {
     type: Number,
-    default: 0,
+    default: 5,
     trim: true
   },
   traffic: {
     type: Number,
-    default: 0,
+    default: 5,
     trim: true
   },
   overall: {
     type: Number,
-    default: 0,
+    default: 5,
     trim: true
   },
   salt: {
