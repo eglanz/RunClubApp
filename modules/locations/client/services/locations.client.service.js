@@ -3,9 +3,11 @@
 
   angular
     .module('locations.services')
+    .factory('RecommendationsService', RecommendationsService)
     .factory('LocationsService', LocationsService);
 
   LocationsService.$inject = ['$resource'];
+  RecommendationsService.$inject = ['$resource'];
 
   function LocationsService($resource) {
     return $resource('api/locations/:locationId', {
@@ -16,4 +18,11 @@
       }
     });
   }
+  
+  function RecommendationsService($resource){
+    return $resource('api/locations/jar/:miles', {
+      miles: '@miles'
+    });
+  }
+  
 })();

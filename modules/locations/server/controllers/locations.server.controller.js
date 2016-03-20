@@ -8,6 +8,7 @@ var path = require('path'),
   Location = mongoose.model('Location'),
   errorHandler = require(path.resolve('./modules/core/server/controllers/errors.server.controller'));
 
+var fs = require('fs');
 /**
  * Create an location
  */
@@ -91,6 +92,144 @@ exports.list = function (req, res) {
     }
   });
 };
+
+
+//JAR STUFF:
+exports.jar = function(req, res){
+  var locations;
+  if(req.params.miles == 0 || req.params.miles == '0'){
+    locations = Location.where('length').gt(0).lt(2.99).select('name hills scenic traffic overall');
+  }else if(req.params.miles == 1 || req.params.miles == '1'){
+    locations = Location.where('length').gt(2.99).lt(5.99).select('name hills scenic traffic overall');
+  }else if(req.params.miles == 2 || req.params.miles == '2'){
+    locations = Location.where('length').gt(5.99).select('name hills scenic traffic overall');
+  }
+  
+  //console.log(locations);
+  //console.log(articles);
+ // articles.select("content", "title");
+  var foundLocations = "Id,Hills,Scenic,Traffic,Overall\n";
+  var foundLocation;
+  locations.exec(function (err, docs) {
+  // called when the `query.complete` or `query.error` are called
+  // internally
+    //console.log(docs);
+    console.log("HEREEEEEEEEEEEEEEEEEEEE:\n");
+   // console.log(req.params.miles+'\n');
+    for(var it in docs){
+      //console.log("IT:"+docs[it].name+"\n");
+      foundLocations += docs[it].name+','+docs[it].hills+','+docs[it].scenic+','+docs[it].traffic+','+docs[it].overall+'\n';
+    }
+    
+    var file = "TrainTest.csv";
+    //foundLocations = "Id,Hills,Scenic,Traffic,Overall\nRoute 1,5,3,4,0\nRoute 2,2,2,2,0\nRoute 3,5,1,1,0\nRoute 4,2,2,2,0\nRoute 5,4,4,4,0\n";
+    console.log(foundLocations);
+    var foundLocation;
+  
+    fs.writeFileSync(file, foundLocations, 'utf8', (err) => {
+      if (err) throw err;
+      console.log('It\'s saved!');
+    });
+    
+    var file2 = "TestTest.csv";
+    foundLocation = "Id,Hills,Scenic,Traffic,Overall\n";
+    foundLocation += req.user.firstName+','+req.user.hills+','+req.user.scenic+','+req.user.traffic+','+req.user.overall+'\n';
+    console.log("USER:\n"+foundLocation);
+    fs.writeFileSync(file2, foundLocation, 'utf8', (err) => {
+      if (err) throw err;
+      console.log('It\'s saved!');
+    });
+    
+  });
+  
+   Location.find().sort('-created').populate('user', 'displayName').exec(function (err, locations) {
+    console.log("LOCATIONS: \n", locations);
+  });
+  
+  
+  var exec = require('child_process').exec;
+  var child = exec('java -jar RunClubRec.jar TrainTest.csv TestTest.csv',
+    function (error, stdout, stderr){
+      var output = "";
+  var outputJson = [];
+      console.log('Output -> ' + stdout);
+      output += stdout;
+      
+      if(error !== null){
+        console.log("Error -> "+error);
+      }
+      console.log("OUTPUT:\n"+output);
+      
+      var array_output = output.split('\n');
+
+      var promise = new Promise(function(resolve, reject) {      
+      if(array_output.length >= 1){
+        Location.findOne({'name' : array_output[0]}).populate('user', 'displayName').exec(function(err,loc){
+            if(loc != null){
+            outputJson.push(loc);
+            console.log("HERE:\n"+JSON.stringify(outputJson));}
+          
+        });
+      }
+     
+      resolve("YAY");
+      });
+      
+      promise.then(function(result) {
+        if(array_output.length >= 2){
+        return Location.findOne({'name' : array_output[1]}).populate('user', 'displayName').exec(function(err,loc){
+            if(loc != null){
+            outputJson.push(loc);
+            console.log("HERE:\n"+JSON.stringify(outputJson));}
+          
+        });
+      }
+      }).then(function(){
+          if(array_output.length >= 3){
+        return Location.findOne({'name' : array_output[2]}).populate('user', 'displayName').exec(function(err,loc){
+            if(loc != null){
+            outputJson.push(loc);
+            console.log("HERE:\n"+JSON.stringify(outputJson));}
+          
+        });
+      }
+      }).then(function(){
+        if(array_output.length >= 4){
+        return Location.findOne({'name' : array_output[3]}).populate('user', 'displayName').exec(function(err,loc){
+            if(loc != null){
+            outputJson.push(loc);
+            console.log("HERE:\n"+JSON.stringify(outputJson));}
+          
+        });
+      }
+      }).then(function(){
+        if(array_output.length >= 5){
+       return Location.findOne({'name' : array_output[4]}).populate('user', 'displayName').exec(function(err,loc){
+           if(loc != null){
+            outputJson.push(loc);
+            console.log("HERE:\n"+JSON.stringify(outputJson));}
+          
+        });
+      }
+      }).then(function(){
+          var locations = JSON.stringify(outputJson);
+        console.log("AT END:\n"+locations);
+
+        res.json(outputJson);
+      });
+      
+      
+      //var outString = outputJson.stringify();
+     // console.log("JSON:\n"+outString);
+      //var jsonO = JSON.parse(outString);
+      
+      //res.data("cat", stdout);
+      
+  });
+  
+  
+  
+}
 
 /**
  * Location middleware

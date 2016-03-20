@@ -27,5 +27,12 @@
       state: 'locations.create',
       roles: ['*']
     });
+    
+    //Add dropdown recommendation options
+    Menus.addSubMenuItem('topbar', 'locations', {
+      title: 'Get Route Recommendation',
+      state: 'locations.recops',
+      roles: ['*']
+    });
   }
 })();

@@ -5,12 +5,16 @@
  */
 var locationsPolicy = require('../policies/locations.server.policy'),
   locations = require('../controllers/locations.server.controller');
+  
+
 
 module.exports = function (app) {
   // Locations collection routes
   app.route('/api/locations').all(locationsPolicy.isAllowed)
     .get(locations.list)
     .post(locations.create);
+    
+  app.route('/api/locations/jar/:miles').all(locationsPolicy.isAllowed).get(locations.jar)
 
   // Single location routes
   app.route('/api/locations/:locationId').all(locationsPolicy.isAllowed)

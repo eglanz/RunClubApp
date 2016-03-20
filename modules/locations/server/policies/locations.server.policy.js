@@ -20,6 +20,9 @@ exports.invokeRolesPolicies = function () {
     }, {
       resources: '/api/locations/:locationId',
       permissions: '*'
+    }, {
+      resources: '/api/locations/jar/:miles',
+      permissions: '*'
     }]
   }, {
     roles: ['user'],
@@ -29,6 +32,9 @@ exports.invokeRolesPolicies = function () {
     }, {
       resources: '/api/locations/:locationId',
       permissions: ['get']
+    } , {
+      resources: '/api/locations/jar/:miles',
+      permissions: '*'
     }]
   }, {
     roles: ['guest'],
