@@ -32,7 +32,7 @@
           articleResolve: newArticle
         },
         data: {
-          roles: ['user', 'admin'],
+          roles: ['admin'],
           pageTitle : 'Articles Create'
         }
       })

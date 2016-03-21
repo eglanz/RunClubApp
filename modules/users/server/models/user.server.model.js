@@ -99,6 +99,7 @@ var UserSchema = new Schema({
     type: Date
   }
 });
+UserSchema.add({ doNotEmail: { type: Boolean, default: false } });
 
 /**
  * Hook a pre save method to hash the password
