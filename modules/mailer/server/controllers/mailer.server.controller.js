@@ -35,11 +35,10 @@ exports.massMailer = function(req,res) {
       for (var i = 0; i < users.length; i++) {
         if (users[i].email !== 'admin@localhost.com' && users[i].email !== 'user@localhost.com') {
           email.to = users[i].email;
-          console.log("email object: " + JSON.stringify(email));
           smtpTransport.sendMail(email, emailCallback());
         }
       }
-      res.json(1);
+      res.json(1); // success
     }
   });
 };

@@ -15,7 +15,7 @@ exports.invokeRolesPolicies = function () {
   acl.allow([{
     roles: ['admin'],
     allows: [{
-      resources: '/api/mailer',
+      resources: '/api/massmailer',
       permissions: '*'
     }]
   }]);

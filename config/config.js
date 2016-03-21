@@ -208,7 +208,6 @@ var initGlobalConfig = function () {
     validateSessionSecret: validateSessionSecret
   };
   
-  config.mailer.from = 'email address';
   config.mailer.options = {
     service: 'gmail',
     auth: {

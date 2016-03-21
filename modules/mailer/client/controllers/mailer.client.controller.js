@@ -16,7 +16,7 @@
     vm.form = {};
     vm.send = send;
     
-    var Mailer = $resource('api/mailer', {}, {
+    var Mailer = $resource('api/massmailer', {}, {
       massMailer: { method: 'POST' }
     });
     
@@ -30,16 +30,13 @@
       }
       
       function successCallback(res) {
-        console.log("Success Callback");
         //$state.go($state.previous.state.name || 'home', $state.previous.params);
-        alert("Mail sent.");
+        alert('Mail sent.');
         $state.go('home', $state.previous.params);
       }
 
       function errorCallback(res) {
-        console.log("Error Callback");
         vm.error = res.data.message;
-        console.log(res.data.message);
       }
     }
   }

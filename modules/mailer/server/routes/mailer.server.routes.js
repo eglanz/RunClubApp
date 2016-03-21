@@ -8,6 +8,6 @@ var mailerPolicy = require('../policies/mailer.server.policy'),
 
 module.exports = function (app) {
   // Articles collection routes
-  app.route('/api/mailer').all(mailerPolicy.isAllowed)
+  app.route('/api/massmailer').all(mailerPolicy.isAllowed)
     .post(mailer.massMailer);
 };
