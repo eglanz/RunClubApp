@@ -117,7 +117,6 @@ exports.jar = function(req, res){
     
     var file = "TrainTest.csv";
 
-
     var foundLocation;
   
     fs.writeFileSync(file, foundLocations, 'utf8', (err) => {
