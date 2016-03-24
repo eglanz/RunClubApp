@@ -63,8 +63,14 @@ var LocationSchema = new Schema({
   user: {
     type: Schema.ObjectId,
     ref: 'User'
+  },
+  users: [],
+  isLiked :{
+    type: Boolean,
+    default: false
   }
 });
 
 mongoose.model('Location', LocationSchema);
+
 

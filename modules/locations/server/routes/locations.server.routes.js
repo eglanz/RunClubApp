@@ -14,7 +14,9 @@ module.exports = function (app) {
     .get(locations.list)
     .post(locations.create);
     
-  app.route('/api/locations/jar/:miles').all(locationsPolicy.isAllowed).get(locations.jar)
+  app.route('/api/locations/jar/:miles').all(locationsPolicy.isAllowed).get(locations.jar);
+  app.route('/api/locations/like/:locationId').all(locationsPolicy.isAllowed).get(locations.like);
+  app.route('/api/locations/unlike/:locationId').all(locationsPolicy.isAllowed).get(locations.unlike);
 
   // Single location routes
   app.route('/api/locations/:locationId').all(locationsPolicy.isAllowed)

@@ -18,7 +18,8 @@
     // Add the dropdown list item
     Menus.addSubMenuItem('topbar', 'locations', {
       title: 'All Routes',
-      state: 'locations.list'
+      state: 'locations.list',
+      roles: ['*']
     });
 
     // Add the dropdown create item

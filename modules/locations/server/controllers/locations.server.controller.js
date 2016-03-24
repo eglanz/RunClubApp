@@ -88,10 +88,72 @@ exports.list = function (req, res) {
         message: errorHandler.getErrorMessage(err)
       });
     } else {
-      res.json(locations);
+      
+      for(var location in locations){
+        var found = true;
+        if(locations[location].users.indexOf(req.user._id) === -1){
+          found = false;
+        }
+          locations[location].isLiked = found;
+          locations[location].save();
+      }
+      
+      return locations;
     }
+  }).then(function(locations){
+    
+      Location.find().sort('-created').populate('user', 'displayName').exec(function (err, mlocations) {
+    if (err) {
+      return res.status(400).send({
+        message: errorHandler.getErrorMessage(err)
+      });
+    } else {
+      
+      
+      res.json( mlocations );
+    }
+  })
+  
   });
 };
+
+exports.like = function(req, res){
+  Location.findOne({'_id' : req.params.locationId}).exec(function(err,loc){
+    loc.users.push(req.user._id);
+    loc.isLiked = true;
+    loc.save();
+    
+    req.user.numLiked = req.user.numLiked + 1;
+
+    req.user.hills = (req.user.hills + loc.hills);
+    req.user.scenic = (req.user.scenic + loc.scenic);
+    req.user.traffic = (req.user.traffic + loc.traffic);
+    req.user.overall = (req.user.overall + loc.overall);
+
+    req.user.save();
+    //res.json(loc);
+  });
+
+}
+
+exports.unlike = function(req, res){
+  Location.findOne({'_id' : req.params.locationId}).exec(function(err,loc){
+    loc.users.splice(loc.users.indexOf(req.user._id),1);
+    loc.isLiked = false;
+    req.user.numLiked = req.user.numLiked - 1;
+
+      req.user.hills = (req.user.hills - loc.hills);
+      req.user.scenic = (req.user.scenic - loc.scenic);
+      req.user.traffic = (req.user.traffic - loc.traffic);
+      req.user.overall = (req.user.overall - loc.overall);
+      
+    req.user.save();
+    loc.save();
+    //res.json(loc);
+    
+  });
+
+}
 
 
 //JAR STUFF:
@@ -126,7 +188,13 @@ exports.jar = function(req, res){
     
     var file2 = "TestTest.csv";
     foundLocation = "Id,Hills,Scenic,Traffic,Overall\n";
-    foundLocation += req.user.firstName+','+req.user.hills+','+req.user.scenic+','+req.user.traffic+','+req.user.overall+'\n';
+    var num = req.user.numLiked;
+    console.log("NUMBER LIKE: "+num);
+    if(num > 0){
+      foundLocation += req.user.firstName+','+(req.user.hills/num)+','+(req.user.scenic/num)+','+(req.user.traffic/num)+','+(req.user.overall/num)+'\n';
+    }else{
+      foundLocation += req.user.firstName+','+req.user.hills+','+req.user.scenic+','+req.user.traffic+','+req.user.overall+'\n';
+    }
     console.log("USER:\n"+foundLocation);
     fs.writeFileSync(file2, foundLocation, 'utf8', (err) => {
       if (err) throw err;

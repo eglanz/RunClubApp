@@ -20,6 +20,7 @@
         controller: 'LocationsListController',
         controllerAs: 'vm',
         data: {
+          roles: ['user', 'admin'],
           pageTitle: 'Locations List'
         }
       })

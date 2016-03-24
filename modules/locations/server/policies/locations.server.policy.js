@@ -23,6 +23,12 @@ exports.invokeRolesPolicies = function () {
     }, {
       resources: '/api/locations/jar/:miles',
       permissions: '*'
+    },{
+      resources: '/api/locations/like/:locationId',
+      permissions: '*'
+    }, {
+      resources: '/api/locations/unlike/:locationId',
+      permissions: '*'
     }]
   }, {
     roles: ['user'],
@@ -34,6 +40,13 @@ exports.invokeRolesPolicies = function () {
       permissions: ['get']
     } , {
       resources: '/api/locations/jar/:miles',
+      permissions: '*'
+    }, {
+      resources: '/api/locations/like/:locationId',
+      permissions: '*'
+    },
+    {
+      resources: '/api/locations/unlike/:locationId',
       permissions: '*'
     }]
   }, {

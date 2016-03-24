@@ -9,7 +9,7 @@
     <h1>Routes</h1>
   </div>
   <div class="list-group">
-    <a ng-repeat="location in vm.locations" ui-sref="locations.view({ locationId: location._id })" class="list-group-item">
+    <a ng-repeat="location in vm.locations"  class="list-group-item">
       <small class="list-group-item-text">
         Posted on
         <span ng-bind="location.created | date:'mediumDate'"></span>
@@ -30,6 +30,14 @@
           <h4 class="list-group-item-heading" ng-bind="location.traffic"></h4></td>
           <td><p>Overall Rating</p>
           <h4 class="list-group-item-heading" ng-bind="location.overall"></h4></td>
+          <td><a class="btn btn-info btn-lg" ng-click="vm.clickview(location._id)">     
+          View
+          </a></td>
+          <td><a ng-if="(vm.unlikebuttons.indexOf(location._id) === -1 && !location.isLiked) || (vm.likebuttons.indexOf(location._id) > -1)" class="btn btn-warning btn-lg" ng-click="vm.like(location._id)">     
+          Like
+          </a><a ng-if="(vm.likebuttons.indexOf(location._id) === -1 && location.isLiked) || (vm.unlikebuttons.indexOf(location._id) > -1)" class="btn btn-danger btn-lg" ng-click="vm.unlike(location._id)">     
+          Unlike
+          </a></td>
         </tr>
       </table>
       
