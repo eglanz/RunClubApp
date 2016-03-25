@@ -70,6 +70,14 @@ describe('Location Model Unit Tests:', function () {
       });
     });
     
+    /*it('should be able to show an error when a route name is being reused', function (done) {
+      locationGlobal.save();
+      return locationGlobal.save(function (err) {
+        should.exist(err);
+        done();
+      });
+    });*/
+    
   });
 
 

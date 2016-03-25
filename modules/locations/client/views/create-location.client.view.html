@@ -69,6 +69,9 @@
       <br>
       <br>
       <textarea id="length" disable="true" readonly="true" rows="1" style="border: none; outline: none; overflow: auto; -webkit-box-shadow: none; -moz-box-shadow: none;  box-shadow: none; font-size: 40px"></textarea>
+      <div ng-show="vm.error" class="text-danger">
+        <strong ng-bind="vm.error"></strong>
+      </div>
       <form name="vm.form.locationForm" class="form-horizontal" ng-submit="vm.save(vm.form.locationForm.$valid)" novalidate>
       <fieldset>
         <div class="form-group" show-errors>
@@ -76,6 +79,7 @@
           <input name="name" type="text" ng-model="vm.location.name" id="name" class="form-control" placeholder="Name" required>
           <div ng-messages="vm.form.locationForm.name.$error" role="alert">
             <p class="help-block error-text" ng-message="required">Route name is required.</p>
+            <p class="help-block error-text" ng-message="unique">Route name must be unique.</p>
           </div>
         </div>
         <div class="form-group" show-errors>
@@ -119,8 +123,6 @@
         <div class="form-group">
           <button type="submit" class="btn btn-default">{{ 'Create'}}</button>
         </div>
-        <div ng-show="vm.error" class="text-danger">
-          <strong ng-bind="vm.error"></strong>
-        </div>
+
       </fieldset>
     </form>
