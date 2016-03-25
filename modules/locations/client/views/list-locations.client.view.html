@@ -1,12 +1,6 @@
-<div>
-  <map center="[41.66,-92.533]" zoom="12" id="lise">
-    <marker ng-repeat='location in locations' position='[{{location.lat}},{{location.lon}}]' visible="true" on-click="gotolink(event,location)"></marker>
-  </map>
-</div>
-
 <section>
   <div class="page-header">
-    <h1>Routes</h1>
+    <h1 class="routes">Routes</h1>
   </div>
   <div class="list-group">
     <a ng-repeat="location in vm.locations"  class="list-group-item">
@@ -17,7 +11,7 @@
         <span ng-if="location.user" ng-bind="location.user.displayName"></span>
         <span ng-if="!location.user">Deleted User</span>
       </small>
-      <h4 class="list-group-item-heading" ng-bind="location.name"></h4>
+      <h2 class="list-group-item-heading" ng-bind="location.name"></h2>
       <table style="width:100%">
         <tr>
           <td><p>Miles</p>
@@ -35,7 +29,7 @@
           </a></td>
           <td><a ng-if="(vm.unlikebuttons.indexOf(location._id) === -1 && !location.isLiked) || (vm.likebuttons.indexOf(location._id) > -1)" class="btn btn-warning btn-lg btn-like" ng-click="vm.like(location._id)">     
           Like
-          </a><a ng-if="(vm.likebuttons.indexOf(location._id) === -1 && location.isLiked) || (vm.unlikebuttons.indexOf(location._id) > -1)" class="btn btn-danger btn-lg btn-unlike" ng-click="vm.unlike(location._id)">     
+          </a><a ng-if="(vm.likebuttons.indexOf(location._id) === -1 && location.isLiked) || (vm.unlikebuttons.indexOf(location._id) > -1)" class="btn btn-primary btn-lg btn-unlike" ng-click="vm.unlike(location._id)">     
           Unlike
           </a></td>
         </tr>
