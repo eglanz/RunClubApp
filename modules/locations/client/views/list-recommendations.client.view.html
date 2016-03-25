@@ -1,7 +1,9 @@
 
 <section>
-  <div class="page-header">
+  <div class="page-header"  ng-if="vm.locations.$resolved">
+    <div class="jumbotron text-center recroutes">
     <h1 class="routes">Top Recommended Routes</h1>
+    </div>
   </div>
   
   <div class="list-group">
@@ -34,8 +36,10 @@
   <div class="alert alert-warning text-center" ng-if="vm.locations.$resolved && !vm.locations.length">
     No routes yet
   </div>
-  <div id="hey" ng-if="!vm.locations.$resolved" class="page-header">
+  <div id="hey" ng-if="!vm.locations.$resolved">
+    <center>
     <img alt="404" class="img-responsive text-center" src="modules/core/client/img/brand/Results.PNG" />
+    </center>
   </div>
 </section>
 

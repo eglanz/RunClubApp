@@ -131,7 +131,7 @@ exports.like = function(req, res){
     req.user.overall = (req.user.overall + loc.overall);
 
     req.user.save();
-    //res.json(loc);
+    res.json([]);
   });
 
 };
@@ -150,6 +150,7 @@ exports.unlike = function(req, res){
     req.user.save();
     loc.save();
     //res.json(loc);
+    res.json([]);
     
   });
 

@@ -54,6 +54,10 @@ h1.routes{
   font-family: 'Pacifico';
   font-size: 5em;
   text-shadow: 4px 4px 4px #aaa;
+  color: #000000;
+  /*color: #5bc0de;
+  outline-color: #5bc0de;
+  outline-width: thick;*/
 }
 .btn-toolbar > .btn, .btn-toolbar > .btn-group, .btn-toolbar > .input-group {
     margin-left: 10px;
@@ -62,13 +66,29 @@ h1.routes{
 
 .btn-like{
   padding: 10px 24.5px;
-  /*background-image: url("../img/brand/routerec.jpg");*/
+
 }
+
+
 
 div.rec{
   background-image: url("../img/brand/routerec.jpg");
   padding-top: 100px;
   padding-bottom: 100px;
+}
+
+div.routes{
+  background-image: url("../img/brand/shoe.jpg");
+  background-size: cover;
+  padding-top: 50px;
+  padding-bottom: 50px;
+}
+
+div.recroutes{
+  background-image: url("../img/brand/outdoors.jpg");
+  background-size: cover;
+  padding-top: 50px;
+  padding-bottom: 50px;
 }
 
 .list-group-item:nth-child(odd){
@@ -84,6 +104,6 @@ div.rec{
 }
 
 .list-group-item:hover{
-  background-color: #8b9dc3;
+  color: #8b9dc3;
 
 }
