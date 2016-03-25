@@ -13,9 +13,9 @@
     //vm.locations = $http.get()
 
     function jar(mile_group){
-        $state.go('locations.reclist', {
-          miles: mile_group
-        });
+      $state.go('locations.reclist', {
+        miles: mile_group
+      });
     }
   }
 })();

@@ -19,15 +19,15 @@
     //console.log(vm.locations[1].isLiked);
     
     function clickview(id){
-        $state.go('locations.view', {
-          locationId: id
-        });
+      $state.go('locations.view', {
+        locationId: id
+      });
     }
     
     function like(id){
       for(var location in vm.locations){
         if(vm.locations[location] && vm.locations[location]._id === id){
-          LikeService.query({locationId: id});
+          LikeService.query({ locationId: id });
           if(vm.unlikebuttons.isEmpty || vm.unlikebuttons.indexOf(id) === -1){
             vm.unlikebuttons.push(id);
             if(vm.likebuttons.indexOf(id) > -1){
@@ -43,9 +43,9 @@
     }
 
     function unlike(id){
-        for(var location in vm.locations){
+      for(var location in vm.locations){
         if(vm.locations[location] && vm.locations[location]._id === id){
-          UnLikeService.query({locationId: id});
+          UnLikeService.query({ locationId: id });
           
           if(vm.likebuttons.isEmpty || vm.likebuttons.indexOf(id) === -1){
             vm.likebuttons.push(id);
@@ -55,7 +55,7 @@
           }
         }
       }
-      }
+    }
   }
 })();
 

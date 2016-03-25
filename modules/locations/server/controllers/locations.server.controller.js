@@ -112,7 +112,7 @@ exports.list = function (req, res) {
       
       res.json( mlocations );
     }
-  })
+  });
   
   });
 };
@@ -134,7 +134,7 @@ exports.like = function(req, res){
     //res.json(loc);
   });
 
-}
+};
 
 exports.unlike = function(req, res){
   Location.findOne({'_id' : req.params.locationId}).exec(function(err,loc){
@@ -153,17 +153,17 @@ exports.unlike = function(req, res){
     
   });
 
-}
+};
 
 
 //JAR STUFF:
 exports.jar = function(req, res){
   var locations;
-  if(req.params.miles == 0 || req.params.miles == '0'){
+  if(req.params.miles === 0 || req.params.miles === '0'){
     locations = Location.where('length').gt(0).lt(2.99).select('name hills scenic traffic overall');
-  }else if(req.params.miles == 1 || req.params.miles == '1'){
+  }else if(req.params.miles === 1 || req.params.miles === '1'){
     locations = Location.where('length').gt(2.99).lt(5.99).select('name hills scenic traffic overall');
-  }else if(req.params.miles == 2 || req.params.miles == '2'){
+  }else if(req.params.miles === 2 || req.params.miles === '2'){
     locations = Location.where('length').gt(5.99).select('name hills scenic traffic overall');
   }
 
@@ -222,7 +222,7 @@ exports.jar = function(req, res){
       var promise = new Promise(function(resolve, reject) {      
       if(array_output.length >= 1){
         Location.findOne({'name' : array_output[0]}).populate('user', 'displayName').exec(function(err,loc){
-            if(loc != null){
+            if(loc !== null){
             outputJson.push(loc);
            }
           
@@ -235,7 +235,7 @@ exports.jar = function(req, res){
       promise.then(function(result) {
         if(array_output.length >= 2){
         return Location.findOne({'name' : array_output[1]}).populate('user', 'displayName').exec(function(err,loc){
-            if(loc != null){
+            if(loc !== null){
             outputJson.push(loc);
             }
           
@@ -244,7 +244,7 @@ exports.jar = function(req, res){
       }).then(function(){
           if(array_output.length >= 3){
         return Location.findOne({'name' : array_output[2]}).populate('user', 'displayName').exec(function(err,loc){
-            if(loc != null){
+            if(loc !== null){
             outputJson.push(loc);
             }
           
@@ -253,7 +253,7 @@ exports.jar = function(req, res){
       }).then(function(){
         if(array_output.length >= 4){
         return Location.findOne({'name' : array_output[3]}).populate('user', 'displayName').exec(function(err,loc){
-            if(loc != null){
+            if(loc !== null){
             outputJson.push(loc);
            }
           
@@ -262,7 +262,7 @@ exports.jar = function(req, res){
       }).then(function(){
         if(array_output.length >= 5){
        return Location.findOne({'name' : array_output[4]}).populate('user', 'displayName').exec(function(err,loc){
-           if(loc != null){
+           if(loc !== null){
             outputJson.push(loc);
             }
           
@@ -278,7 +278,7 @@ exports.jar = function(req, res){
   
   
   
-}
+};
 
 /**
  * Location middleware

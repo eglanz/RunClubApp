@@ -66,7 +66,7 @@
       };
 
 
-        var stateparams = {miles: 2};
+      var stateparams = { miles: 2 };
       // Initialize the Locations List controller.
       RecommendationsListController = $controller('RecommendationsListController as vm', {
         $scope: $scope,

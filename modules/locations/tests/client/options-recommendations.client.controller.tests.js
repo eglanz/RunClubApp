@@ -81,12 +81,12 @@
         
         var mile_group = 1;
         $scope.vm.jar(mile_group);
-        $httpBackend
+        //$httpBackend;
 
         expect($state.go).toHaveBeenCalledWith('locations.reclist', {
           miles: mile_group
         });
-    }))
+      }));
     });
 
   });
