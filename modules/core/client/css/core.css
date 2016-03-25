@@ -52,4 +52,11 @@ h1.main{
 
 .btn-like{
   padding: 10px 24.5px;
+  /*background-image: url("../img/brand/routerec.jpg");*/
+}
+
+div.rec{
+  background-image: url("../img/brand/routerec.jpg");
+  padding-top: 100px;
+  padding-bottom: 100px;
 }
