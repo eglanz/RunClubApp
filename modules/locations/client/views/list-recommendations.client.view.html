@@ -7,7 +7,7 @@
   </div>
   
   <div class="list-group">
-    <a ng-repeat="location in vm.locations" ui-sref="locations.view({ locationId: location._id })" class="list-group-item">
+    <a ng-repeat="location in vm.locations" class="list-group-item">
       <small class="list-group-item-text">
         Posted on
         <span ng-bind="location.created | date:'mediumDate'"></span>
@@ -28,6 +28,9 @@
           <h4 class="list-group-item-heading" ng-bind="location.traffic"></h4></td>
           <td><p>Overall Rating</p>
           <h4 class="list-group-item-heading" ng-bind="location.overall"></h4></td>
+          <td><a class="btn btn-primary btn-lg btn-view" ng-click="vm.clickview(location._id)">     
+          View Route
+          </a></td>
         </tr>
       </table>
       

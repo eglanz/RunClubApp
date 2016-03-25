@@ -65,8 +65,41 @@ h1.routes{
 }
 
 .btn-like{
-  padding: 10px 24.5px;
+  padding: 10px 26.5px;
+  background-color: #ffffff;
+  color: #46b8da;
+  border-width: medium;
+  background-image: url("fake");
+  font-family: 'Anton';
+  
+}
 
+.btn-view{
+
+  background-color: #ffffff;
+  color: #245580;
+  border-width: medium;
+  background-image: url("fake");
+  font-family: 'Anton';
+  
+}
+
+.btn-unliked{
+  background-color: #ffffff;
+  color: #eb9316;
+  border-width: medium;
+  background-image: url("fake");
+  font-family: 'Anton';
+  
+}
+
+.btn-unlike{
+  background-color: #ffffff;
+  color: #eb9316;
+  border-width: medium;
+  background-image: url("fake");
+  font-family: 'Pacifico';
+  
 }
 
 
@@ -99,11 +132,20 @@ div.recroutes{
 
 .list-group-item:nth-child(even){
   /*background-image: url("../img/brand/choice1.jpg");*/
-  background-color: #ffffff;
+  background-color: #f7f7f7;
 
 }
 
-.list-group-item:hover{
+a.list-group-item:focus{
   color: #8b9dc3;
 
+}
+
+a.list-group-item:hover{
+  background-color: #8b9dc3;
+
+}
+
+td{
+  width: 150px;
 }
