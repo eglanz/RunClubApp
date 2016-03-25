@@ -156,7 +156,7 @@ describe('Location CRUD tests', function () {
       // Request locations
       try
       {
-        request(app).get('/api/locations' )
+        request(app).get('/api/locations')
         .end(function (req, res) {
 
           expect.fail();
