@@ -29,9 +29,9 @@
           <td><a class="btn btn-primary btn-lg btn-view" ng-click="vm.clickview(location._id)">     
           View Route
           </a></td>
-          <td><a ng-if="(vm.unlikebuttons.indexOf(location._id) === -1 && !location.isLiked) || (vm.likebuttons.indexOf(location._id) > -1)" class="btn btn-info btn-lg btn-like" ng-click="vm.like(location._id)">     
+          <td><a ng-if="(vm.unlikebuttons.indexOf(location._id) === -1 && !location.isLiked) || (vm.likebuttons.indexOf(location._id) > -1)" class="btn btn-primary btn-lg btn-liked" ng-click="vm.like(location._id)">     
           Like Route
-          </a><a ng-if="(vm.likebuttons.indexOf(location._id) === -1 && location.isLiked) || (vm.unlikebuttons.indexOf(location._id) > -1)" class="btn btn-warning btn-lg btn-unlike" ng-click="vm.unlike(location._id)">     
+          </a><a ng-if="(vm.likebuttons.indexOf(location._id) === -1 && location.isLiked) || (vm.unlikebuttons.indexOf(location._id) > -1)" class="btn btn-primary btn-lg btn-unlike" ng-click="vm.unlike(location._id)">     
           Unlike Route
           </a></td>
         </tr>

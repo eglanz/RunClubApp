@@ -42,7 +42,7 @@ h1{
 }
 h2{
   font-family: 'Anton';
-  font-size: 3em;
+  font-size: 2em;
   
 }
 h1.main{
@@ -68,7 +68,17 @@ h1.routes{
   padding: 10px 26.5px;
   background-color: #ffffff;
   color: #46b8da;
-  border-width: medium;
+  border-width: thin;
+  background-image: url("fake");
+  font-family: 'Anton';
+  
+}
+
+.btn-liked{
+  padding: 10px 24px;
+  background-color: #ffffff;
+  color: #245580;
+  border-width: thin;
   background-image: url("fake");
   font-family: 'Anton';
   
@@ -78,7 +88,7 @@ h1.routes{
 
   background-color: #ffffff;
   color: #245580;
-  border-width: medium;
+  border-width: thin;
   background-image: url("fake");
   font-family: 'Anton';
   
@@ -87,7 +97,7 @@ h1.routes{
 .btn-unliked{
   background-color: #ffffff;
   color: #eb9316;
-  border-width: medium;
+  border-width: thin;
   background-image: url("fake");
   font-family: 'Anton';
   
@@ -95,8 +105,8 @@ h1.routes{
 
 .btn-unlike{
   background-color: #ffffff;
-  color: #eb9316;
-  border-width: medium;
+  color: #245580;
+  border-width: thin;
   background-image: url("fake");
   font-family: 'Anton';
   
@@ -126,17 +136,17 @@ div.recroutes{
 
 .list-group-item:nth-child(odd){
   /*background-image: url("../img/brand/routerec.jpg");*/
-  background-color: #ffffff;
+ /* background-color: #ffffff;*/
   
 }
 
 .list-group-item:nth-child(even){
   /*background-image: url("../img/brand/choice1.jpg");*/
-  background-color: #f7f7f7;
+  /*background-color: #f7f7f7;*/
 
 }
 
-a.list-group-item:focus{
+/*a.list-group-item:focus{
   color: #8b9dc3;
 
 }
@@ -144,7 +154,7 @@ a.list-group-item:focus{
 a.list-group-item:hover{
   background-color: #8b9dc3;
 
-}
+}*/
 
 td{
   width: 150px;
