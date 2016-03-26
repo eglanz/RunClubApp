@@ -70,13 +70,33 @@ describe('Location Model Unit Tests:', function () {
       });
     });
     
-    /*it('should be able to show an error when a route name is being reused', function (done) {
-      locationGlobal.save();
-      return locationGlobal.save(function (err) {
-        should.exist(err);
-        done();
+    it('should be able to show an error when a route name is being reused', function (done) {
+      locationGlobal.name = 'Name';
+      locationGlobal.save(function(err){
       });
-    });*/
+
+      var locationGlobal2 = new Location({
+        name: 'Name',
+        content: 'egi~FhfcvOajCcyA',
+        length: 1.1,
+        hills: 1,
+        scenic: 3,
+        traffic: 4,
+        overall:3,
+        user: userGlobal
+      });
+
+      locationGlobal2.name = 'Name';
+      return locationGlobal2.save(function (err) {
+        should.exist(err);
+      done();
+      });
+    });
+    
+    
+    
+    
+    
     
   });
 
