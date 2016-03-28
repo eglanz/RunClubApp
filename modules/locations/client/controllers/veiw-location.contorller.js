@@ -128,16 +128,23 @@
           }
         });
       }
+      $scope.$on('$destroy', function() {
+        for (var i = 0; i < markerArray.length; i++) {
+          markerArray[i].setMap(null);
+        }
+        polyline.setMap(null);
+        startPointPolyline.setMap(null);
+        markerArray = [];
+        polyline.setPath([]);
+        startPointPolyline.setPath([]);
+        startPointMarker.setMap(null);
+        startPointMarker = null;
+        map = null;
+      }); 
     });
     
      
-    $scope.$on('$destroy', function() {
-      for (var i = 0; i < markerArray.length; i++) {
-        markerArray[i].setMap(null);
-      }
-      polyline.setMap(null);
-      startPointPolyline.setMap(null);
-    }); 
+
   }
 
 })();
