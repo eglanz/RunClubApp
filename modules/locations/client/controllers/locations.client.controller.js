@@ -64,8 +64,13 @@
       button.addEventListener('click', resetRoute);
       var labels = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
       var labelIndex = 0;
+      var length = document.getElementById('length'); //new
+      vm.location.length = 0;  //new
+      length.value = 0 + ' miles'; //new
       var routeArray =[];
-        
+      
+
+      
       var directionsDisplay;
       var directionsService = new google.maps.DirectionsService();
       directionsDisplay = new google.maps.DirectionsRenderer();
@@ -206,10 +211,18 @@
       }
       
       $scope.$on('$destroy', function() {
-        for (var i = 0; i < markerArray.length; i++) {
+
+        for (var i = 0; i < markerArray.length; i++) 
+        {
           markerArray[i].setMap(null);
         }
+        markerArray = [];
+        routeArray = [];
         polyline.setMap(null);
+        polyline.setPath([]);
+        labelIndex=0;
+        vm.location.length = 0;
+        length.value = 0 + ' miles';
       });   
     });
   }

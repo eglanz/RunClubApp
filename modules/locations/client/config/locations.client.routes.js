@@ -20,6 +20,7 @@
         controller: 'LocationsListController',
         controllerAs: 'vm',
         data: {
+          roles: ['user', 'admin'],
           pageTitle: 'Locations List'
         }
       })
@@ -47,6 +48,26 @@
         data: {
           roles: ['user', 'admin'],
           pageTitle: 'Edit location {{ locationResolve.title }}'
+        }
+      })
+      .state('locations.recops', {
+        url: '/rec',
+        templateUrl: 'modules/locations/client/views/options-recommendations.client.view.html',
+        controller: 'RecommendationsOptionsController',
+        controllerAs: 'vm',
+        data: {
+          roles: ['user', 'admin'],
+          pageTitle: 'Recommendation Options'
+        }
+      })
+      .state('locations.reclist', {
+        url: '/rec/:miles',
+        templateUrl: 'modules/locations/client/views/list-recommendations.client.view.html',
+        controller: 'RecommendationsListController',
+        controllerAs: 'vm',
+        data: {
+          roles: ['user', 'admin'],
+          pageTitle: 'Recommendation List'
         }
       })
       .state('locations.view', {

@@ -9,7 +9,7 @@
 
   function menuConfig(Menus) {
     Menus.addMenuItem('topbar', {
-      title: 'Locations',
+      title: 'Routes',
       state: 'locations',
       type: 'dropdown',
       roles: ['*']
@@ -17,14 +17,22 @@
 
     // Add the dropdown list item
     Menus.addSubMenuItem('topbar', 'locations', {
-      title: 'Locations',
-      state: 'locations.list'
+      title: 'All Routes',
+      state: 'locations.list',
+      roles: ['*']
     });
 
     // Add the dropdown create item
     Menus.addSubMenuItem('topbar', 'locations', {
-      title: 'Create Location',
+      title: 'Create Route',
       state: 'locations.create',
+      roles: ['*']
+    });
+    
+    //Add dropdown recommendation options
+    Menus.addSubMenuItem('topbar', 'locations', {
+      title: 'Get Route Recommendation',
+      state: 'locations.recops',
       roles: ['*']
     });
   }

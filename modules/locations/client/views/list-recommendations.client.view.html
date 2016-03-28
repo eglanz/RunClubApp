@@ -1,0 +1,49 @@
+
+<section>
+  <div class="page-header"  ng-if="vm.locations.$resolved">
+    <div class="jumbotron text-center recroutes">
+    <h1 class="routes">Top Recommended Routes</h1>
+    </div>
+  </div>
+  
+  <div class="list-group">
+    <a ng-repeat="location in vm.locations" class="list-group-item">
+      <small class="list-group-item-text">
+        Posted on
+        <span ng-bind="location.created | date:'mediumDate'"></span>
+        by
+        <span ng-if="location.user" ng-bind="location.user.displayName"></span>
+        <span ng-if="!location.user">Deleted User</span>
+      </small>
+      <h2 class="list-group-item-heading" ng-bind="location.name"></h2>
+      <table style="width:100%">
+        <tr>
+          <td><p>Miles</p>
+          <h4 class="list-group-item-heading" ng-bind="location.length"></h4></td>
+          <td><p>Hills</p>
+          <h4 class="list-group-item-heading" ng-bind="location.hills"></h4></td>
+          <td><p>Scenery</p>
+          <h4 class="list-group-item-heading" ng-bind="location.scenic"></h4></td>		
+          <td><p>Traffic</p>
+          <h4 class="list-group-item-heading" ng-bind="location.traffic"></h4></td>
+          <td><p>Overall Rating</p>
+          <h4 class="list-group-item-heading" ng-bind="location.overall"></h4></td>
+          <td><a class="btn btn-primary btn-lg btn-view" ng-click="vm.clickview(location._id)">     
+          View Route
+          </a></td>
+        </tr>
+      </table>
+      
+    </a>
+  </div>
+  <div class="alert alert-warning text-center" ng-if="vm.locations.$resolved && !vm.locations.length">
+    No routes yet
+  </div>
+  <div id="hey" ng-if="!vm.locations.$resolved">
+    <center>
+    <img alt="404" class="img-responsive text-center" src="modules/core/client/img/brand/Results.PNG" />
+    </center>
+  </div>
+</section>
+
+

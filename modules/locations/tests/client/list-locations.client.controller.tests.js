@@ -9,6 +9,8 @@
       $state,
       Authentication,
       LocationsService,
+      UnLikeService,
+      LikeService,
       mockLocation;
 
     // The $resource service augments the response object with methods for updating and deleting the resource.
@@ -36,7 +38,7 @@
     // The injector ignores leading and trailing underscores here (i.e. _$httpBackend_).
     // This allows us to inject a service but then attach it to a variable
     // with the same name as the service.
-    beforeEach(inject(function ($controller, $rootScope, _$state_, _$httpBackend_, _Authentication_, _LocationsService_) {
+    beforeEach(inject(function ($controller, $rootScope, _$state_, _$httpBackend_, _Authentication_, _LocationsService_, _LikeService_, _UnLikeService_) {
       // Set a new global scope
       $scope = $rootScope.$new();
 
@@ -91,6 +93,20 @@
         expect($scope.vm.locations[0]).toEqual(mockLocation);
         expect($scope.vm.locations[1]).toEqual(mockLocation);
 
+      }));
+    });
+    
+    describe('Like', function(){
+      it('should send a GET request to like the route', inject(function(LikeService){
+        $scope.vm.like(2);
+        $httpBackend.expectGET('/api/locations/like/2');
+      }));
+    });
+    
+    describe('UnLike', function(){
+      it('should send a GET request to like the route', inject(function(UnLikeService){
+        $scope.vm.unlike(2);
+        $httpBackend.expectGET('/api/locations/unlike/2');
       }));
     });
   });

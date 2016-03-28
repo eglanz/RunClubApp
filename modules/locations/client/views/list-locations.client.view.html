@@ -1,15 +1,11 @@
-<div>
-  <map center="[41.66,-92.533]" zoom="12" id="lise">
-    <marker ng-repeat='location in locations' position='[{{location.lat}},{{location.lon}}]' visible="true" on-click="gotolink(event,location)"></marker>
-  </map>
-</div>
-
 <section>
   <div class="page-header">
-    <h1>Routes</h1>
+    <div class="jumbotron text-center routes">
+    <h1 class="routes">Routes</h1>
+    </div>
   </div>
   <div class="list-group">
-    <a ng-repeat="location in vm.locations" ui-sref="locations.view({ locationId: location._id })" class="list-group-item">
+    <a ng-repeat="location in vm.locations"  class="list-group-item">
       <small class="list-group-item-text">
         Posted on
         <span ng-bind="location.created | date:'mediumDate'"></span>
@@ -17,7 +13,7 @@
         <span ng-if="location.user" ng-bind="location.user.displayName"></span>
         <span ng-if="!location.user">Deleted User</span>
       </small>
-      <h4 class="list-group-item-heading" ng-bind="location.name"></h4>
+      <h2 class="list-group-item-heading" ng-bind="location.name"></h2>
       <table style="width:100%">
         <tr>
           <td><p>Miles</p>
@@ -30,13 +26,21 @@
           <h4 class="list-group-item-heading" ng-bind="location.traffic"></h4></td>
           <td><p>Overall Rating</p>
           <h4 class="list-group-item-heading" ng-bind="location.overall"></h4></td>
+          <td><a class="btn btn-primary btn-lg btn-view" ng-click="vm.clickview(location._id)">     
+          View Route
+          </a></td>
+          <td><a ng-if="(vm.unlikebuttons.indexOf(location._id) === -1 && !location.isLiked) || (vm.likebuttons.indexOf(location._id) > -1)" class="btn btn-primary btn-lg btn-liked" ng-click="vm.like(location._id)">     
+          Like Route
+          </a><a ng-if="(vm.likebuttons.indexOf(location._id) === -1 && location.isLiked) || (vm.unlikebuttons.indexOf(location._id) > -1)" class="btn btn-primary btn-lg btn-unlike" ng-click="vm.unlike(location._id)">     
+          Unlike Route
+          </a></td>
         </tr>
       </table>
       
     </a>
   </div>
   <div class="alert alert-warning text-center" ng-if="vm.locations.$resolved && !vm.locations.length">
-    No announcements yet
+    No routes yet
   </div>
 </section>
 

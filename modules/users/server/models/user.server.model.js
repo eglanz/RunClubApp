@@ -63,6 +63,30 @@ var UserSchema = new Schema({
     type: String,
     default: ''
   },
+  hills: {
+    type: Number,
+    default: 0,
+    trim: true
+  },
+  scenic: {
+    type: Number,
+    default: 0,
+    trim: true
+  },
+  traffic: {
+    type: Number,
+    default: 0,
+    trim: true
+  },
+  overall: {
+    type: Number,
+    default: 0,
+    trim: true
+  },
+  numLiked: {
+    type: Number,
+    default: 0
+  },
   salt: {
     type: String
   },
