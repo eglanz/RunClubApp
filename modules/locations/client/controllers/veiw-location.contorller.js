@@ -11,9 +11,14 @@
     
     var vm = this;
     vm.location = location;
+    vm.lat = 41.659941;
+    vm.lon = -91.533864;
     var polyline;
     var decodedLine;
     var markerArray = [];
+    var routeBeginning;
+    var startPointMarker = null;
+    var startPointPolyline = null;
 
     $scope.$on('mapInitialized', function(event,map) {
       var content = vm.location.content;
@@ -34,6 +39,8 @@
       }
       map.fitBounds(bounds);
 
+      routeBeginning = decodedLine[0];
+      calcStartPoint();
       addMarker(decodedLine[0], map, 'A');
       addMarker(decodedLine[decodedLine.length -1], map, 'B');
       polyline.setPath(decodedLine);
@@ -51,13 +58,88 @@
         });
         markerArray.push(marker);
       }
+      
+      google.maps.event.addListener(map, 'click', function(event) {
+        console.log("on click");
+        vm.lat = event.latLng.lat();
+        vm.lon = event.latLng.lng();
+        calcStartPoint();
+      });
+      
+      function calcStartPoint() {
+        
+        var start = {lat: vm.lat, lng: vm.lon};
+        
+        if(startPointMarker !== null)
+        {
+          startPointMarker.setMap(null);
+        }
+
+        startPointMarker = new google.maps.Marker({
+          position: start,
+          label: 'S',
+          map: map
+        });
+
+        if(startPointPolyline !== null)
+        {
+          startPointPolyline.setMap(null);
+        }
+        
+        startPointPolyline = new google.maps.Polyline({
+          path: [],
+          strokeColor: '#0000FF',
+          strokeWeight: 3
+        });
+        
+        var directionsService = new google.maps.DirectionsService();
+  
+        var request = {
+          origin: {lat: vm.lat, lng: vm.lon},
+          destination: routeBeginning,
+          travelMode: google.maps.TravelMode.WALKING, 
+          provideRouteAlternatives: false
+        };
+
+        directionsService.route(request, function(response, status) {
+          if (status === google.maps.DirectionsStatus.OK) 
+          {
+            var bounds = new google.maps.LatLngBounds();
+            var legs = response.routes[0].legs;
+            for (var i = 0; i < legs.length; i++) {
+              var steps = legs[i].steps;
+              for (var j = 0; j < steps.length; j++) {
+                var nextSegment = steps[j].path;
+                for (var k = 0; k < nextSegment.length; k++) {
+                  startPointPolyline.getPath().push(nextSegment[k]);
+                  bounds.extend(nextSegment[k]);
+                }
+              }
+            }
+  
+            startPointPolyline.setMap(map);
+            vm.location.length += (google.maps.geometry.spherical.computeLength(startPointPolyline.getPath()) * 0.00062137).toFixed(2);
+            $state.go('locations.length', {
+              length: vm.location.length
+            });
+            
+          }
+          else
+          {
+            //TODO handle this correctly, should this allow them to enter a different location?
+            console.log("request failure");
+          }
+        });
+      }
     });
+    
      
     $scope.$on('$destroy', function() {
       for (var i = 0; i < markerArray.length; i++) {
         markerArray[i].setMap(null);
       }
       polyline.setMap(null);
+      startPointPolyline.setMap(null);
     }); 
   }
 
