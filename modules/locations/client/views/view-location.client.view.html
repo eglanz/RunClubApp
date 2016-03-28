@@ -8,8 +8,12 @@
     <h1 ng-bind="vm.location.name"></h1>
   </div>
   <table style="width:100%">
+        <tr><h4>Total length</h4></tr>
         <tr>
-          <td><p>Miles</p>
+          <textarea id="length" disable="true" readonly="true" rows="1" style="border: none; outline: none; overflow: auto; -webkit-box-shadow: none; -moz-box-shadow: none;  box-shadow: none; font-size: 40px"></textarea>
+        </tr>
+        <tr>
+          <td><p>Route Length</p>
           <h4 class="list-group-item-heading" ng-bind="vm.location.length"></h4></td>
           <td><p>Hills</p>
           <h4 class="list-group-item-heading" ng-bind="vm.location.hills"></h4></td>

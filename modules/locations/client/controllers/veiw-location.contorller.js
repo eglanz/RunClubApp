@@ -19,7 +19,6 @@
     var routeBeginning;
     var startPointMarker = null;
     var startPointPolyline = null;
-    var startPointAddedLength = 0;
 
     $scope.$on('mapInitialized', function(event,map) {
       var content = vm.location.content;
@@ -67,8 +66,8 @@
       });
       
       function calcStartPoint() {
-        
-        var start = {lat: vm.lat, lng: vm.lon};
+        var length = document.getElementById('length'); //new
+        var start = { lat: vm.lat, lng: vm.lon };
         
         if(startPointMarker !== null)
         {
@@ -95,7 +94,7 @@
         var directionsService = new google.maps.DirectionsService();
   
         var request = {
-          origin: {lat: vm.lat, lng: vm.lon},
+          origin: { lat: vm.lat, lng: vm.lon },
           destination: routeBeginning,
           travelMode: google.maps.TravelMode.WALKING, 
           provideRouteAlternatives: false
@@ -120,13 +119,12 @@
             startPointPolyline.setMap(map);
             var originalLength = vm.location.length;
             var addedLength = google.maps.geometry.spherical.computeLength(startPointPolyline.getPath()) * 0.00062137;
-            vm.location.length = originalLength - startPointAddedLength + addedLength;
-            startPointAddedLength = addedLength;
+            length.value = originalLength + addedLength;
           }
           else
           {
             //TODO handle this correctly, should this allow them to enter a different location?
-            console.log("request failure");
+            console.log('request failure');
           }
         });
       }
