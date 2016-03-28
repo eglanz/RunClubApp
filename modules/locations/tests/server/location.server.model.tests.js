@@ -48,6 +48,7 @@ describe('Location Model Unit Tests:', function () {
     it('should be able to save without problems', function (done) {
       this.timeout(10000);
       return locationGlobal.save(function (err) {
+        console.log(err);
         should.not.exist(err);
         done();
       });
@@ -69,6 +70,36 @@ describe('Location Model Unit Tests:', function () {
         done();
       });
     });
+    
+    /*it('should be able to show an error when a route name is being reused', function (done) {
+      locationGlobal.name = 'Name';
+      locationGlobal.save(function(err){
+      });
+      done();
+      /*var locationGlobal2 = new Location({
+        name: 'Name',
+        content: 'egi~FhfcvOajCcyA',
+        length: 1.1,
+        hills: 1,
+        scenic: 3,
+        traffic: 4,
+        overall:3,
+        user: userGlobal
+      });
+
+      locationGlobal2.name = 'Name';
+      return locationGlobal2.save(function (err) {
+        should.exist(err);
+        done();
+      });
+      
+      
+    });*/
+    
+    
+    
+    
+    
     
   });
 

@@ -5,7 +5,7 @@
  */
 var mongoose = require('mongoose'),
   Schema = mongoose.Schema;
-
+  
 /**
  * Location Schema
  */
@@ -14,21 +14,12 @@ var LocationSchema = new Schema({
     type: Date,
     default: Date.now
   },
-  /*lat:{
-    type: Number,
-    default: 0,
-    trim: true
-  },
-  lon:{
-    type: Number,
-    default: 0,
-    trim: true
-  },*/
   name: {
     type: String,
-    default: '',
+    unique: true,
     trim: true,
     required: 'Name cannot be empty'
+    
   },
   content: {
     type: String,
@@ -71,6 +62,22 @@ var LocationSchema = new Schema({
   }
 });
 
-mongoose.model('Location', LocationSchema);
+var LocationModel = mongoose.model('Location', LocationSchema);
+
+/**
+ * Hook a pre save method to hash the password
+ */
+LocationSchema.pre('save', function (next) {
+  var self = this;
+  LocationModel.find({ name : self.name }, function (err, docs) {
+    if (!docs.length){
+      next();
+    }else{                
+      next(new Error('route name already exists'));
+    }
+  });
+});
+
+
 
 

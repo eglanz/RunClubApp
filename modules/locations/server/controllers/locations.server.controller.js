@@ -13,13 +13,14 @@ var fs = require('fs');
  * Create an location
  */
 exports.create = function (req, res) {
+  console.log('create');
   var location = new Location(req.body);
   location.user = req.user;
 
   location.save(function (err) {
     if (err) {
       return res.status(400).send({
-        message: errorHandler.getErrorMessage(err)
+        message:  err.message
       });
     } else {
       res.json(location);
