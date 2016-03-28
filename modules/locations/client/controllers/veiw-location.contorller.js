@@ -19,6 +19,7 @@
     var routeBeginning;
     var startPointMarker = null;
     var startPointPolyline = null;
+    var startPointAddedLength = 0;
 
     $scope.$on('mapInitialized', function(event,map) {
       var content = vm.location.content;
@@ -60,7 +61,6 @@
       }
       
       google.maps.event.addListener(map, 'click', function(event) {
-        console.log("on click");
         vm.lat = event.latLng.lat();
         vm.lon = event.latLng.lng();
         calcStartPoint();
@@ -118,11 +118,10 @@
             }
   
             startPointPolyline.setMap(map);
-            vm.location.length += (google.maps.geometry.spherical.computeLength(startPointPolyline.getPath()) * 0.00062137).toFixed(2);
-            $state.go('locations.length', {
-              length: vm.location.length
-            });
-            
+            var originalLength = vm.location.length;
+            var addedLength = google.maps.geometry.spherical.computeLength(startPointPolyline.getPath()) * 0.00062137;
+            vm.location.length = originalLength - startPointAddedLength + addedLength;
+            startPointAddedLength = addedLength;
           }
           else
           {
