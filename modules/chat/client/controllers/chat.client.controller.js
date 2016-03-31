@@ -20,7 +20,11 @@
       // If user is not signed in then redirect back home
       if (!Authentication.user) {
         $state.go('home');
+        
+        
       }
+      
+      Socket.emit('historyRequest');
 
       // Make sure the Socket is connected
       if (!Socket.socket) {
@@ -30,10 +34,13 @@
       // Add an event listener to the 'chatMessage' event
       Socket.on('chatMessage', function (message) {
         vm.messages.unshift(message);
-        if(message.type == "status"){
-          Socket.emit('chatHistory', vm.messages);
-        }
+        
       });
+      
+      Socket.on('historyRequest', function(){
+        console.log("HERE REQ");
+        Socket.emit('chatHistory', vm.messages);
+      })
       
       Socket.on('chatHistory', function(messages){
         console.log("HERE dawg");

@@ -127,6 +127,13 @@ div.routes{
   padding-bottom: 50px;
 }
 
+div.chat{
+  background-image: url("../img/brand/corn.jpg");
+  background-size: cover;
+  padding-top: 50px;
+  padding-bottom: 50px;
+}
+
 div.recroutes{
   background-image: url("../img/brand/outdoors.jpg");
   background-size: cover;

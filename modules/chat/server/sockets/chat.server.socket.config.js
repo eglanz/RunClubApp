@@ -25,6 +25,10 @@ module.exports = function (io, socket) {
   socket.on('chatHistory', function(messages){
     io.emit('chatHistory', messages);
   });
+  
+  socket.on('historyRequest', function(){
+    io.emit('historyRequest');
+  })
 
   // Emit the status event when a socket client is disconnected
   socket.on('disconnect', function () {
