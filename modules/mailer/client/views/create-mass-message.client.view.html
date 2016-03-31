@@ -1,0 +1,31 @@
+<section>
+  <div class="page-header" ng-controller="MailerController">
+    <h1>Send Mass Email</h1>
+  </div>
+  <div class="col-md-12">
+    <form name="vm.form.massMailForm" class="form-horizontal" ng-submit="vm.send(vm.form.massMailForm.$valid)" novalidate>
+      <fieldset>
+        <div class="form-group" show-errors>
+          <label class="control-label" for="subject">Subject</label>
+          <input name="subject" type="text" ng-model="vm.message.subject" id="subject" class="form-control" placeholder="Subject" required>
+          <div ng-messages="vm.form.massMailForm.subject.$error" role="alert">
+            <p class="help-block error-text" ng-message="required">Subject is required.</p>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="control-label" for="content">Content</label>
+          <textarea name="content" ng-model="vm.message.content" id="content" class="form-control" cols="30" rows="10" placeholder="Content" required></textarea>
+          <div ng-messages="vm.form.massMailForm.content.$error" role="alert">
+            <p class="help-block error-text" ng-message="required">Message must have content.</p>
+          </div>
+        </div>
+        <div class="form-group">
+          <button type="submit" class="btn btn-default">Send</button>
+        </div>
+        <div ng-show="vm.error" class="text-danger">
+          <strong ng-bind="vm.error"></strong>
+        </div>
+      </fieldset>
+    </form>
+  </div>
+</section>
