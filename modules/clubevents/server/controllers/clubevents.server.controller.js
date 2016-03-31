@@ -37,6 +37,7 @@ exports.read = function(req, res) {
   // Add a custom field to the Article, for determining if the current User is the "owner".
   // NOTE: This field is NOT persisted to the database, since it doesn't exist in the Article model.
   clubevent.isCurrentUserOwner = req.user && clubevent.user && clubevent.user._id.toString() === req.user._id.toString() ? true : false;
+  clubevent.isCurrentUserAdmin = req.user && req.user.roles[1] ==='admin' ? true : false;
 
   res.jsonp(clubevent);
 };

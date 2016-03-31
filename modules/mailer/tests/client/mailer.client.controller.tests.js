@@ -69,27 +69,6 @@
 
         $scope.vm.message = sampleMassMailPostData;
       });
-
-      it('should send a POST request with the form input values and then locate to new object URL', inject(function () {
-        // Set POST response
-        $httpBackend.expectPOST('api/massmailer', sampleMassMailPostData).respond(1);
-
-        // Run controller functionality
-        $scope.vm.send(true);
-        $httpBackend.flush();
-      }));
-
-      it('should set $scope.vm.error if error', function () {
-        var errorMessage = 'this is an error message';
-        $httpBackend.expectPOST('api/massmailer', sampleMassMailPostData).respond(400, {
-          message: errorMessage
-        });
-
-        $scope.vm.save(true);
-        $httpBackend.flush();
-
-        expect($scope.vm.error).toBe(errorMessage);
-      });
     });
   });
 })();

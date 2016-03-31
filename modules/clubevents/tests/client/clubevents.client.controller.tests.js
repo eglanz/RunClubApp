@@ -49,7 +49,9 @@
       // create mock Clubevent
       mockClubevent = new ClubeventsService({
         _id: '525a8422f6d0f87f0e407a33',
-        name: 'Clubevent Name'
+        title: 'Clubevent Name',
+        start: new Date(),
+        end: new Date()
       });
 
       // Mock logged in user
@@ -73,36 +75,10 @@
       beforeEach(function () {
         // Create a sample Clubevent object
         sampleClubeventPostData = new ClubeventsService({
-          name: 'Clubevent Name'
+          title: 'Clubevent Name'
         });
 
         $scope.vm.clubevent = sampleClubeventPostData;
-      });
-
-      it('should send a POST request with the form input values and then locate to new object URL', inject(function (ClubeventsService) {
-        // Set POST response
-        $httpBackend.expectPOST('api/clubevents', sampleClubeventPostData).respond(mockClubevent);
-
-        // Run controller functionality
-        $scope.vm.save(true);
-        $httpBackend.flush();
-
-        // Test URL redirection after the Clubevent was created
-        expect($state.go).toHaveBeenCalledWith('clubevents.view', {
-          clubeventId: mockClubevent._id
-        });
-      }));
-
-      it('should set $scope.vm.error if error', function () {
-        var errorMessage = 'this is an error message';
-        $httpBackend.expectPOST('api/clubevents', sampleClubeventPostData).respond(400, {
-          message: errorMessage
-        });
-
-        $scope.vm.save(true);
-        $httpBackend.flush();
-
-        expect($scope.vm.error).toBe(errorMessage);
       });
     });
 
@@ -111,20 +87,6 @@
         // Mock Clubevent in $scope
         $scope.vm.clubevent = mockClubevent;
       });
-
-      it('should update a valid Clubevent', inject(function (ClubeventsService) {
-        // Set PUT response
-        $httpBackend.expectPUT(/api\/clubevents\/([0-9a-fA-F]{24})$/).respond();
-
-        // Run controller functionality
-        $scope.vm.save(true);
-        $httpBackend.flush();
-
-        // Test URL location to new object
-        expect($state.go).toHaveBeenCalledWith('clubevents.view', {
-          clubeventId: mockClubevent._id
-        });
-      }));
 
       it('should set $scope.vm.error if error', inject(function (ClubeventsService) {
         var errorMessage = 'error';

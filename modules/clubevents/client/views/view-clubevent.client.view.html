@@ -8,6 +8,9 @@
        data-ui-sref="clubevents.edit({ clubeventId: vm.clubevent._id })">
       <i class="glyphicon glyphicon-edit"></i>
     </a>
+  </div>
+  <div class="pull-right"
+       data-ng-show="vm.clubevent.isCurrentUserOwner || vm.clubevent.isCurrentUserAdmin">
     <a class="btn btn-primary" data-ng-click="vm.remove()">
       <i class="glyphicon glyphicon-trash"></i>
     </a>

@@ -131,7 +131,7 @@ describe('Clubevent CRUD tests', function () {
           .expect(400)
           .end(function (clubeventSaveErr, clubeventSaveRes) {
             // Set message assertion
-            (clubeventSaveRes.body.message).should.match('Please fill Clubevent name');
+            (clubeventSaveRes.body.message).should.match('Please fill event title');
 
             // Handle Clubevent save error
             done(clubeventSaveErr);
@@ -177,7 +177,7 @@ describe('Clubevent CRUD tests', function () {
 
                 // Set assertions
                 (clubeventUpdateRes.body._id).should.equal(clubeventSaveRes.body._id);
-                (clubeventUpdateRes.body.name).should.match('WHY YOU GOTTA BE SO MEAN?');
+                (clubeventUpdateRes.body.title).should.match('WHY YOU GOTTA BE SO MEAN?');
 
                 // Call the assertion callback
                 done();

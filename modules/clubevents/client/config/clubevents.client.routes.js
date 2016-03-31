@@ -46,7 +46,7 @@
         },
         data: {
           roles: ['user', 'admin'],
-          pageTitle: 'Edit Clubevent {{ clubeventResolve.name }}'
+          pageTitle: 'Edit Clubevent {{ clubeventResolve.title }}'
         }
       })
       .state('clubevents.view', {
@@ -58,7 +58,7 @@
           clubeventResolve: getClubevent
         },
         data:{
-          pageTitle: 'Clubevent {{ articleResolve.name }}'
+          pageTitle: 'Clubevent {{ articleResolve.title }}'
         }
       });
   }

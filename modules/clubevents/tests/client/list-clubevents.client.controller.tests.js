@@ -65,27 +65,5 @@
       //Spy on state go
       spyOn($state, 'go');
     }));
-
-    describe('Instantiate', function () {
-      var mockClubeventList;
-
-      beforeEach(function () {
-        mockClubeventList = [mockClubevent, mockClubevent];
-      });
-
-      it('should send a GET request and return all Clubevents', inject(function (ClubeventsService) {
-        // Set POST response
-        $httpBackend.expectGET('api/clubevents').respond(mockClubeventList);
-
-
-        $httpBackend.flush();
-
-        // Test form inputs are reset
-        expect($scope.vm.clubevents.length).toEqual(2);
-        expect($scope.vm.clubevents[0]).toEqual(mockClubevent);
-        expect($scope.vm.clubevents[1]).toEqual(mockClubevent);
-
-      }));
-    });
   });
 })();
