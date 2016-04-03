@@ -71,18 +71,18 @@ LocationSchema.pre('save', function (next) {
   var self = this;
   if(this.isNew === false)
   {
-      next();
+    next();
   }
   else
   {
-      LocationModel.find({ name : self.name }, function (err, docs) {
-        if (!docs.length){
-          next();
-        }else{          
-          next(new Error('route name already exists'));
-        }
-     });
-   }
+    LocationModel.find({ name : self.name }, function (err, docs) {
+      if (!docs.length){
+        next();
+      }else{          
+        next(new Error('route name already exists'));
+      }
+    });
+  }
 });
   
   

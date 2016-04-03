@@ -39,13 +39,13 @@
       
       Socket.on('historyRequest', function(){
         Socket.emit('chatHistory', vm.messages);
-      })
+      });
       
       Socket.on('chatHistory', function(messages){
         if(vm.messages.length < messages.length){
           vm.messages = messages;
         }
-      })
+      });
 
       // Remove the event listener when the controller instance is destroyed
       $scope.$on('$destroy', function () {
