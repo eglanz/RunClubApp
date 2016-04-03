@@ -211,8 +211,8 @@ var initGlobalConfig = function () {
   config.mailer.options = {
     service: 'gmail',
     auth: {
-      user: '',
-      pass: ''
+      user: 'runningclubiowa',
+      pass: 'RunningClub16'
     }
   };
 

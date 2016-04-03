@@ -38,14 +38,10 @@
       });
       
       Socket.on('historyRequest', function(){
-        console.log("HERE REQ");
         Socket.emit('chatHistory', vm.messages);
       })
       
       Socket.on('chatHistory', function(messages){
-        console.log("HERE dawg");
-        console.log("VM:");
-        console.log("VM:"+vm.messages.length);
         if(vm.messages.length < messages.length){
           vm.messages = messages;
         }
