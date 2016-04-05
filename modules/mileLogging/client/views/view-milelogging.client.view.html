@@ -1,0 +1,29 @@
+<section>
+  <div class="page-header">
+    <h1 ng-bind="vm.milelogging.title"></h1>
+  </div>
+  <div class="pull-right" ng-show="vm.milelogging.isCurrentUserOwner">
+    <a class="btn btn-primary" ui-sref="milelogging.edit({ mileloggingId: vm.milelogging._id })">
+      <i class="glyphicon glyphicon-edit"></i>
+    </a>
+    <a class="btn btn-primary" ng-click="vm.remove()">
+      <i class="glyphicon glyphicon-trash"></i>
+    </a>
+  </div>
+  <small>
+    <em class="text-muted">
+      Posted on
+      <span ng-bind="vm.milelogging.created | date:'mediumDate'"></span>
+      by
+      <span ng-if="vm.milelogging.user" ng-bind="vm.milelogging.user.displayName"></span>
+      <span ng-if="!vm.milelogging.user">Deleted User</span>
+    </em>
+  </small>
+  <p class="lead" ng-bind="vm.milelogging.content"></p>
+</section>
+
+
+
+      
+  </div>
+</section>

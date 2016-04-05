@@ -9,47 +9,47 @@ var acl = require('acl');
 acl = new acl(new acl.memoryBackend());
 
 /**
- * Invoke Articles Permissions
+ * Invoke Milelogging Permissions
  */
 exports.invokeRolesPolicies = function () {
   acl.allow([{
     roles: ['admin'],
     allows: [{
-      resources: '/api/articles',
+      resources: '/api/milelogging',
       permissions: '*'
     }, {
-      resources: '/api/articles/:articleId',
+      resources: '/api/milelogging/:mileloggingId',
       permissions: '*'
     }]
   }, {
     roles: ['user'],
     allows: [{
-      resources: '/api/articles',
+      resources: '/api/milelogging',
       permissions: ['get', 'post']
     }, {
-      resources: '/api/articles/:articleId',
+      resources: '/api/milelogging/:mileloggingId',
       permissions: ['get']
     }]
   }, {
     roles: ['guest'],
     allows: [{
-      resources: '/api/articles',
+      resources: '/api/milelogging',
       permissions: ['get']
     }, {
-      resources: '/api/articles/:articleId',
+      resources: '/api/milelogging/:mileloggingId',
       permissions: ['get']
     }]
   }]);
 };
 
 /**
- * Check If Articles Policy Allows
+ * Check If Mile logging Policy Allows
  */
 exports.isAllowed = function (req, res, next) {
   var roles = (req.user) ? req.user.roles : ['guest'];
 
-  // If an article is being processed and the current user created it then allow any manipulation
-  if (req.article && req.user && req.article.user && req.article.user.id === req.user.id) {
+  // If a mile log is being processed and the current user created it then allow any manipulation
+  if (req.milelogging && req.user && req.milelogging.user && req.milelogging.user.id === req.user.id) {
     return next();
   }
 

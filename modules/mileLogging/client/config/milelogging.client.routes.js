@@ -45,7 +45,7 @@
         },
         data: {
           roles: ['user', 'admin'],
-          pageTitle: 'Edit Log Entry {{ mileloggingResolve.title }}'
+          pageTitle: 'Edit Log Entry'
         }
       })
       .state('milelogging.view', {
@@ -57,7 +57,7 @@
           mileloggingResolve: getMilelogging
         },
         data:{
-          pageTitle: 'Milelogging {{ mileloggingResolve.title }}'
+          pageTitle: 'Mile Logging'
         }
       });
   }

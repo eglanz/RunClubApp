@@ -7,23 +7,21 @@ var mongoose = require('mongoose'),
   Schema = mongoose.Schema;
 
 /**
- * Article Schema
+ * Milelogging Schema
  */
-var ArticleSchema = new Schema({
+var MileloggingSchema = new Schema({
   created: {
     type: Date,
     default: Date.now
   },
-  title: {
-    type: String,
-    default: '',
-    trim: true,
-    required: 'Title cannot be blank'
-  },
-  content: {
-    type: String,
-    default: '',
+  length: {
+    type: Number,
+    default: 0,
     trim: true
+  },
+  date: {
+    type: Date,
+    default: Date.now
   },
   user: {
     type: Schema.ObjectId,
@@ -31,4 +29,4 @@ var ArticleSchema = new Schema({
   }
 });
 
-mongoose.model('Article', ArticleSchema);
+mongoose.model('Milelogging', MileloggingSchema);
