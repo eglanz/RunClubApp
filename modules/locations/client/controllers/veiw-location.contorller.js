@@ -119,7 +119,7 @@
             startPointPolyline.setMap(map);
             var originalLength = vm.location.length;
             var addedLength = google.maps.geometry.spherical.computeLength(startPointPolyline.getPath()) * 0.00062137;
-            length.value = originalLength + addedLength;
+            length.value = (originalLength + addedLength).toFixed(2);
           }
           else
           {

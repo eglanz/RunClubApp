@@ -23,7 +23,7 @@
 
     // Add the dropdown create item
     Menus.addSubMenuItem('topbar', 'articles', {
-      title: 'Create Article',
+      title: 'Create Announcement',
       state: 'articles.create',
       roles: ['admin']
     });

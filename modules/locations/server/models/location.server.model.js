@@ -69,14 +69,26 @@ var LocationModel = mongoose.model('Location', LocationSchema);
  */
 LocationSchema.pre('save', function (next) {
   var self = this;
-  LocationModel.find({ name : self.name }, function (err, docs) {
-    if (!docs.length){
-      next();
-    }else{                
-      next(new Error('route name already exists'));
-    }
-  });
+  if(this.isNew === false)
+  {
+    next();
+  }
+  else
+  {
+    LocationModel.find({ name : self.name }, function (err, docs) {
+      if (!docs.length){
+        next();
+      }else{          
+        next(new Error('route name already exists'));
+      }
+    });
+  }
 });
+  
+  
+
+
+//});
 
 
 

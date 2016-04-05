@@ -5,7 +5,9 @@ module.exports = {
     lib: {
       css: [
         'public/lib/bootstrap/dist/css/bootstrap.css',
-        'public/lib/bootstrap/dist/css/bootstrap-theme.css'
+        'public/lib/bootstrap/dist/css/bootstrap-theme.css',
+        'public/lib/fullcalendar/dist/fullcalendar.css'
+        
       ],
       js: [
         'public/lib/angular/angular.js',
@@ -17,6 +19,11 @@ module.exports = {
         'public/lib/angular-bootstrap/ui-bootstrap-tpls.js',
         'public/lib/angular-file-upload/angular-file-upload.js',
         'public/lib/owasp-password-strength-test/owasp-password-strength-test.js',
+        'public/lib/jquery/dist/jquery.min.js',
+        'public/lib/moment/min/moment.min.js',
+        'public/lib/angular-ui-calendar/src/calendar.js',
+        'public/lib/fullcalendar/dist/fullcalendar.min.js',
+        'public/lib/fullcalendar/dist/gcal.js',
         
         'https://maps.googleapis.com/maps/api/js?sensor=false&libraries=places,geometry',
         'public/lib/ngmap/build/scripts/ng-map.min.js'
