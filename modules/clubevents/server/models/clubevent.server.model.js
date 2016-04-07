@@ -41,6 +41,10 @@ var ClubeventSchema = new Schema({
     type: Date,
     default: Date.now
   },
+  signedUpUsers: [{
+    type: Schema.ObjectId,
+    ref: 'User'
+  }],
   user: {
     type: Schema.ObjectId,
     ref: 'User'

@@ -32,7 +32,30 @@
         vm.clubevent.$remove($state.go('clubevents.list'));
       }
     }
+    
+    function toggleParticipation() {
+      console.log('Calling toggleParticipation()');
+      if (vm.authentication.user && vm.clubevent.isCurrentUserSignedUp) {
+        console.log('Attempting to remove');
+        var index = vm.clubevent.signedUpUsers.indexOf(vm.authentication.user);
+        vm.clubevent.signedUpUsers.splice(index,1);
+        vm.clubevent.$update(successCallback, errorCallback);
+      }
+      else {
+        console.log('Attempting to add');
+        vm.clubevent.signedUpUsers.push(vm.authentication.user);
+        vm.clubevent.$update(successCallback, errorCallback);
+      }
+      
+      function successCallback(res) {
+        // nothing
+      }
 
+      function errorCallback(res) {
+        vm.error = res.data.message;
+      }
+    }
+    
     // Save Clubevent
     function save(isValid) {
       if (!isValid) {

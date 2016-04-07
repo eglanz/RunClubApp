@@ -38,6 +38,7 @@ exports.read = function(req, res) {
   // NOTE: This field is NOT persisted to the database, since it doesn't exist in the Article model.
   clubevent.isCurrentUserOwner = req.user && clubevent.user && clubevent.user._id.toString() === req.user._id.toString() ? true : false;
   clubevent.isCurrentUserAdmin = req.user && req.user.roles[1] ==='admin' ? true : false;
+  clubevent.isCurrentUserSignedUp = req.user && clubevent.signedUpUsers.indexOf(req.user) !== -1 ? true : false;
 
   res.jsonp(clubevent);
 };
