@@ -17,6 +17,7 @@
     vm.form = {};
     vm.remove = remove;
     vm.save = save;
+    vm.toggleParticipation = toggleParticipation;
     
     var dummyDate = new Date();
     
@@ -33,17 +34,21 @@
       }
     }
     
+    function test() {
+      console.log('Testing');
+    }
+    
     function toggleParticipation() {
       console.log('Calling toggleParticipation()');
       if (vm.authentication.user && vm.clubevent.isCurrentUserSignedUp) {
         console.log('Attempting to remove');
-        var index = vm.clubevent.signedUpUsers.indexOf(vm.authentication.user);
+        var index = vm.clubevent.signedUpUsers.indexOf(vm.authentication.user._id);
         vm.clubevent.signedUpUsers.splice(index,1);
         vm.clubevent.$update(successCallback, errorCallback);
       }
       else {
         console.log('Attempting to add');
-        vm.clubevent.signedUpUsers.push(vm.authentication.user);
+        vm.clubevent.signedUpUsers.push(vm.authentication.user._id);
         vm.clubevent.$update(successCallback, errorCallback);
       }
       

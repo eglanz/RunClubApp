@@ -16,20 +16,20 @@
       <h2 class="list-group-item-heading" ng-bind="location.name"></h2>
       <table style="width:100%">
         <tr>
-          <td><p>Miles</p>
+          <td class="list-routes"><p>Miles</p>
           <h4 class="list-group-item-heading" ng-bind="location.length"></h4></td>
-          <td><p>Hills</p>
+          <td class="list-routes"><p>Hills</p>
           <h4 class="list-group-item-heading" ng-bind="location.hills"></h4></td>
-          <td><p>Scenery</p>
+          <td class="list-routes"><p>Scenery</p>
           <h4 class="list-group-item-heading" ng-bind="location.scenic"></h4></td>		
-          <td><p>Traffic</p>
+          <td class="list-routes"><p>Traffic</p>
           <h4 class="list-group-item-heading" ng-bind="location.traffic"></h4></td>
-          <td><p>Overall Rating</p>
+          <td class="list-routes"><p>Overall Rating</p>
           <h4 class="list-group-item-heading" ng-bind="location.overall"></h4></td>
-          <td><a class="btn btn-primary btn-lg btn-view" ng-click="vm.clickview(location._id)">     
+          <td class="list-routes"><a class="btn btn-primary btn-lg btn-view" ng-click="vm.clickview(location._id)">     
           View Route
           </a></td>
-          <td><a ng-if="(vm.unlikebuttons.indexOf(location._id) === -1 && !location.isLiked) || (vm.likebuttons.indexOf(location._id) > -1)" class="btn btn-primary btn-lg btn-liked" ng-click="vm.like(location._id)">     
+          <td class="list-routes"><a ng-if="(vm.unlikebuttons.indexOf(location._id) === -1 && !location.isLiked) || (vm.likebuttons.indexOf(location._id) > -1)" class="btn btn-primary btn-lg btn-liked" ng-click="vm.like(location._id)">     
           Like Route
           </a><a ng-if="(vm.likebuttons.indexOf(location._id) === -1 && location.isLiked) || (vm.unlikebuttons.indexOf(location._id) > -1)" class="btn btn-primary btn-lg btn-unlike" ng-click="vm.unlike(location._id)">     
           Unlike Route

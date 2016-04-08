@@ -163,6 +163,6 @@ a.list-group-item:hover{
 
 }*/
 
-td{
-  width: 150px;
+td.list-routes{
+  width: 8em;
 }

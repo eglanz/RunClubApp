@@ -27,10 +27,10 @@
   </small>
   <p class="lead" data-ng-bind="vm.clubevent.content"></p>
   <div>
-    <a ng-if="vm.clubevent.isCurrentUserSignedUp" class="btn btn-primary btn-lg" ng-click="vm.toggleParticipation()">     
-      Sign Up For This Event!</a>
-    <a ng-if="!vm.clubevent.isCurrentUserSignedUp" class="btn btn-primary btn-lg" ng-click="vm.toggleParticipation()">     
-      I No Longer Want To Participate</a>
+    <button type="button" class="btn btn-primary btn-lg" ng-click="vm.toggleParticipation()">     
+      {{vm.clubevent.isCurrentUserSignedUp ? 'I No Longer Want To Participate' : 'Sign Me Up!'}}</button>
     {{vm.clubevent.isCurrentUserSignedUp ? 'Signed up' : 'Not signed up'}}
+    {{vm.clubevent.signedUpUsers}}
+    {{[vm.authentication.user._id]}}
   </div>
 </section>
