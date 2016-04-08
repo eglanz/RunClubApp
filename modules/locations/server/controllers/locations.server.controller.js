@@ -95,31 +95,28 @@ exports.list = function (req, res) {
         if(locations[location].users.indexOf(req.user._id) === -1){
           found = false;
         }
-          locations[location].isLiked = found;
-          locations[location].save();
+        locations[location].isLiked = found;
+        locations[location].save();
       }
       
       return locations;
     }
   }).then(function(locations){
     
-      Location.find().sort('-created').populate('user', 'displayName').exec(function (err, mlocations) {
-    if (err) {
-      return res.status(400).send({
-        message: errorHandler.getErrorMessage(err)
-      });
-    } else {
-      
-      
-      res.json( mlocations );
-    }
-  });
-  
+    Location.find().sort('-created').populate('user', 'displayName').exec(function (err, mlocations) {
+      if (err) {
+        return res.status(400).send({
+          message: errorHandler.getErrorMessage(err)
+        });
+      } else {
+        res.json(mlocations);
+      }
+    });
   });
 };
 
 exports.like = function(req, res){
-  Location.findOne({'_id' : req.params.locationId}).exec(function(err,loc){
+  Location.findOne({ '_id' : req.params.locationId }).exec(function(err,loc){
     loc.users.push(req.user._id);
     loc.isLiked = true;
     loc.save();
@@ -138,15 +135,15 @@ exports.like = function(req, res){
 };
 
 exports.unlike = function(req, res){
-  Location.findOne({'_id' : req.params.locationId}).exec(function(err,loc){
+  Location.findOne({ '_id' : req.params.locationId }).exec(function(err,loc){
     loc.users.splice(loc.users.indexOf(req.user._id),1);
     loc.isLiked = false;
     req.user.numLiked = req.user.numLiked - 1;
 
-      req.user.hills = (req.user.hills - loc.hills);
-      req.user.scenic = (req.user.scenic - loc.scenic);
-      req.user.traffic = (req.user.traffic - loc.traffic);
-      req.user.overall = (req.user.overall - loc.overall);
+    req.user.hills = (req.user.hills - loc.hills);
+    req.user.scenic = (req.user.scenic - loc.scenic);
+    req.user.traffic = (req.user.traffic - loc.traffic);
+    req.user.overall = (req.user.overall - loc.overall);
       
     req.user.save();
     loc.save();
@@ -169,8 +166,7 @@ exports.jar = function(req, res){
     locations = Location.where('length').gt(5.99).select('name hills scenic traffic overall');
   }
 
-  var foundLocations = "Id,Hills,Scenic,Traffic,Overall\n";
-  var foundLocation;
+  var foundLocations = 'Id,Hills,Scenic,Traffic,Overall\n';
   locations.exec(function (err, docs) {
   // called when the `query.complete` or `query.error` are called
   // internally
@@ -179,26 +175,26 @@ exports.jar = function(req, res){
       foundLocations += docs[it].name+','+docs[it].hills+','+docs[it].scenic+','+docs[it].traffic+','+docs[it].overall+'\n';
     }
     
-    var file = "TrainTest.csv";
+    var file = 'TrainTest.csv';
 
     var foundLocation;
   
-    fs.writeFileSync(file, foundLocations, 'utf8', (err) => {
+    fs.writeFileSync(file, foundLocations, 'utf8', function(err) {
       if (err) throw err;
       console.log('It\'s saved!');
     });
     
-    var file2 = "TestTest.csv";
-    foundLocation = "Id,Hills,Scenic,Traffic,Overall\n";
+    var file2 = 'TestTest.csv';
+    foundLocation = 'Id,Hills,Scenic,Traffic,Overall\n';
     var num = req.user.numLiked;
-    console.log("NUMBER LIKE: "+num);
+    console.log('NUMBER LIKE: '+num);
     if(num > 0){
       foundLocation += req.user.firstName+','+(req.user.hills/num)+','+(req.user.scenic/num)+','+(req.user.traffic/num)+','+(req.user.overall/num)+'\n';
     }else{
       foundLocation += req.user.firstName+','+req.user.hills+','+req.user.scenic+','+req.user.traffic+','+req.user.overall+'\n';
     }
-    console.log("USER:\n"+foundLocation);
-    fs.writeFileSync(file2, foundLocation, 'utf8', (err) => {
+    console.log('USER:\n'+foundLocation);
+    fs.writeFileSync(file2, foundLocation, 'utf8', function(err) {
       if (err) throw err;
       console.log('It\'s saved!');
     });
@@ -209,77 +205,68 @@ exports.jar = function(req, res){
   var exec = require('child_process').exec;
   var child = exec('java -jar RunClubRec.jar TrainTest.csv TestTest.csv',
     function (error, stdout, stderr){
-      var output = "";
-  var outputJson = [];
+      var output = '';
+      var outputJson = [];
       console.log('Output -> ' + stdout);
       output += stdout;
       
       if(error !== null){
-        console.log("Error -> "+error);
+        console.log('Error -> '+error);
       }
 
       
       var array_output = output.split('\n');
 
       var promise = new Promise(function(resolve, reject) {      
-      if(array_output.length >= 1){
-        Location.findOne({'name' : array_output[0]}).populate('user', 'displayName').exec(function(err,loc){
+        if(array_output.length >= 1){
+          Location.findOne({ 'name' : array_output[0] }).populate('user', 'displayName').exec(function(err,loc){
             if(loc !== null){
-            outputJson.push(loc);
-           }
-          
-        });
-      }
+              outputJson.push(loc);
+            }
+          });
+        }
      
-      resolve("Resolved");
+        resolve('Resolved');
       });
       
       promise.then(function(result) {
         if(array_output.length >= 2){
-        return Location.findOne({'name' : array_output[1]}).populate('user', 'displayName').exec(function(err,loc){
+          return Location.findOne({ 'name' : array_output[1] }).populate('user', 'displayName').exec(function(err,loc){
             if(loc !== null){
-            outputJson.push(loc);
+              outputJson.push(loc);
             }
           
-        });
-      }
+          });
+        }
       }).then(function(){
-          if(array_output.length >= 3){
-        return Location.findOne({'name' : array_output[2]}).populate('user', 'displayName').exec(function(err,loc){
+        if(array_output.length >= 3){
+          return Location.findOne({ 'name' : array_output[2] }).populate('user', 'displayName').exec(function(err,loc){
             if(loc !== null){
-            outputJson.push(loc);
+              outputJson.push(loc);
             }
-          
-        });
-      }
+          });
+        }
       }).then(function(){
         if(array_output.length >= 4){
-        return Location.findOne({'name' : array_output[3]}).populate('user', 'displayName').exec(function(err,loc){
+          return Location.findOne({ 'name' : array_output[3] }).populate('user', 'displayName').exec(function(err,loc){
             if(loc !== null){
-            outputJson.push(loc);
-           }
-          
-        });
-      }
+              outputJson.push(loc);
+            }
+          });
+        }
       }).then(function(){
         if(array_output.length >= 5){
-       return Location.findOne({'name' : array_output[4]}).populate('user', 'displayName').exec(function(err,loc){
-           if(loc !== null){
-            outputJson.push(loc);
+          return Location.findOne({ 'name' : array_output[4] }).populate('user', 'displayName').exec(function(err,loc){
+            if(loc !== null){
+              outputJson.push(loc);
             }
-          
-        });
-      }
+          });
+        }
       }).then(function(){
-          var locations = JSON.stringify(outputJson);
-          res.json(outputJson);
+        var locations = JSON.stringify(outputJson);
+        res.json(outputJson);
       });
-
-      
-  });
-  
-  
-  
+    });
 };
 
 /**
