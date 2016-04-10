@@ -19,7 +19,11 @@
         templateUrl: 'modules/milelogging/client/views/list-milelogging.client.view.html',
         controller: 'MileloggingListController',
         controllerAs: 'vm',
+        resolve: {
+          userResolve: getUservalue
+        },
         data: {
+          roles: ['user', 'admin'],
           pageTitle: 'Mile Log'
         }
       })
@@ -69,6 +73,14 @@
       mileloggingId: $stateParams.mileloggingId
     }).$promise;
   }
+  
+  getUservalue.$inject = ['$stateParams', 'GetUser'];
+  
+  function getUservalue($stateParams, GetUser) {
+    return GetUser.get({
+    }).$promise;
+  }
+
 
   newMilelogging.$inject = ['MileloggingService'];
 

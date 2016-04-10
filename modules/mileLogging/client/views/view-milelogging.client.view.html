@@ -17,6 +17,7 @@
       by
       <span ng-if="vm.milelogging.user" ng-bind="vm.milelogging.user.displayName"></span>
       <span ng-if="!vm.milelogging.user">Deleted User</span>
+      <span ng-bind="vm.milelogging.date | date:'mediumDate'"></span>
     </em>
   </small>
   <p class="lead" ng-bind="vm.milelogging.content"></p>

@@ -7,6 +7,7 @@ var path = require('path'),
   mongoose = require('mongoose'),
   Milelogging = mongoose.model('Milelogging'),
   errorHandler = require(path.resolve('./modules/core/server/controllers/errors.server.controller'));
+  
 
 /**
  * Create an mile log
@@ -81,13 +82,14 @@ exports.delete = function (req, res) {
  * List of mile log
  */
 exports.list = function (req, res) {
-  Milelogging.find().sort('-created').populate('user', 'displayName').exec(function (err, milelogging) {
+
+  Milelogging.find({ 'user': req.user }).sort('-created').populate('user', 'displayName').exec(function (err, mileloggings) {
     if (err) {
       return res.status(400).send({
         message: errorHandler.getErrorMessage(err)
       });
     } else {
-      res.json(milelogging);
+      res.json(mileloggings);
     }
   });
 };

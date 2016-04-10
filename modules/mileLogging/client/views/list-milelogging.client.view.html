@@ -1,20 +1,27 @@
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
 <section>
   <div class="page-header">
     <h1>Mile Log</h1>
   </div>
-  <div class="list-group">
-    <a ng-repeat="milelog in vm.milelogging" ui-sref="milelogging.view({ mileloggingId: milelog._id })" class="list-group-item">
+  <div class="list-group" > 
+    <a ng-repeat="milelog in vm.milelogs" ui-sref="vm.milelogs.view({ mileloggingId: milelog._id })" class="list-group-item">
       <small class="list-group-item-text">
         Posted on
         <span ng-bind="milelog.created | date:'mediumDate'"></span>
         by
+        <div ng-if="milelog.isCurrentUserOwner">Current User owner</div>
         <span ng-if="milelog.user" ng-bind="milelog.user.displayName"></span>
         <span ng-if="!milelog.user">Deleted User</span>
+        
       </small>
       <p class="list-group-item-text" ng-bind="milelog.length"></p>
       <p class="list-group-item-text" ng-bind="milelog.date"></p>
-      <!--<h4 class="list-group-item-heading" ng-bind="milelog.title"></h4>
-      <p class="list-group-item-text" ng-bind="milelog.content"></p>-->
     </a>
   </div>
   <div class="alert alert-warning text-center" ng-if="vm.milelogging.$resolved && !vm.milelogging.length">
@@ -25,5 +32,11 @@
 <section>
   <div class="page-header">
     <h1>Events</h1>
-  </div>
-  <div ui-calendar="uiConfig.calendar" ng-model="vm.milelogging">
+    <h1 ng-bind="vm.length"></h1>
+    <textarea id="length" disable="true" readonly="true" rows="1" style="border: none; outline: none; overflow: auto; -webkit-box-shadow: none; -moz-box-shadow: none;  box-shadow: none; font-size: 40px"></textarea>
+  </div >
+  <!--<div ng-show="user.$resolved">-->
+    <div  ui-calendar="uiConfig.calendar" ng-model="vm.milelogging">
+    </div>
+  <!--</div>-->
+</section>

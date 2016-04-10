@@ -10,6 +10,11 @@ var mongoose = require('mongoose'),
  * Milelogging Schema
  */
 var MileloggingSchema = new Schema({
+  title: {
+    type: String,
+    default: 'miles',
+    trim: true
+  },
   created: {
     type: Date,
     default: Date.now
@@ -23,6 +28,10 @@ var MileloggingSchema = new Schema({
     type: Date,
     default: Date.now
   },
+  allDay: {
+    type: Boolean,
+    default: true
+  },
   user: {
     type: Schema.ObjectId,
     ref: 'User'
@@ -30,3 +39,9 @@ var MileloggingSchema = new Schema({
 });
 
 mongoose.model('Milelogging', MileloggingSchema);
+
+MileloggingSchema.pre('save', function (next) {
+  var self = this;
+  self.title = self.length.toString() + ' miles';
+  next();
+});

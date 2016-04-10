@@ -16,7 +16,12 @@
     vm.form = {};
     vm.remove = remove;
     vm.save = save;
-
+    
+    if (vm.milelogging._id) {
+      //vm.clubevent.starttime = new Date(clubevent.start);
+      //vm.clubevent.endtime = new Date(clubevent.end);
+      vm.milelogging.date = new Date(vm.milelogging.date);
+    }
     // Remove existing Milelogging
     function remove() {
       if (confirm('Are you sure you want to delete?')) {
@@ -26,6 +31,7 @@
 
     // Save Milelogging
     function save(isValid) {
+      //vm.form.milelogginForm.date = vm.form.milelogginForm.date
       if (!isValid) {
         $scope.$broadcast('show-errors-check-validity', 'vm.form.milelogginForm');
         return false;
