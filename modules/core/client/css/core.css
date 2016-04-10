@@ -166,3 +166,13 @@ a.list-group-item:hover{
 td.list-routes{
   width: 8em;
 }
+
+table.participation {
+  margin-top: 1em;
+  max-width: 400px;
+}
+
+td.participation, th.participation, span.participation {
+  /*padding: 1em 0.5em 1em 0.5em;*/
+  /*margin: 0.5em 0 0.5em 0;*/
+}

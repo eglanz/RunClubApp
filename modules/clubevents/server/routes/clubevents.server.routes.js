@@ -15,6 +15,7 @@ module.exports = function(app) {
   app.route('/api/clubevents/:clubeventId').all(clubeventsPolicy.isAllowed)
     .get(clubevents.read)
     .put(clubevents.update)
+    .post(clubevents.toggleParticipation)
     .delete(clubevents.delete);
 
   // Finish by binding the Clubevent middleware

@@ -15,6 +15,8 @@ var path = require('path'),
 exports.create = function(req, res) {
   var clubevent = new Clubevent(req.body);
   clubevent.user = req.user;
+  console.log(req.user);
+  console.log(clubevent.user);
 
   clubevent.save(function(err) {
     if (err) {
@@ -38,7 +40,15 @@ exports.read = function(req, res) {
   // NOTE: This field is NOT persisted to the database, since it doesn't exist in the Article model.
   clubevent.isCurrentUserOwner = req.user && clubevent.user && clubevent.user._id.toString() === req.user._id.toString() ? true : false;
   clubevent.isCurrentUserAdmin = req.user && req.user.roles[1] ==='admin' ? true : false;
-  clubevent.isCurrentUserSignedUp = req.user && clubevent.signedUpUsers.indexOf(req.user._id.toString()) !== -1 ? true : false;
+  
+  if (req.user) {
+    var index = -1;
+    for (var i = 0; i < clubevent.signedUpUsers.length; i++) {
+      if (clubevent.signedUpUsers[i]._id && clubevent.signedUpUsers[i]._id.toString() === req.user._id.toString())
+        index = i;
+    }
+    clubevent.isCurrentUserSignedUp = index !== -1 ? true : false;
+  }
 
   res.jsonp(clubevent);
 };
@@ -77,6 +87,36 @@ exports.delete = function(req, res) {
       res.jsonp(clubevent);
     }
   });
+};
+
+exports.toggleParticipation = function(req,res) {
+  var clubevent = req.clubevent;
+  
+  if (req.user) {
+    var index = -1;
+    for (var i = 0; i < clubevent.signedUpUsers.length; i++) {
+      if (clubevent.signedUpUsers[i]._id.toString() === req.user._id.toString())
+        index = i;
+    }
+    if (index === -1) {
+      // user is not signed up
+      clubevent.signedUpUsers.push({ _id: req.user._id, displayName: req.user.displayName });
+    }
+    else {
+      // user is signed up
+      clubevent.signedUpUsers.splice(index,1);
+    }
+    
+    clubevent.save(function(err) {
+      if (err) {
+        return res.status(400).send({
+          message: errorHandler.getErrorMessage(err)
+        });
+      } else {
+        res.jsonp(clubevent);
+      }
+    });
+  }
 };
 
 /**

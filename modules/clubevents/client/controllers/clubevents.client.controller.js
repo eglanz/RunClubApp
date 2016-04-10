@@ -34,26 +34,14 @@
       }
     }
     
-    function test() {
-      console.log('Testing');
-    }
-    
     function toggleParticipation() {
       console.log('Calling toggleParticipation()');
-      if (vm.authentication.user && vm.clubevent.isCurrentUserSignedUp) {
-        console.log('Attempting to remove');
-        var index = vm.clubevent.signedUpUsers.indexOf(vm.authentication.user._id);
-        vm.clubevent.signedUpUsers.splice(index,1);
-        vm.clubevent.$update(successCallback, errorCallback);
-      }
-      else {
-        console.log('Attempting to add');
-        vm.clubevent.signedUpUsers.push(vm.authentication.user._id);
-        vm.clubevent.$update(successCallback, errorCallback);
+      if (vm.authentication.user) {
+        vm.clubevent.$toggleParticipation(successCallback,errorCallback);
       }
       
       function successCallback(res) {
-        // nothing
+        vm.clubevent.$get();
       }
 
       function errorCallback(res) {
