@@ -18,6 +18,7 @@
     vm.remove = remove;
     vm.save = save;
     vm.toggleParticipation = toggleParticipation;
+    vm.isCurrentUserSignedUp = vm.clubevent.isCurrentUserSignedUp;
     
     var dummyDate = new Date();
     
@@ -41,7 +42,12 @@
       }
       
       function successCallback(res) {
-        vm.clubevent.$get();
+        if (vm.isCurrentUserSignedUp === true) {
+          vm.isCurrentUserSignedUp = false;
+        }
+        else {
+          vm.isCurrentUserSignedUp = true;
+        }
       }
 
       function errorCallback(res) {
