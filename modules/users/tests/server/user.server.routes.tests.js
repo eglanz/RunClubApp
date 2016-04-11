@@ -632,6 +632,7 @@ describe('User CRUD tests', function () {
           var userUpdate = {
             firstName: 'user_update_first',
             lastName: 'user_update_last',
+            isUsingStartPoint: false
           };
 
           agent.put('/api/users')
@@ -645,6 +646,7 @@ describe('User CRUD tests', function () {
               userInfoRes.body.should.be.instanceof(Object);
               userInfoRes.body.firstName.should.be.equal('user_update_first');
               userInfoRes.body.lastName.should.be.equal('user_update_last');
+              userInfoRes.body.isUsingStartPoint.should.be.equal(false);
               userInfoRes.body.roles.should.be.instanceof(Array).and.have.lengthOf(1);
               userInfoRes.body.roles.indexOf('user').should.equal(0);
               userInfoRes.body._id.should.be.equal(String(user._id));
