@@ -15,8 +15,6 @@ var path = require('path'),
 exports.create = function(req, res) {
   var clubevent = new Clubevent(req.body);
   clubevent.user = req.user;
-  console.log(req.user);
-  console.log(clubevent.user);
 
   clubevent.save(function(err) {
     if (err) {
