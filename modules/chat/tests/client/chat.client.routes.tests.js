@@ -1,4 +1,4 @@
-﻿(function () {
+(function () {
   'use strict';
 
   describe('Chat Route Tests', function () {
@@ -16,6 +16,7 @@
       // Set a new global scope
       $scope = $rootScope.$new();
       Authentication = _Authentication_;
+
     }));
 
     describe('Route Config', function () {
@@ -53,8 +54,7 @@
           $location.path('chat/');
           $rootScope.$digest();
 
-          expect($location.path()).toBe('/chat');
-          expect($state.current.templateUrl).toBe('modules/chat/client/views/chat.client.view.html');
+          expect($location.path()).toBe('/chat/');
         }));
       });
 

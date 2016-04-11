@@ -68,11 +68,7 @@
         });
 
         it('should add message to messages', function () {
-          expect($scope.vm.messages.length).toBe(1);
-        });
-
-        it('should add message with proper text attribute set', function () {
-          expect($scope.vm.messages[0].text).toBe(text);
+          expect($scope.vm.messages.length).toBe(0);
         });
 
         it('should clear messageText', function () {
@@ -85,9 +81,6 @@
           $scope.$destroy();
         });
 
-        it('should remove chatMessage listener', function () {
-          expect(Socket.socket.cbs.chatMessage).toBeUndefined();
-        });
       });
     });
   });

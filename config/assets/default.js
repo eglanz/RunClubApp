@@ -26,7 +26,11 @@ module.exports = {
         'public/lib/fullcalendar/dist/gcal.js',
         
         'https://maps.googleapis.com/maps/api/js?sensor=false&libraries=places,geometry',
-        'public/lib/ngmap/build/scripts/ng-map.min.js'
+        'public/lib/ngmap/build/scripts/ng-map.min.js',
+        
+        'public/lib/socket.io-client/socket.io.js',
+        'public/lib/angular-socket-io/socket.js',
+        
       ],
       tests: ['public/lib/angular-mocks/angular-mocks.js']
     },
