@@ -25,6 +25,9 @@
          // alert on eventClick 
     $scope.alertOnEventClick = function(date, jsEvent, view){
       $scope.alertMessage = (date.title + ' was clicked ');
+      $state.go('milelogging.view', {
+          mileloggingId: date._id
+        });
     };
     //alert on Drop 
     $scope.alertOnDrop = function(event, delta, revertFunc, jsEvent, ui, view){
@@ -49,7 +52,7 @@
       if(uiCalendarConfig.calendars[calendar]){
         uiCalendarConfig.calendars[calendar].fullCalendar('render');
       }
-      length.value = vm.length;
+      length.value = vm.length + ' miles';
     };
      // Render Tooltip 
     $scope.eventRender = function(event,element,view) { 

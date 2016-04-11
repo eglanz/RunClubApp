@@ -36,6 +36,13 @@
         $scope.$broadcast('show-errors-check-validity', 'vm.form.milelogginForm');
         return false;
       }
+      
+       //if (vm.milelogging.date ) {
+         vm.milelogging.date = new Date(vm.milelogging.date);
+         console.log(vm.milelogging.date);
+         //vm.milelogging.date = new Date(vm.milelogging.date.getFullYear(),vm.milelogging.date.getMonth(), vm.milelogging.date.getDay(), 0, 0,  0, 0);
+         //console.log(vm.milelogging.date);
+      //}
 
       // TODO: move create/update logic to service
       if (vm.milelogging._id) {

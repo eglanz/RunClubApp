@@ -6,7 +6,8 @@
 var path = require('path'),
   mongoose = require('mongoose'),
   Milelogging = mongoose.model('Milelogging'),
-  errorHandler = require(path.resolve('./modules/core/server/controllers/errors.server.controller'));
+  errorHandler = require(path.resolve('./modules/core/server/controllers/errors.server.controller')),
+  _ = require('lodash');
   
 
 /**
@@ -15,7 +16,6 @@ var path = require('path'),
 exports.create = function (req, res) {
   var milelogging = new Milelogging(req.body);
   milelogging.user = req.user;
-
   milelogging.save(function (err) {
     if (err) {
       return res.status(400).send({
@@ -45,11 +45,9 @@ exports.read = function (req, res) {
  * Update a mile log
  */
 exports.update = function (req, res) {
-  var milelogging = req.milelogging;
+  var milelogging = req.milelogging ;
 
-  milelogging.title = req.body.title;
-  milelogging.content = req.body.content;
-
+  milelogging = _.extend(milelogging , req.body);
   milelogging.save(function (err) {
     if (err) {
       return res.status(400).send({
