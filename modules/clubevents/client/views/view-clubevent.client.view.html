@@ -10,7 +10,7 @@
     </a>
   </div>
   <div class="pull-right"
-       data-ng-show="vm.clubevent.isCurrentUserOwner || vm.clubevent.isCurrentUserAdmin">
+       data-ng-show="vm.clubevent.isCurrentUserOwner || vm.authentication.user.roles.indexOf('admin') !== -1">
     <a class="btn btn-primary" data-ng-click="vm.remove()">
       <i class="glyphicon glyphicon-trash"></i>
     </a>
@@ -26,4 +26,17 @@
     </em>
   </small>
   <p class="lead" data-ng-bind="vm.clubevent.content"></p>
+  <div>
+    <button ng-if="vm.authentication.user && vm.clubevent ? true : false" type="button" class="btn btn-primary btn-lg" ng-click="vm.toggleParticipation()">     
+      {{vm.isCurrentUserSignedUp ? 'I No Longer Want To Participate' : 'Sign Me Up!'}}</button>
+  </div>
+  <div class="list-group">
+    <table class="participation table table-responsive table-striped table-bordered">
+      <tr><th class="participation">Participating Members</th></tr>
+      <tr ng-if="vm.clubevent.signedUpUsers.length === 0"><td><span class="participation"><em>No members signed up at this time</em></span></td></tr>
+      <tr ng-repeat="user in vm.clubevent.signedUpUsers">
+        <td><span class="participation" ng-bind="user.displayName"></span></td>
+      </tr>
+    </table>
+  </div>
 </section>
