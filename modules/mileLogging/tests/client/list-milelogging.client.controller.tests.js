@@ -1,15 +1,15 @@
 (function () {
   'use strict';
 
-  describe('Articles List Controller Tests', function () {
+  describe('Milelogging List Controller Tests', function () {
     // Initialize global variables
-    var ArticlesListController,
+    var MileloggingListController,
       $scope,
       $httpBackend,
       $state,
       Authentication,
-      ArticlesService,
-      mockArticle;
+      MileloggingService,
+      mockMilelogging;
 
     // The $resource service augments the response object with methods for updating and deleting the resource.
     // If we were to use the standard toEqual matcher, our tests would fail because the test values would not match
@@ -36,7 +36,7 @@
     // The injector ignores leading and trailing underscores here (i.e. _$httpBackend_).
     // This allows us to inject a service but then attach it to a variable
     // with the same name as the service.
-    beforeEach(inject(function ($controller, $rootScope, _$state_, _$httpBackend_, _Authentication_, _ArticlesService_) {
+    beforeEach(inject(function ($controller, $rootScope, _$state_, _$httpBackend_, _Authentication_, _MileloggingService_) {
       // Set a new global scope
       $scope = $rootScope.$new();
 
@@ -44,13 +44,13 @@
       $httpBackend = _$httpBackend_;
       $state = _$state_;
       Authentication = _Authentication_;
-      ArticlesService = _ArticlesService_;
+      MileloggingService = _MileloggingService_;
 
-      // create mock article
-      mockArticle = new ArticlesService({
+      // create mock milelogging
+      mockMilelogging = new MileloggingService({
         _id: '525a8422f6d0f87f0e407a33',
-        title: 'An Article about MEAN',
-        content: 'MEAN rocks!'
+        title: '5 miles',
+        length: '5'
       });
 
       // Mock logged in user
@@ -58,8 +58,8 @@
         roles: ['user']
       };
 
-      // Initialize the Articles List controller.
-      ArticlesListController = $controller('ArticlesListController as vm', {
+      // Initialize the Milelogging List controller.
+      MileloggingListController = $controller('MileloggingListController as vm', {
         $scope: $scope
       });
 
@@ -68,23 +68,23 @@
     }));
 
     describe('Instantiate', function () {
-      var mockArticleList;
+      var mockMileloggingList;
 
       beforeEach(function () {
-        mockArticleList = [mockArticle, mockArticle];
+        mockMileloggingList = [mockMilelogging, mockMilelogging];
       });
 
-      it('should send a GET request and return all articles', inject(function (ArticlesService) {
+      it('should send a GET request and return all milelogging', inject(function (MileloggingService) {
         // Set POST response
-        $httpBackend.expectGET('api/articles').respond(mockArticleList);
+        $httpBackend.expectGET('api/milelogging').respond(mockMileloggingList);
 
 
         $httpBackend.flush();
 
         // Test form inputs are reset
-        expect($scope.vm.articles.length).toEqual(2);
-        expect($scope.vm.articles[0]).toEqual(mockArticle);
-        expect($scope.vm.articles[1]).toEqual(mockArticle);
+        expect($scope.vm.milelogging.length).toEqual(2);
+        expect($scope.vm.milelogging[0]).toEqual(mockMilelogging);
+        expect($scope.vm.milelogging[1]).toEqual(mockMilelogging);
 
       }));
     });

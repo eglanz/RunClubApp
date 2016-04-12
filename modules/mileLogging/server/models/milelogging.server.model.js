@@ -22,10 +22,12 @@ var MileloggingSchema = new Schema({
   length: {
     type: Number,
     default: 0,
-    trim: true
+    trim: true,
+    required: 'Please enter your miles.'
   },
   date: {
     type: Date,
+    required: 'Please enter a date.',
     default: Date.now
   },
   allDay: {

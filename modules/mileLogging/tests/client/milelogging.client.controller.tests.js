@@ -1,15 +1,15 @@
 (function () {
   'use strict';
 
-  describe('Articles Controller Tests', function () {
+  describe('Milelogging Controller Tests', function () {
     // Initialize global variables
-    var ArticlesController,
+    var MileloggingController,
       $scope,
       $httpBackend,
       $state,
       Authentication,
-      ArticlesService,
-      mockArticle;
+      MileloggingService,
+      mockMilelogging;
 
     // The $resource service augments the response object with methods for updating and deleting the resource.
     // If we were to use the standard toEqual matcher, our tests would fail because the test values would not match
@@ -36,7 +36,7 @@
     // The injector ignores leading and trailing underscores here (i.e. _$httpBackend_).
     // This allows us to inject a service but then attach it to a variable
     // with the same name as the service.
-    beforeEach(inject(function ($controller, $rootScope, _$state_, _$httpBackend_, _Authentication_, _ArticlesService_) {
+    beforeEach(inject(function ($controller, $rootScope, _$state_, _$httpBackend_, _Authentication_, _MileloggingService_) {
       // Set a new global scope
       $scope = $rootScope.$new();
 
@@ -44,13 +44,13 @@
       $httpBackend = _$httpBackend_;
       $state = _$state_;
       Authentication = _Authentication_;
-      ArticlesService = _ArticlesService_;
+      MileloggingService = _MileloggingService_;
 
-      // create mock article
-      mockArticle = new ArticlesService({
+      // create mock milelog
+      mockMilelogging = new MileloggingService({
         _id: '525a8422f6d0f87f0e407a33',
-        title: 'An Article about MEAN',
-        content: 'MEAN rocks!'
+        title: '5 miles',
+        length: '5'
       });
 
       // Mock logged in user
@@ -58,10 +58,10 @@
         roles: ['user']
       };
 
-      // Initialize the Articles controller.
-      ArticlesController = $controller('ArticlesController as vm', {
+      // Initialize the Milelogging controller.
+      MileloggingController = $controller('MileloggingController as vm', {
         $scope: $scope,
-        articleResolve: {}
+        mileloggingResolve: {}
       });
 
       //Spy on state go
@@ -69,35 +69,35 @@
     }));
 
     describe('vm.save() as create', function () {
-      var sampleArticlePostData;
+      var sampleMileloggingPostData;
 
       beforeEach(function () {
-        // Create a sample article object
-        sampleArticlePostData = new ArticlesService({
-          title: 'An Article about MEAN',
-          content: 'MEAN rocks!'
+        // Create a sample milelogging object
+        sampleMileloggingPostData = new MileloggingService({
+          title: '5 miles',
+          length: '5'
         });
 
-        $scope.vm.article = sampleArticlePostData;
+        $scope.vm.milelogging = sampleMileloggingPostData;
       });
 
-      it('should send a POST request with the form input values and then locate to new object URL', inject(function (ArticlesService) {
+      it('should send a POST request with the form input values and then locate to new object URL', inject(function (MileloggingService) {
         // Set POST response
-        $httpBackend.expectPOST('api/articles', sampleArticlePostData).respond(mockArticle);
+        $httpBackend.expectPOST('api/milelogging', sampleMileloggingPostData).respond(mockMilelogging);
 
         // Run controller functionality
         $scope.vm.save(true);
         $httpBackend.flush();
 
-        // Test URL redirection after the article was created
-        expect($state.go).toHaveBeenCalledWith('articles.view', {
-          articleId: mockArticle._id
+        // Test URL redirection after the milelog was created
+        expect($state.go).toHaveBeenCalledWith('milelogging.view', {
+          mileloggingId: mockMilelogging._id
         });
       }));
 
       it('should set $scope.vm.error if error', function () {
         var errorMessage = 'this is an error message';
-        $httpBackend.expectPOST('api/articles', sampleArticlePostData).respond(400, {
+        $httpBackend.expectPOST('api/milelogging', sampleMileloggingPostData).respond(400, {
           message: errorMessage
         });
 
@@ -110,27 +110,27 @@
 
     describe('vm.save() as update', function () {
       beforeEach(function () {
-        // Mock article in $scope
-        $scope.vm.article = mockArticle;
+        // Mock milelog in $scope
+        $scope.vm.milelogging = mockMilelogging;
       });
 
-      it('should update a valid article', inject(function (ArticlesService) {
+      it('should update a valid milelogging', inject(function (MileloggingService) {
         // Set PUT response
-        $httpBackend.expectPUT(/api\/articles\/([0-9a-fA-F]{24})$/).respond();
+        $httpBackend.expectPUT(/api\/milelogging\/([0-9a-fA-F]{24})$/).respond();
 
         // Run controller functionality
         $scope.vm.save(true);
         $httpBackend.flush();
 
         // Test URL location to new object
-        expect($state.go).toHaveBeenCalledWith('articles.view', {
-          articleId: mockArticle._id
+        expect($state.go).toHaveBeenCalledWith('milelogging.view', {
+          mileloggingId: mockMilelogging._id
         });
       }));
 
-      it('should set $scope.vm.error if error', inject(function (ArticlesService) {
+      it('should set $scope.vm.error if error', inject(function (MileloggingService) {
         var errorMessage = 'error';
-        $httpBackend.expectPUT(/api\/articles\/([0-9a-fA-F]{24})$/).respond(400, {
+        $httpBackend.expectPUT(/api\/milelogging\/([0-9a-fA-F]{24})$/).respond(400, {
           message: errorMessage
         });
 
@@ -143,23 +143,23 @@
 
     describe('vm.remove()', function () {
       beforeEach(function () {
-        //Setup articles
-        $scope.vm.article = mockArticle;
+        //Setup milelogging
+        $scope.vm.milelogging = mockMilelogging;
       });
 
-      it('should delete the article and redirect to articles', function () {
+      it('should delete the milelog and redirect to milelogging', function () {
         //Return true on confirm message
         spyOn(window, 'confirm').and.returnValue(true);
 
-        $httpBackend.expectDELETE(/api\/articles\/([0-9a-fA-F]{24})$/).respond(204);
+        $httpBackend.expectDELETE(/api\/milelogging\/([0-9a-fA-F]{24})$/).respond(204);
 
         $scope.vm.remove();
         $httpBackend.flush();
 
-        expect($state.go).toHaveBeenCalledWith('articles.list');
+        expect($state.go).toHaveBeenCalledWith('milelogging.list');
       });
 
-      it('should should not delete the article and not redirect', function () {
+      it('should should not delete the milelog and not redirect', function () {
         //Return false on confirm message
         spyOn(window, 'confirm').and.returnValue(false);
 

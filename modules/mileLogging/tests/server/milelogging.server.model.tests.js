@@ -6,17 +6,17 @@
 var should = require('should'),
   mongoose = require('mongoose'),
   User = mongoose.model('User'),
-  Article = mongoose.model('Article');
+  Milelogging = mongoose.model('Milelogging');
 
 /**
  * Globals
  */
-var user, article;
+var user, milelogging;
 
 /**
  * Unit tests
  */
-describe('Article Model Unit Tests:', function () {
+describe('Milelogging Model Unit Tests:', function () {
 
   beforeEach(function (done) {
     user = new User({
@@ -29,9 +29,9 @@ describe('Article Model Unit Tests:', function () {
     });
 
     user.save(function () {
-      article = new Article({
-        title: 'Article Title',
-        content: 'Article Content',
+      milelogging = new Milelogging({
+        title: '5 miles',
+        length: '5',
         user: user
       });
 
@@ -42,16 +42,25 @@ describe('Article Model Unit Tests:', function () {
   describe('Method Save', function () {
     it('should be able to save without problems', function (done) {
       this.timeout(10000);
-      return article.save(function (err) {
+      return milelogging.save(function (err) {
         should.not.exist(err);
         done();
       });
     });
 
-    it('should be able to show an error when try to save without title', function (done) {
-      article.title = '';
+    it('should be able to show an error when try to save without length', function (done) {
+      milelogging.length = '';
 
-      return article.save(function (err) {
+      return milelogging.save(function (err) {
+        should.exist(err);
+        done();
+      });
+    });
+    
+    it('should be able to show an error when try to save without date', function (done) {
+      milelogging.date = '';
+
+      return milelogging.save(function (err) {
         should.exist(err);
         done();
       });
@@ -59,7 +68,7 @@ describe('Article Model Unit Tests:', function () {
   });
 
   afterEach(function (done) {
-    Article.remove().exec(function () {
+    Milelogging.remove().exec(function () {
       User.remove().exec(done);
     });
   });

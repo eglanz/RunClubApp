@@ -7,16 +7,16 @@
 
   MileloggingListController.$inject = ['MileloggingService', '$scope', 'uiCalendarConfig', '$compile', 'GetUser', 'Authentication', '$state', 'userResolve'];
 
-  function MileloggingListController(MileloggingService, $scope, uiCalendarConfig, $compile,  GetUser, Authentication, $state, userResolve) {
+  function MileloggingListController(MileloggingService, $scope, uiCalendarConfig, $compile, GetUser, Authentication, $state, userResolve) {
     var vm = this;
     
     vm.authentication = Authentication;
     var length = document.getElementById('length'); //new
     vm.length = 0;
     vm.user = userResolve;
-    console.log( vm.user._id );
+    console.log(vm.user._id);
     
-    vm.milelogs = MileloggingService.query( {'user': vm.user});
+    vm.milelogs = MileloggingService.query({ 'user': vm.user });
     vm.milelogs.$promise.then(function (result) {
 
     });
@@ -26,8 +26,8 @@
     $scope.alertOnEventClick = function(date, jsEvent, view){
       $scope.alertMessage = (date.title + ' was clicked ');
       $state.go('milelogging.view', {
-          mileloggingId: date._id
-        });
+        mileloggingId: date._id
+      });
     };
     //alert on Drop 
     $scope.alertOnDrop = function(event, delta, revertFunc, jsEvent, ui, view){
@@ -70,7 +70,7 @@
     
 
 
-    vm.milelogging = [MileloggingService.query({ user: vm.userid})];
+    vm.milelogging = [MileloggingService.query({ user: vm.userid })];
     vm.eventSources = [];
     
     // object 

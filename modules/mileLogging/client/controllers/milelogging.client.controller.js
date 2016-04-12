@@ -17,10 +17,8 @@
     vm.remove = remove;
     vm.save = save;
     
-    if (vm.milelogging._id) {
-      //vm.clubevent.starttime = new Date(clubevent.start);
-      //vm.clubevent.endtime = new Date(clubevent.end);
-      vm.milelogging.date = new Date(vm.milelogging.date);
+    if (vm.milelogging._id){ //&& vm.milelogging.date) {
+      vm.milelogging.date = new Date(milelogging.date);
     }
     // Remove existing Milelogging
     function remove() {
@@ -33,16 +31,13 @@
     function save(isValid) {
       //vm.form.milelogginForm.date = vm.form.milelogginForm.date
       if (!isValid) {
-        $scope.$broadcast('show-errors-check-validity', 'vm.form.milelogginForm');
+        $scope.$broadcast('show-errors-check-validity', 'vm.form.mileloggingForm');
         return false;
       }
       
-       //if (vm.milelogging.date ) {
-         vm.milelogging.date = new Date(vm.milelogging.date);
-         console.log(vm.milelogging.date);
-         //vm.milelogging.date = new Date(vm.milelogging.date.getFullYear(),vm.milelogging.date.getMonth(), vm.milelogging.date.getDay(), 0, 0,  0, 0);
-         //console.log(vm.milelogging.date);
-      //}
+       if (vm.milelogging.date ) {
+      vm.milelogging.date = new Date(vm.milelogging.date.getFullYear(),vm.milelogging.date.getMonth(),vm.milelogging.date.getDate(),vm.milelogging.date.getHours(),vm.milelogging.date.getMinutes(), vm.milelogging.date.getSeconds(), vm.milelogging.date.getMilliseconds());
+      }
 
       // TODO: move create/update logic to service
       if (vm.milelogging._id) {
@@ -52,9 +47,11 @@
       }
 
       function successCallback(res) {
+        
         $state.go('milelogging.view', {
           mileloggingId: res._id
         });
+        res.date = new Date(res.date);
       }
 
       function errorCallback(res) {
