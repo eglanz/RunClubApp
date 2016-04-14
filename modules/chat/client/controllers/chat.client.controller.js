@@ -24,12 +24,14 @@
         
       }
       
-      Socket.emit('historyRequest');
+      
 
       // Make sure the Socket is connected
       if (!Socket.socket) {
         Socket.connect();
       }
+      
+      Socket.emit('historyRequest');
 
       // Add an event listener to the 'chatMessage' event
       Socket.on('chatMessage', function (message) {

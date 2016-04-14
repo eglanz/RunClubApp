@@ -10,6 +10,7 @@
   function LocationsViewController($scope, $state, location, Authentication) {
     
     var vm = this;
+    vm.user = Authentication.user;
     vm.location = location;
     vm.lat = 41.659941;
     vm.lon = -91.533864;
@@ -66,67 +67,76 @@
       });
       
       function calcStartPoint() {
+        
         var length = document.getElementById('length'); //new
-        var start = { lat: vm.lat, lng: vm.lon };
-        
-        if(startPointMarker !== null)
+
+        if(vm.user.isUsingStartPoint)
         {
-          startPointMarker.setMap(null);
-        }
-
-        startPointMarker = new google.maps.Marker({
-          position: start,
-          label: 'S',
-          map: map
-        });
-
-        if(startPointPolyline !== null)
-        {
-          startPointPolyline.setMap(null);
-        }
-        
-        startPointPolyline = new google.maps.Polyline({
-          path: [],
-          strokeColor: '#0000FF',
-          strokeWeight: 3
-        });
-        
-        var directionsService = new google.maps.DirectionsService();
-  
-        var request = {
-          origin: { lat: vm.lat, lng: vm.lon },
-          destination: routeBeginning,
-          travelMode: google.maps.TravelMode.WALKING, 
-          provideRouteAlternatives: false
-        };
-
-        directionsService.route(request, function(response, status) {
-          if (status === google.maps.DirectionsStatus.OK) 
+          var start = { lat: vm.lat, lng: vm.lon };
+          
+          if(startPointMarker !== null)
           {
-            var bounds = new google.maps.LatLngBounds();
-            var legs = response.routes[0].legs;
-            for (var i = 0; i < legs.length; i++) {
-              var steps = legs[i].steps;
-              for (var j = 0; j < steps.length; j++) {
-                var nextSegment = steps[j].path;
-                for (var k = 0; k < nextSegment.length; k++) {
-                  startPointPolyline.getPath().push(nextSegment[k]);
-                  bounds.extend(nextSegment[k]);
+            startPointMarker.setMap(null);
+          }
+  
+          startPointMarker = new google.maps.Marker({
+            position: start,
+            label: 'S',
+            map: map
+          });
+  
+          if(startPointPolyline !== null)
+          {
+            startPointPolyline.setMap(null);
+          }
+          
+          startPointPolyline = new google.maps.Polyline({
+            path: [],
+            strokeColor: '#0000FF',
+            strokeWeight: 3
+          });
+          
+          var directionsService = new google.maps.DirectionsService();
+    
+          var request = {
+            origin: { lat: vm.lat, lng: vm.lon },
+            destination: routeBeginning,
+            travelMode: google.maps.TravelMode.WALKING, 
+            provideRouteAlternatives: false
+          };
+  
+          directionsService.route(request, function(response, status) {
+            if (status === google.maps.DirectionsStatus.OK) 
+            {
+              var bounds = new google.maps.LatLngBounds();
+              var legs = response.routes[0].legs;
+              for (var i = 0; i < legs.length; i++) {
+                var steps = legs[i].steps;
+                for (var j = 0; j < steps.length; j++) {
+                  var nextSegment = steps[j].path;
+                  for (var k = 0; k < nextSegment.length; k++) {
+                    startPointPolyline.getPath().push(nextSegment[k]);
+                    bounds.extend(nextSegment[k]);
+                  }
                 }
               }
+    
+              startPointPolyline.setMap(map);
+              var originalLength = vm.location.length;
+              var addedLength = google.maps.geometry.spherical.computeLength(startPointPolyline.getPath()) * 0.00062137;
+              length.value = (originalLength + addedLength).toFixed(2);
             }
-  
-            startPointPolyline.setMap(map);
-            var originalLength = vm.location.length;
-            var addedLength = google.maps.geometry.spherical.computeLength(startPointPolyline.getPath()) * 0.00062137;
-            length.value = (originalLength + addedLength).toFixed(2);
-          }
-          else
-          {
-            //TODO handle this correctly, should this allow them to enter a different location?
-            console.log('request failure');
-          }
-        });
+            else
+            {
+              //TODO handle this correctly, should this allow them to enter a different location?
+              console.log('request failure');
+            }
+          });
+        }
+        else
+        {
+          length.value = (vm.location.length).toFixed(2);
+        }
       }
       $scope.$on('$destroy', function() {
         for (var i = 0; i < markerArray.length; i++) {

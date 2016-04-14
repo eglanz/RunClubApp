@@ -26,6 +26,11 @@
     });
 
     Menus.addSubMenuItem('account', 'settings', {
+      title: 'Edit Account Options',
+      state: 'settings.options'
+    });
+
+    Menus.addSubMenuItem('account', 'settings', {
       title: 'Edit Profile Picture',
       state: 'settings.picture'
     });

@@ -2,11 +2,15 @@
   'use strict';
 
   // Create the Socket.io wrapper service
+  
+  
   angular
     .module('core')
     .factory('Socket', Socket);
+  
 
   Socket.$inject = ['Authentication', '$state', '$timeout'];
+
 
   function Socket(Authentication, $state, $timeout) {
     var service = {
@@ -15,6 +19,7 @@
       on: on,
       removeListener: removeListener,
       socket: null
+      
     };
 
     connect();
