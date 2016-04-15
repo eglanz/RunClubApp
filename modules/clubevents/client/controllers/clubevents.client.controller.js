@@ -17,6 +17,8 @@
     vm.form = {};
     vm.remove = remove;
     vm.save = save;
+    vm.toggleParticipation = toggleParticipation;
+    vm.isCurrentUserSignedUp = vm.clubevent.isCurrentUserSignedUp;
     
     var dummyDate = new Date();
     
@@ -32,7 +34,27 @@
         vm.clubevent.$remove($state.go('clubevents.list'));
       }
     }
+    
+    function toggleParticipation() {
+      console.log('Calling toggleParticipation()');
+      if (vm.authentication.user) {
+        vm.clubevent.$toggleParticipation(successCallback,errorCallback);
+      }
+      
+      function successCallback(res) {
+        if (vm.isCurrentUserSignedUp === true) {
+          vm.isCurrentUserSignedUp = false;
+        }
+        else {
+          vm.isCurrentUserSignedUp = true;
+        }
+      }
 
+      function errorCallback(res) {
+        vm.error = res.data.message;
+      }
+    }
+    
     // Save Clubevent
     function save(isValid) {
       if (!isValid) {

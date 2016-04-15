@@ -14,6 +14,9 @@
     }, {
       update: {
         method: 'PUT'
+      },
+      toggleParticipation: {
+        method: 'POST'
       }
     });
   }

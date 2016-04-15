@@ -9,47 +9,47 @@ var acl = require('acl');
 acl = new acl(new acl.memoryBackend());
 
 /**
- * Invoke Clubevents Permissions
+ * Invoke Milelogging Permissions
  */
 exports.invokeRolesPolicies = function () {
   acl.allow([{
     roles: ['admin'],
     allows: [{
-      resources: '/api/clubevents',
+      resources: '/api/milelogging',
       permissions: '*'
     }, {
-      resources: '/api/clubevents/:clubeventId',
+      resources: '/api/milelogging/:mileloggingId',
       permissions: '*'
     }]
   }, {
     roles: ['user'],
     allows: [{
-      resources: '/api/clubevents',
+      resources: '/api/milelogging',
       permissions: ['get', 'post']
     }, {
-      resources: '/api/clubevents/:clubeventId',
-      permissions: ['get', 'post']
+      resources: '/api/milelogging/:mileloggingId',
+      permissions: ['get']
     }]
   }, {
     roles: ['guest'],
     allows: [{
-      resources: '/api/clubevents',
+      resources: '/api/milelogging',
       permissions: ['get']
     }, {
-      resources: '/api/clubevents/:clubeventId',
+      resources: '/api/milelogging/:mileloggingId',
       permissions: ['get']
     }]
   }]);
 };
 
 /**
- * Check If Clubevents Policy Allows
+ * Check If Mile logging Policy Allows
  */
 exports.isAllowed = function (req, res, next) {
   var roles = (req.user) ? req.user.roles : ['guest'];
 
-  // If an Clubevent is being processed and the current user created it then allow any manipulation
-  if (req.clubevent && req.user && req.clubevent.user && req.clubevent.user.id === req.user.id) {
+  // If a mile log is being processed and the current user created it then allow any manipulation
+  if (req.milelogging && req.user && req.milelogging.user && req.milelogging.user.id === req.user.id) {
     return next();
   }
 
