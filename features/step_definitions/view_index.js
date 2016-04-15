@@ -11,16 +11,16 @@ module.exports = function(){
     
     
     this.When(/^I sign up$/, function(callback){
-        //this.browser.setValue('input#username', 'user', callback);
-        //this.browser.setValue('input#username', 'user');
-        this.browser.window.setValue('#input#username', 'user');
-      //setValue('input#username', 'user'+Math.random()).
-      /*setValue('input#firstName', 'Zener').
-      setValue('input#lastName', 'Diode').
-      setValue('input#email', 'zener@email.com').
-      setValue('input#password', '1234567890abcdefjklmno').
-      submitForm('#userForm')
-      .call(callback)*/
+      var email = "zener" + Math.random() + "@email.com";
+      console.log(email);
+      var username = "user" + Math.random();
+      console.log(username);
+      this.browser.fill('input#username', username);
+      this.browser.fill('input#firstName', 'Zener');
+      this.browser.fill('input#lastName', 'Diode');
+      this.browser.fill('input#email', email);
+      this.browser.fill('input#password', '123456789sdafadsf0abc092838kddefjklmno');
+      this.browser.click('#signing_button', callback);
     });
     
     this.Then(/^I should see "(.*)"$/, function(title, callback){
