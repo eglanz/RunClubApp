@@ -1,4 +1,4 @@
-Feature: User can view index page
+Feature: User can view index page and login
   As a user
   I want to be able to view the index page
   
