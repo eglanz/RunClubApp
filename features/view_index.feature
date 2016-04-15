@@ -7,6 +7,7 @@ Feature: User can view index page
     Then I should see "Welcome to RunNet"
     
   Scenario: User sign up
+    When I go to the url
     When I go to the sign up url
     When I sign up
     Then I should see "Welcome to RunNet"

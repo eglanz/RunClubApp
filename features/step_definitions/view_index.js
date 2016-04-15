@@ -6,7 +6,7 @@ module.exports = function(){
     });
     
     this.When(/^I go to the sign up url$/, function(callback){
-        this.visit('https://runclubapp.herokuapp.com/authentication/signup', callback);
+        this.browser.click('#singuplink',callback);
     });
     
     
