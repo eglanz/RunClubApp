@@ -201,13 +201,6 @@ UserSchema.statics.findUniqueUsername = function (username, suffix, callback) {
 * Returns a promise that resolves with the generated passphrase, or rejects with an error if something goes wrong.
 * NOTE: Passphrases are only tested against the required owasp strength tests, and not the optional tests.
 */
-UserSchema.statics.getAdminPassphrase = function () {
-   return new Promise(function (resolve, reject) {
-      var password = "0123456789abcdefghijklmnop"
-     resolve(password);
-   });
-}
-
 UserSchema.statics.generateRandomPassphrase = function () {
   return new Promise(function (resolve, reject) {
     var password = '';
