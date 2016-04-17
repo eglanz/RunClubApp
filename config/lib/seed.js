@@ -136,7 +136,7 @@ module.exports.start = function start(options) {
 
     //If production only seed admin if it does not exist
     if (process.env.NODE_ENV === 'production') {
-      User.generateRandomPassphrase()
+      User.getAdminPassphrase()
         .then(seedTheUser(adminAccount))
         .then(function () {
           resolve();
