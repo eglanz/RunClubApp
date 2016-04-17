@@ -1,0 +1,18 @@
+<section>
+  <div class="page-header">
+    <h1>Running Club Leadership</h1>
+  </div>
+  <div class="list-group">
+    <a ng-repeat="executive in vm.executives" ui-sref="executives.view({ executiveId: executive._id })" class="list-group-item">
+      <h4 class="list-group-item-heading" ng-bind="executive.firstName"></h4>
+      <p class="list-group-item-text" ng-bind="executive.description"></p>
+      <small class="list-group-item-text">
+        Email
+        <span ng-bind="executive.email"></span>
+      </small>
+    </a>
+  </div>
+  <div class="alert alert-warning text-center" ng-if="vm.executives.$resolved && !vm.executives.length">
+    No leaders added yet
+  </div>
+</section>
