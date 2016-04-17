@@ -16,12 +16,10 @@ var path = require('path'),
 exports.create = function (req, res) {
   var milelogging = new Milelogging(req.body);
   milelogging.user = req.user;
-  console.log('date server ' + milelogging.date);
-  console.log('created server ' + milelogging.created);
   milelogging.save(function (err) {
     if (err) {
       return res.status(400).send({
-        message: errorHandler.getErrorMessage(err)
+        message: err.message
       });
     } else {
       res.json(milelogging);

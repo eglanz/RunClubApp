@@ -17,7 +17,7 @@
 
     // Add the dropdown list item
     Menus.addSubMenuItem('topbar', 'milelogging', {
-      title: 'Mile Logging',
+      title: 'Mile Log',
       state: 'milelogging.list'
     });
 
