@@ -87,14 +87,14 @@
 
       it('should send a POST request with the form input values and then locate to new object URL', inject(function (ExecutivesService) {
         // Set POST response
-        $httpBackend.expectPOST('api/articles', sampleExecutivePostData).respond(mockExecutive);
+        $httpBackend.expectPOST('api/executives', sampleExecutivePostData).respond(mockExecutive);
 
         // Run controller functionality
         $scope.vm.save(true);
         $httpBackend.flush();
 
         // Test URL redirection after the exec was created
-        expect($state.go).toHaveBeenCalledWith('exeuctives.view', {
+        expect($state.go).toHaveBeenCalledWith('executives.view', {
           executiveId: mockExecutive._id
         });
       }));
@@ -120,6 +120,7 @@
 
       it('should update a valid executive', inject(function (ExecutivesService) {
         // Set PUT response
+        console.log('I AM HERE');
         $httpBackend.expectPUT(/api\/executives\/([0-9a-fA-F]{24})$/).respond();
 
         // Run controller functionality
