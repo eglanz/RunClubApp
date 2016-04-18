@@ -276,7 +276,7 @@ angular.module('ui.calendar', [])
         };
 
         eventsWatcher.onAdded = function(event) {
-          calendar.fullCalendar('renderEvent', event, true);
+          calendar.fullCalendar('renderEvent', event, true);   //here
         };
 
         eventsWatcher.onRemoved = function(event) {
