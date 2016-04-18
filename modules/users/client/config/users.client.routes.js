@@ -20,6 +20,13 @@ angular.module('users').config(['$stateProvider',
           pageTitle: 'Settings'
         }
       })
+      .state('settings.options', {
+        url: '/options',
+        templateUrl: 'modules/users/client/views/settings/options.client.view.html',
+        data: {
+          pageTitle: 'Settings options'
+        }
+      })
       .state('settings.password', {
         url: '/password',
         templateUrl: 'modules/users/client/views/settings/change-password.client.view.html',

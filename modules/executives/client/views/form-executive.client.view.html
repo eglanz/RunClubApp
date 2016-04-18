@@ -1,0 +1,42 @@
+<section>
+  <div class="page-header">
+    <h1>{{vm.executive._id ? 'Edit Executive' : 'New Executive'}}</h1>
+  </div>
+  <div class="col-md-12">
+    <form name="vm.form.executiveForm" class="form-horizontal" ng-submit="vm.save(vm.form.executiveForm.$valid)" novalidate>
+      <fieldset>
+        <div class="form-group" show-errors>
+          <label class="control-label" for="firstName">First Name</label>
+          <input name="firstName" type="text" ng-model="vm.executive.firstName" id="firstName" class="form-control" placeholder="First Name" required>
+          <div ng-messages="vm.form.executiveForm.firstName.$error" role="alert">
+            <p class="help-block error-text" ng-message="required">First name is required.</p>
+          </div>
+        </div>
+        <div class="form-group" show-errors>
+          <label class="control-label" for="lastName">Last Name</label>
+          <input name="lastName" type="text" ng-model="vm.executive.lastName" id="lastName" class="form-control" placeholder="Last Name" required>
+          <div ng-messages="vm.form.executiveForm.lastName.$error" role="alert">
+            <p class="help-block error-text" ng-message="required">Last name is required.</p>
+          </div>
+        </div>
+        <div class="form-group" show-errors>
+          <label class="control-label" for="email">Leader's Email</label>
+          <input name="email" type="text" ng-model="vm.executive.email" id="email" class="form-control" placeholder="Email" required>
+          <div ng-messages="vm.form.executiveForm.email.$error" role="alert">
+            <p class="help-block error-text" ng-message="required">Email is required.</p>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="control-label" for="content">Description</label>
+          <textarea name="descript" data-ng-model="vm.executive.descript" id="descript" class="form-control" cols="30" rows="10" placeholder="Description"></textarea>
+        </div>
+        <div class="form-group">
+          <button type="submit" class="btn btn-default">{{vm.executive._id ? 'Update' : 'Create'}}</button>
+        </div>
+        <div ng-show="vm.error" class="text-danger">
+          <strong ng-bind="vm.error"></strong>
+        </div>
+      </fieldset>
+    </form>
+  </div>
+</section>

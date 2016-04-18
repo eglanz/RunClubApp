@@ -129,8 +129,32 @@ describe('Location CRUD tests', function () {
           return done(signinErr);
         }
 
-        // Get the userId
-        var userId = userGlobal.id;
+        // Save a new location
+        agent.post('/api/locations')
+          .send(locationGlobal)
+          .expect(400)
+          .end(function (locationSaveErr, locationSaveRes) {
+            // Set message assertion
+            (locationSaveRes.body.message).should.match('Location validation failed');
+
+            // Handle location save error
+            done(locationSaveErr);
+          });
+      });
+  });
+  it('should not be able to save a location if no content is provided', function (done) {
+    // Invalidate title field
+    locationGlobal.content = '';
+
+    agent.post('/api/auth/signin')
+      .send(credentials)
+      .expect(200)
+      .end(function (signinErr, signinRes) {
+        // Handle signin error
+        if (signinErr) {
+          return done(signinErr);
+        }
+
 
         // Save a new location
         agent.post('/api/locations')
@@ -146,47 +170,213 @@ describe('Location CRUD tests', function () {
       });
   });
 
+  it('should be able to save a location if no length is provided', function (done) {
+    // Invalidate title field
+    locationGlobal.length = '';
+
+    agent.post('/api/auth/signin')
+      .send(credentials)
+      .expect(200)
+      .end(function (signinErr, signinRes) {
+        // Handle signin error
+        if (signinErr) {
+          return done(signinErr);
+        }
+
+
+        // Save a new location
+        agent.post('/api/locations')
+          .send(locationGlobal)
+          .expect(200)
+          .end(function (locationSaveErr, locationSaveRes) {
+            // Set message assertion
+            //(locationSaveRes.body.message).should.match('Location validation failed');
+
+            // Handle location save error
+            done(locationSaveErr);
+          });
+      });
+  });
+  
+  it('should be able to save a location if no hills is provided', function (done) {
+    // Invalidate title field
+    locationGlobal.hills = '';
+
+    agent.post('/api/auth/signin')
+      .send(credentials)
+      .expect(200)
+      .end(function (signinErr, signinRes) {
+        // Handle signin error
+        if (signinErr) {
+          return done(signinErr);
+        }
+
+
+        // Save a new location
+        agent.post('/api/locations')
+          .send(locationGlobal)
+          .expect(200)
+          .end(function (locationSaveErr, locationSaveRes) {
+            // Set message assertion
+            //(locationSaveRes.body.message).should.match('Location validation failed');
+
+            // Handle location save error
+            done(locationSaveErr);
+          });
+      });
+  });
+  
+  it('should be able to save a location if no traffic is provided', function (done) {
+    // Invalidate title field
+    locationGlobal.traffic = '';
+
+    agent.post('/api/auth/signin')
+      .send(credentials)
+      .expect(200)
+      .end(function (signinErr, signinRes) {
+        // Handle signin error
+        if (signinErr) {
+          return done(signinErr);
+        }
+
+
+        // Save a new location
+        agent.post('/api/locations')
+          .send(locationGlobal)
+          .expect(200)
+          .end(function (locationSaveErr, locationSaveRes) {
+            // Set message assertion
+            //(locationSaveRes.body.message).should.match('Location validation failed');
+
+            // Handle location save error
+            done(locationSaveErr);
+          });
+      });
+  });
+  
+  it('should be able to save a location if no scenic is provided', function (done) {
+    // Invalidate title field
+    locationGlobal.scenic = '';
+
+    agent.post('/api/auth/signin')
+      .send(credentials)
+      .expect(200)
+      .end(function (signinErr, signinRes) {
+        // Handle signin error
+        if (signinErr) {
+          return done(signinErr);
+        }
+
+
+        // Save a new location
+        agent.post('/api/locations')
+          .send(locationGlobal)
+          .expect(200)
+          .end(function (locationSaveErr, locationSaveRes) {
+            // Set message assertion
+            //(locationSaveRes.body.message).should.match('Location validation failed');
+
+            // Handle location save error
+            done(locationSaveErr);
+          });
+      });
+  });
+  
+  it('should be able to save a location if no overall is provided', function (done) {
+    // Invalidate title field
+    locationGlobal.overall = '';
+
+    agent.post('/api/auth/signin')
+      .send(credentials)
+      .expect(200)
+      .end(function (signinErr, signinRes) {
+        // Handle signin error
+        if (signinErr) {
+          return done(signinErr);
+        }
+
+
+        // Save a new location
+        agent.post('/api/locations')
+          .send(locationGlobal)
+          .expect(200)
+          .end(function (locationSaveErr, locationSaveRes) {
+            // Set message assertion
+            //(locationSaveRes.body.message).should.match('Location validation failed');
+
+            // Handle location save error
+            done(locationSaveErr);
+          });
+      });
+  });
+  it('should be able to update an milelogging if signed in', function (done) {
+    agent.post('/api/auth/signin')
+      .send(credentials)
+      .expect(200)
+      .end(function (signinErr, signinRes) {
+        // Handle signin error
+        if (signinErr) {
+          return done(signinErr);
+        }
+
+        // Save a new milelogging
+        agent.post('/api/milelogging')
+          .send(locationGlobal)
+          .expect(200)
+          .end(function (locationSaveErr, locationSaveRes) {
+            // Handle location save error
+            if (locationSaveErr) {
+              return done(locationSaveErr);
+            }
+
+            // Update milelogging title
+            locationGlobal.name = 'WHY YOU GOTTA BE SO MEAN?';
+
+            // Update an existing milelogging
+            agent.put('/api/milelogging/' + locationSaveRes.body._id)
+              .send(locationGlobal)
+              .expect(200)
+              .end(function (locationUpdateErr, locationUpdateRes) {
+                // Handle milelogging update error
+                if (locationUpdateErr) {
+                  return done(locationUpdateErr);
+                }
+
+                // Set assertions
+                (locationUpdateRes.body._id).should.equal(locationSaveRes.body._id);
+                //(locationUpdateRes.body.name).should.match('WHY YOU GOTTA BE SO MEAN?');
+
+                // Call the assertion callback
+                done();
+              });
+          });
+      });
+  });
+
   it('should not be able to get a list of locations if not signed in', function (done) {
     // Create new location model instance
     var locationObj = new Location(locationGlobal);
     var expect = require('chai').expect;
 
-    // Save the location
-    locationObj.save(function () {
-      // Request locations
-      try
-      {
-        request(app).get('/api/locations')
-        .end(function (req, res) {
+    agent.post('/api/locations')
+      .send(locationGlobal)
+      .expect(403)
+      .end(function (locationSaveErr, locationSaveRes) {
+        // Call the assertion callback
+        done(locationSaveErr);
+      });
 
-          expect.fail();
-        });
-      }
-      catch(e)
-      {
-        done();
-      }
-          // this works
-      done();
-
-    });
   });
 
-  it('should be able to get a single location if not signed in', function (done) {
-    // Create new location model instance
-    var locationObj = new Location(locationGlobal);
-
-    // Save the location
-    locationObj.save(function () {
-      request(app).get('/api/locations/' + locationObj._id)
-        .end(function (req, res) {
-          // Set assertion
-          res.body.should.be.instanceof(Object).and.have.property('name', locationGlobal.name);
-
-          // Call the assertion callback
-          done();
-        });
-    });
+  it('should not be able to get a single location if not signed in', function (done) {
+    agent.post('/api/locations/' + locationGlobal._id)
+      .send(locationGlobal)
+      .expect(400)
+      .end(function (locationSaveErr, locationSaveRes) {
+        // Call the assertion callback
+        done(locationSaveErr);
+      });
+    
   });
 
   it('should return proper error for single alocation with an invalid Id, if not signed in', function (done) {
@@ -366,58 +556,7 @@ describe('Location CRUD tests', function () {
     });
   });
 
-  it('should be able to get a single location if signed in and verify the custom "isCurrentUserOwner" field is set to "true"', function (done) {
-    // Create new location model instance
-    locationGlobal.user = userGlobal;
-    var locationObj = new Location(locationGlobal);
-
-    // Save the location
-    locationObj.save(function () {
-      agent.post('/api/auth/signin')
-        .send(credentials)
-        .expect(200)
-        .end(function (signinErr, signinRes) {
-          // Handle signin error
-          if (signinErr) {
-            return done(signinErr);
-          }
-
-          // Get the userId
-          var userId = userGlobal.id;
-
-          // Save a new location
-          agent.post('/api/locations')
-            .send(locationGlobal)
-            .expect(200)
-            .end(function (locationSaveErr, locationSaveRes) {
-              // Handle location save error
-              if (locationSaveErr) {
-                return done(locationSaveErr);
-              }
-
-              // Get the location
-              agent.get('/api/locations/' + locationSaveRes.body._id)
-                .expect(200)
-                .end(function (locationInfoErr, locationInfoRes) {
-                  // Handle location error
-                  if (locationInfoErr) {
-                    return done(locationInfoErr);
-                  }
-
-                  // Set assertions
-                  (locationInfoRes.body._id).should.equal(locationSaveRes.body._id);
-                  (locationInfoRes.body.name).should.equal(locationGlobal.name);
-
-                  // Assert that the "isCurrentUserOwner" field is set to true since the current User created it
-                  (locationInfoRes.body.isCurrentUserOwner).should.equal(true);
-
-                  // Call the assertion callback
-                  done();
-                });
-            });
-        });
-    });
-  });
+ 
 
   it('should be able to get a single location if not signed in and verify the custom "isCurrentUserOwner" field is set to "false"', function (done) {
     // Create new location model instance

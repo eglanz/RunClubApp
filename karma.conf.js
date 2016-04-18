@@ -5,6 +5,7 @@
  */
 var _ = require('lodash'),
   defaultAssets = require('./config/assets/default'),
+  //testLibs = require('./config/lib/socket.io'),
   testAssets = require('./config/assets/test'),
   testConfig = require('./config/env/test'),
   karmaReporters = ['progress'];

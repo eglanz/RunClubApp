@@ -63,6 +63,10 @@ var UserSchema = new Schema({
     type: String,
     default: ''
   },
+  isUsingStartPoint: {
+    type: Boolean,
+    default: true
+  },
   hills: {
     type: Number,
     default: 0,
@@ -227,5 +231,7 @@ UserSchema.statics.generateRandomPassphrase = function () {
     }
   });
 };
+
+
 
 mongoose.model('User', UserSchema);
