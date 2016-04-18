@@ -87,14 +87,14 @@
 
       it('should send a POST request with the form input values and then locate to new object URL', inject(function (ExecutivesService) {
         // Set POST response
-        $httpBackend.expectPOST('api/articles', sampleExecutivePostData).respond(mockExecutive);
+        $httpBackend.expectPOST('api/executives', sampleExecutivePostData).respond(mockExecutive);
 
         // Run controller functionality
         $scope.vm.save(true);
         $httpBackend.flush();
 
         // Test URL redirection after the exec was created
-        expect($state.go).toHaveBeenCalledWith('exeuctives.view', {
+        expect($state.go).toHaveBeenCalledWith('executives.view', {
           executiveId: mockExecutive._id
         });
       }));
@@ -120,7 +120,7 @@
 
       it('should update a valid executive', inject(function (ExecutivesService) {
         // Set PUT response
-        $httpBackend.expectPUT(/api\/executives\/([0-9a-fA-F]{24})$/).respond();
+        $httpBackend.expectPUT('api/executives/' + mockExecutive._id).respond();
 
         // Run controller functionality
         $scope.vm.save(true);
@@ -128,13 +128,13 @@
 
         // Test URL location to new object
         expect($state.go).toHaveBeenCalledWith('executives.view', {
-          articleId: mockExecutive._id
+          executiveId: mockExecutive._id
         });
       }));
 
       it('should set $scope.vm.error if error', inject(function (ExecutivesService) {
         var errorMessage = 'error';
-        $httpBackend.expectPUT(/api\/executives\/([0-9a-fA-F]{24})$/).respond(400, {
+        $httpBackend.expectPUT('api/executives/'+ mockExecutive._id).respond(400, {
           message: errorMessage
         });
 
@@ -155,7 +155,7 @@
         //Return true on confirm message
         spyOn(window, 'confirm').and.returnValue(true);
 
-        $httpBackend.expectDELETE(/api\/executives\/([0-9a-fA-F]{24})$/).respond(204);
+        $httpBackend.expectDELETE('api/executives/' + mockExecutive._id).respond(204);
 
         $scope.vm.remove();
         $httpBackend.flush();

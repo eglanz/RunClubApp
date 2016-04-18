@@ -47,7 +47,7 @@
           viewstate = $state.get('executives.view');
           $templateCache.put('modules/executives/client/views/view-executive.client.view.html', '');
 
-          // create mock article
+          // create mock executive
           mockExecutive = new ExecutivesService({
             _id: '525a8422f6d0f876e407a33',
             firstName: 'Ham',
@@ -69,16 +69,16 @@
 
         it('Should have a resolve function', function () {
           expect(typeof viewstate.resolve).toEqual('object');
-          expect(typeof viewstate.resolve.articleResolve).toEqual('function');
+          expect(typeof viewstate.resolve.executiveResolve).toEqual('function');
         });
 
         it('should respond to URL', inject(function ($state) {
           expect($state.href(viewstate, {
-            articleId: 1
+            executiveId: 1
           })).toEqual('/executives/1');
         }));
 
-        it('should attach an article to the controller scope', function () {
+        it('should attach an executive to the controller scope', function () {
           expect($scope.vm.executive._id).toBe(mockExecutive._id);
         });
 
@@ -146,7 +146,7 @@
           editstate = $state.get('executives.edit');
           $templateCache.put('modules/executives/client/views/form-executive.client.view.html', '');
 
-          // create mock article
+          // create mock executive
           mockExecutive = new ExecutivesService({
             _id: '525a8422f6d0f87f0e407a33',
             firstName: 'Ham',
@@ -158,7 +158,7 @@
           //Initialize Controller
           ExecutivesController = $controller('ExecutivesController as vm', {
             $scope: $scope,
-            articleResolve: mockExecutive
+            executiveResolve: mockExecutive
           });
         }));
 
@@ -168,12 +168,12 @@
 
         it('Should have a resolve function', function () {
           expect(typeof editstate.resolve).toEqual('object');
-          expect(typeof editstate.resolve.articleResolve).toEqual('function');
+          expect(typeof editstate.resolve.executiveResolve).toEqual('function');
         });
 
         it('should respond to URL', inject(function ($state) {
           expect($state.href(editstate, {
-            articleId: 1
+            executiveId: 1
           })).toEqual('/executives/1/edit');
         }));
 
