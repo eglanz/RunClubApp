@@ -7,9 +7,13 @@
       $scope,
       $httpBackend,
       $state,
+      $resource,
       Authentication,
       MileloggingService,
-      mockMilelogging;
+      mockMilelogging1,
+      mockMilelogging2,
+      mockCalander, 
+      GetUser;
 
     // The $resource service augments the response object with methods for updating and deleting the resource.
     // If we were to use the standard toEqual matcher, our tests would fail because the test values would not match
@@ -45,22 +49,41 @@
       $state = _$state_;
       Authentication = _Authentication_;
       MileloggingService = _MileloggingService_;
-
-      // create mock milelogging
-      mockMilelogging = new MileloggingService({
-        _id: '525a8422f6d0f87f0e407a33',
-        title: '5 miles',
-        length: '5'
-      });
-
+      
       // Mock logged in user
       Authentication.user = {
-        roles: ['user']
+        roles: ['user'],
+        _id: '123'
       };
+
+      // create mock milelogging
+      mockMilelogging1 = new MileloggingService({
+        _id: '525a8422f6d0f87f0e407a33',
+        title: '5 miles',
+        length: '5',
+        date: Date.now(),
+        allDay: true,
+        user: Authentication.user._id
+      });
+      
+            // create mock milelogging
+      mockMilelogging2 = new MileloggingService({
+        _id: '425a8422f6d0f87f0e407a34',
+        title: '10 miles',
+        length: '10',
+        date: Date.now(), 
+        allDay: true,
+        user: Authentication.user._id
+      });
+      
+      mockCalander = new MileloggingService({
+        fullCalendar: {}
+      });
 
       // Initialize the Milelogging List controller.
       MileloggingListController = $controller('MileloggingListController as vm', {
-        $scope: $scope
+        $scope: $scope,
+        userResolve: Authentication.user._id
       });
 
       //Spy on state go
@@ -69,24 +92,75 @@
 
     describe('Instantiate', function () {
       var mockMileloggingList;
+      var mockCalanderList;
 
       beforeEach(function () {
-        mockMileloggingList = [mockMilelogging, mockMilelogging];
+        mockMileloggingList = [ [mockMilelogging1], [mockMilelogging2] ];
+        mockCalanderList = [mockCalander];
       });
 
-      it('should send a GET request and return all milelogging', inject(function (MileloggingService) {
+      it('should send a GET request and return all milelogging', inject(function (ArticlesService) {
         // Set POST response
+        
+        $httpBackend.expectGET('api/milelogging?user=' + Authentication.user._id).respond([Authentication.user]);//mockMileloggingList);
+        
         $httpBackend.expectGET('api/milelogging').respond(mockMileloggingList);
 
 
         $httpBackend.flush();
 
         // Test form inputs are reset
-        expect($scope.vm.milelogging.length).toEqual(2);
-        expect($scope.vm.milelogging[0]).toEqual(mockMilelogging);
-        expect($scope.vm.milelogging[1]).toEqual(mockMilelogging);
+        expect($scope.vm.milelogging[0][0][0]).toEqual(mockMilelogging1);
+        expect($scope.vm.milelogging[0][1][0]).toEqual(mockMilelogging2);
 
       }));
+      it('should change the alert message and redirect to a page for a single mile logger when an event is clicked on', inject(function(ArticlesService){
+        $scope.alertOnEventClick(mockMilelogging1, null, null);
+        
+        expect($scope.alertMessage === mockMilelogging1.title + ' was clicked ');
+        expect($state.go).toHaveBeenCalledWith('milelogging.view', { mileloggingId: mockMilelogging1._id });
+      }));
+      it('should change the alert message when a milelog is dropped', inject(function(MileloggingService){
+        var delta = 'value';
+        $scope.alertOnDrop(null, delta, null, null, null, null);
+        
+        expect($scope.alertMessage === 'Event Droped to make dayDelta ' + delta);
+      }));
+      it('should change the alert message when a milelog is resized', inject(function(MileloggingService){
+        var delta = 'value';
+        $scope.alertOnDrop(null, delta, null, null, null, null);
+        
+        expect($scope.alertMessage === 'Event Resized to make dayDelta ' + delta);
+      }));
+      it('remove the element when a remove click is done', inject(function(MileloggingService){
+        var index = 0;
+        $scope.alertOnDrop(index);
+        
+        //$scope.events.splice(index, 1);
+        
+        //expect($scope.events.splice).toHaveBeenCalledWith(index, 1 );
+      }));
+      /*it('should change the calendar view', inject(function(ArticlesService){
+        //console.log($scope.uiConfig.calendar);
+        var uiCalendarConfig = {
+          calendars: mockCalanderList
+        };
+        $scope.changeView(null, 0);
+      }));
+      it('should render the calendar', inject(function(ArticlesService){
+        $scope.renderCalender(null, null);
+      }));  */
+      /*it('should render an event', inject(function(ArticlesService){
+        //var lengthVal = vm.length;
+        $scope.eventRender(mockMilelogging1, null, null);
+        //expect(vm.length === lengthVal + mockMilelogging1.length);
+      })); */
+     // it('should return the user when calling getUser', inject(function(MileloggingService){
+       // GetUser($resource);
+      //}));
+      
+      
+      
     });
   });
 })();

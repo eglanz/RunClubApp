@@ -129,8 +129,32 @@ describe('Location CRUD tests', function () {
           return done(signinErr);
         }
 
-        // Get the userId
-        var userId = userGlobal.id;
+        // Save a new location
+        agent.post('/api/locations')
+          .send(locationGlobal)
+          .expect(400)
+          .end(function (locationSaveErr, locationSaveRes) {
+            // Set message assertion
+            (locationSaveRes.body.message).should.match('Location validation failed');
+
+            // Handle location save error
+            done(locationSaveErr);
+          });
+      });
+  });
+  it('should not be able to save a location if no content is provided', function (done) {
+    // Invalidate title field
+    locationGlobal.content = '';
+
+    agent.post('/api/auth/signin')
+      .send(credentials)
+      .expect(200)
+      .end(function (signinErr, signinRes) {
+        // Handle signin error
+        if (signinErr) {
+          return done(signinErr);
+        }
+
 
         // Save a new location
         agent.post('/api/locations')
@@ -142,6 +166,189 @@ describe('Location CRUD tests', function () {
 
             // Handle location save error
             done(locationSaveErr);
+          });
+      });
+  });
+
+  it('should be able to save a location if no length is provided', function (done) {
+    // Invalidate title field
+    locationGlobal.length = '';
+
+    agent.post('/api/auth/signin')
+      .send(credentials)
+      .expect(200)
+      .end(function (signinErr, signinRes) {
+        // Handle signin error
+        if (signinErr) {
+          return done(signinErr);
+        }
+
+
+        // Save a new location
+        agent.post('/api/locations')
+          .send(locationGlobal)
+          .expect(200)
+          .end(function (locationSaveErr, locationSaveRes) {
+            // Set message assertion
+            //(locationSaveRes.body.message).should.match('Location validation failed');
+
+            // Handle location save error
+            done(locationSaveErr);
+          });
+      });
+  });
+  
+  it('should be able to save a location if no hills is provided', function (done) {
+    // Invalidate title field
+    locationGlobal.hills = '';
+
+    agent.post('/api/auth/signin')
+      .send(credentials)
+      .expect(200)
+      .end(function (signinErr, signinRes) {
+        // Handle signin error
+        if (signinErr) {
+          return done(signinErr);
+        }
+
+
+        // Save a new location
+        agent.post('/api/locations')
+          .send(locationGlobal)
+          .expect(200)
+          .end(function (locationSaveErr, locationSaveRes) {
+            // Set message assertion
+            //(locationSaveRes.body.message).should.match('Location validation failed');
+
+            // Handle location save error
+            done(locationSaveErr);
+          });
+      });
+  });
+  
+  it('should be able to save a location if no traffic is provided', function (done) {
+    // Invalidate title field
+    locationGlobal.traffic = '';
+
+    agent.post('/api/auth/signin')
+      .send(credentials)
+      .expect(200)
+      .end(function (signinErr, signinRes) {
+        // Handle signin error
+        if (signinErr) {
+          return done(signinErr);
+        }
+
+
+        // Save a new location
+        agent.post('/api/locations')
+          .send(locationGlobal)
+          .expect(200)
+          .end(function (locationSaveErr, locationSaveRes) {
+            // Set message assertion
+            //(locationSaveRes.body.message).should.match('Location validation failed');
+
+            // Handle location save error
+            done(locationSaveErr);
+          });
+      });
+  });
+  
+  it('should be able to save a location if no scenic is provided', function (done) {
+    // Invalidate title field
+    locationGlobal.scenic = '';
+
+    agent.post('/api/auth/signin')
+      .send(credentials)
+      .expect(200)
+      .end(function (signinErr, signinRes) {
+        // Handle signin error
+        if (signinErr) {
+          return done(signinErr);
+        }
+
+
+        // Save a new location
+        agent.post('/api/locations')
+          .send(locationGlobal)
+          .expect(200)
+          .end(function (locationSaveErr, locationSaveRes) {
+            // Set message assertion
+            //(locationSaveRes.body.message).should.match('Location validation failed');
+
+            // Handle location save error
+            done(locationSaveErr);
+          });
+      });
+  });
+  
+  it('should be able to save a location if no overall is provided', function (done) {
+    // Invalidate title field
+    locationGlobal.overall = '';
+
+    agent.post('/api/auth/signin')
+      .send(credentials)
+      .expect(200)
+      .end(function (signinErr, signinRes) {
+        // Handle signin error
+        if (signinErr) {
+          return done(signinErr);
+        }
+
+
+        // Save a new location
+        agent.post('/api/locations')
+          .send(locationGlobal)
+          .expect(200)
+          .end(function (locationSaveErr, locationSaveRes) {
+            // Set message assertion
+            //(locationSaveRes.body.message).should.match('Location validation failed');
+
+            // Handle location save error
+            done(locationSaveErr);
+          });
+      });
+  });
+  it('should be able to update an milelogging if signed in', function (done) {
+    agent.post('/api/auth/signin')
+      .send(credentials)
+      .expect(200)
+      .end(function (signinErr, signinRes) {
+        // Handle signin error
+        if (signinErr) {
+          return done(signinErr);
+        }
+
+        // Save a new milelogging
+        agent.post('/api/milelogging')
+          .send(locationGlobal)
+          .expect(200)
+          .end(function (locationSaveErr, locationSaveRes) {
+            // Handle location save error
+            if (locationSaveErr) {
+              return done(locationSaveErr);
+            }
+
+            // Update milelogging title
+            locationGlobal.name = 'WHY YOU GOTTA BE SO MEAN?';
+
+            // Update an existing milelogging
+            agent.put('/api/milelogging/' + locationSaveRes.body._id)
+              .send(locationGlobal)
+              .expect(200)
+              .end(function (locationUpdateErr, locationUpdateRes) {
+                // Handle milelogging update error
+                if (locationUpdateErr) {
+                  return done(locationUpdateErr);
+                }
+
+                // Set assertions
+                (locationUpdateRes.body._id).should.equal(locationSaveRes.body._id);
+                //(locationUpdateRes.body.name).should.match('WHY YOU GOTTA BE SO MEAN?');
+
+                // Call the assertion callback
+                done();
+              });
           });
       });
   });

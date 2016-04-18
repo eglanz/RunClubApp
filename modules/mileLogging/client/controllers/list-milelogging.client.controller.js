@@ -14,7 +14,6 @@
     var length = document.getElementById('length'); //new
     vm.length = 0;
     vm.user = userResolve;
-    console.log(vm.user._id);
     
     vm.milelogs = MileloggingService.query({ 'user': vm.user });
     vm.milelogs.$promise.then(function (result) {

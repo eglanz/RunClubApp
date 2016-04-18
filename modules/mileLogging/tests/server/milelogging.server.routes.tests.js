@@ -48,14 +48,16 @@ describe('Milelogging CRUD tests', function () {
     user.save(function () {
       milelogging = {
         title: '5 miles',
-        length: '5'
+        length: '5', 
+        date: Date.now()
       };
 
       done();
     });
   });
 
-  it('should be able to save an milelogging if logged in', function (done) {
+
+  it('should be able to save a milelogging if logged in', function (done) {
     agent.post('/api/auth/signin')
       .send(credentials)
       .expect(200)
@@ -67,6 +69,7 @@ describe('Milelogging CRUD tests', function () {
 
         // Get the userId
         var userId = user.id;
+        var mileloggingTitle = milelogging.title;
 
         // Save a new milelog
         agent.post('/api/milelogging')
@@ -91,7 +94,7 @@ describe('Milelogging CRUD tests', function () {
 
                 // Set assertions
                 (milelogging[0].user._id).should.equal(userId);
-                (milelogging[0].title).should.match('Milelogging Title');
+                (milelogging[0].title).should.match(mileloggingTitle);
 
                 // Call the assertion callback
                 done();
@@ -109,10 +112,10 @@ describe('Milelogging CRUD tests', function () {
         done(mileloggingSaveErr);
       });
   });
-
-  it('should not be able to save an milelog if no title is provided', function (done) {
+  
+  it('should not be able to save an milelog if no length is provided', function (done) {
     // Invalidate title field
-    milelogging.title = '';
+    milelogging.length = '';
 
     agent.post('/api/auth/signin')
       .send(credentials)
@@ -132,7 +135,34 @@ describe('Milelogging CRUD tests', function () {
           .expect(400)
           .end(function (mileloggingSaveErr, mileloggingSaveRes) {
             // Set message assertion
-            (mileloggingSaveRes.body.message).should.match('Title cannot be blank');
+            (mileloggingSaveRes.body.message).should.match('Milelogging validation failed');
+
+            // Handle milelogging save error
+            done(mileloggingSaveErr);
+          });
+      });
+  });
+  
+  it('should not be able to save an milelog if no length is provided', function (done) {
+    // Invalidate title field
+    milelogging.date = '';
+
+    agent.post('/api/auth/signin')
+      .send(credentials)
+      .expect(200)
+      .end(function (signinErr, signinRes) {
+        // Handle signin error
+        if (signinErr) {
+          return done(signinErr);
+        }
+
+        // Save a new milelogging
+        agent.post('/api/milelogging')
+          .send(milelogging)
+          .expect(400)
+          .end(function (mileloggingSaveErr, mileloggingSaveRes) {
+            // Set message assertion
+            (mileloggingSaveRes.body.message).should.match('Milelogging validation failed');
 
             // Handle milelogging save error
             done(mileloggingSaveErr);
@@ -149,9 +179,6 @@ describe('Milelogging CRUD tests', function () {
         if (signinErr) {
           return done(signinErr);
         }
-
-        // Get the userId
-        var userId = user.id;
 
         // Save a new milelogging
         agent.post('/api/milelogging')
@@ -178,7 +205,7 @@ describe('Milelogging CRUD tests', function () {
 
                 // Set assertions
                 (mileloggingUpdateRes.body._id).should.equal(mileloggingSaveRes.body._id);
-                (mileloggingUpdateRes.body.title).should.match('WHY YOU GOTTA BE SO MEAN?');
+                (mileloggingUpdateRes.body.title).should.match('5 miles');
 
                 // Call the assertion callback
                 done();
@@ -186,23 +213,93 @@ describe('Milelogging CRUD tests', function () {
           });
       });
   });
+  it('should not be able to update a milelogging if signed in and an incorrect date is given', function (done) {
+    agent.post('/api/auth/signin')
+      .send(credentials)
+      .expect(200)
+      .end(function (signinErr, signinRes) {
+        // Handle signin error
+        if (signinErr) {
+          return done(signinErr);
+        }
 
-  it('should be able to get a list of milelogs if not signed in', function (done) {
-    // Create new milelogging model instance
-    var mileloggingObj = new Milelogging(milelogging);
+        // Save a new milelogging
+        agent.post('/api/milelogging')
+          .send(milelogging)
+          .expect(200)
+          .end(function (mileloggingSaveErr, mileloggingSaveRes) {
+            // Handle milelogging save error
+            if (mileloggingSaveErr) {
+              return done(mileloggingSaveErr);
+            }
 
-    // Save the milelogging
-    mileloggingObj.save(function () {
-      // Request milelogging
-      request(app).get('/api/milelogging')
-        .end(function (req, res) {
-          // Set assertion
-          res.body.should.be.instanceof(Array).and.have.lengthOf(1);
+            // Update milelogging title
+            milelogging.date = 'WHY YOU GOTTA BE SO MEAN?';
 
-          // Call the assertion callback
-          done();
-        });
+            // Update an existing milelogging
+            agent.put('/api/milelogging/' + mileloggingSaveRes.body._id)
+              .send(milelogging)
+              .expect(400)
+              .end(function (mileloggingUpdateErr, mileloggingUpdateRes) {
+                // Handle milelogging update error
+                if (mileloggingUpdateErr) {
+                  return done(mileloggingUpdateErr);
+                }
 
+                // Set assertions
+                //(mileloggingUpdateRes.body._id).should.equal(mileloggingSaveRes.body._id);
+                //(mileloggingUpdateRes.body.title).should.match('5 miles');
+
+                // Call the assertion callback
+                done();
+              });
+          });
+      });
+  });
+  
+  it('should be not able to update an milelogging if not signed in', function (done) {
+    // Save a new milelogging
+    agent.post('/api/milelogging')
+    .send(milelogging)
+    .expect(403)
+    .end(function (mileloggingSaveErr, mileloggingSaveRes) {
+      // Handle milelogging save error
+      if (mileloggingSaveErr) {
+        return done(mileloggingSaveErr);
+      }
+
+      // Update milelogging title
+      milelogging.title = 'WHY YOU GOTTA BE SO MEAN?';
+
+      // Update an existing milelogging
+      agent.put('/api/milelogging/' + mileloggingSaveRes.body._id)
+      .send(milelogging)
+      .expect(400)
+      .end(function (mileloggingUpdateErr, mileloggingUpdateRes) {
+        // Handle milelogging update error
+        if (mileloggingUpdateErr) {
+          return done(mileloggingUpdateErr);
+        }
+        else
+        {
+          return done();
+        }
+        // Call the assertion callback
+        done();
+      });
+    });
+      //});
+  });
+  it('should not be able to get a list of milelogs if not signed in', function (done) {
+
+    // Request milelogging
+    request(app).get('/api/milelogging')
+    .end(function (req, res) {
+    // Set assertion
+      res.body.should.be.instanceof(Array).and.have.lengthOf(0);
+
+      // Call the assertion callback
+      done();
     });
   });
 
@@ -228,7 +325,7 @@ describe('Milelogging CRUD tests', function () {
     request(app).get('/api/milelogging/test')
       .end(function (req, res) {
         // Set assertion
-        res.body.should.be.instanceof(Object).and.have.property('message', 'Milelogging is invalid');
+        res.body.should.be.instanceof(Object).and.have.property('message', 'Mile log is invalid');
 
         // Call the assertion callback
         done();
@@ -240,7 +337,7 @@ describe('Milelogging CRUD tests', function () {
     request(app).get('/api/milelogging/559e9cd815f80b4c256a8f41')
       .end(function (req, res) {
         // Set assertion
-        res.body.should.be.instanceof(Object).and.have.property('message', 'No milelogging with that identifier has been found');
+        res.body.should.be.instanceof(Object).and.have.property('message', 'No log entry with that identifier has been found');
 
         // Call the assertion callback
         done();
@@ -256,9 +353,6 @@ describe('Milelogging CRUD tests', function () {
         if (signinErr) {
           return done(signinErr);
         }
-
-        // Get the userId
-        var userId = user.id;
 
         // Save a new milelogging
         agent.post('/api/milelogging')
@@ -282,6 +376,46 @@ describe('Milelogging CRUD tests', function () {
 
                 // Set assertions
                 (mileloggingDeleteRes.body._id).should.equal(mileloggingSaveRes.body._id);
+
+                // Call the assertion callback
+                done();
+              });
+          });
+      });
+  });
+  
+  it('should  not be able to delete a milelogging if signed in and an invalid id is requested', function (done) {
+    agent.post('/api/auth/signin')
+      .send(credentials)
+      .expect(200)
+      .end(function (signinErr, signinRes) {
+        // Handle signin error
+        if (signinErr) {
+          return done(signinErr);
+        }
+
+        // Save a new milelogging
+        agent.post('/api/milelogging')
+          .send(milelogging)
+          .expect(200)
+          .end(function (mileloggingSaveErr, mileloggingSaveRes) {
+            // Handle milelogging save error
+            if (mileloggingSaveErr) {
+              return done(mileloggingSaveErr);
+            }
+
+            // Delete an existing milelogging
+            agent.delete('/api/milelogging/' + '123')
+              .send(milelogging)
+              .expect(400)
+              .end(function (mileloggingDeleteErr, mileloggingDeleteRes) {
+                // Handle milelogging error error
+                if (mileloggingDeleteErr) {
+                  return done(mileloggingDeleteErr);
+                }
+
+                // Set assertions
+                //(mileloggingDeleteRes.body._id).should.equal(mileloggingSaveRes.body._id);
 
                 // Call the assertion callback
                 done();

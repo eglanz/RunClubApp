@@ -120,8 +120,9 @@
 
       it('should update a valid executive', inject(function (ExecutivesService) {
         // Set PUT response
-        console.log('I AM HERE');
-        $httpBackend.expectPUT(/api\/executives\/([0-9a-fA-F]{24})$/).respond();
+
+        $httpBackend.expectPUT('api/executives/' + mockExecutive._id).respond();
+
 
         // Run controller functionality
         $scope.vm.save(true);
@@ -129,13 +130,13 @@
 
         // Test URL location to new object
         expect($state.go).toHaveBeenCalledWith('executives.view', {
-          articleId: mockExecutive._id
+          executiveId: mockExecutive._id
         });
       }));
 
       it('should set $scope.vm.error if error', inject(function (ExecutivesService) {
         var errorMessage = 'error';
-        $httpBackend.expectPUT(/api\/executives\/([0-9a-fA-F]{24})$/).respond(400, {
+        $httpBackend.expectPUT('api/executives/'+ mockExecutive._id).respond(400, {
           message: errorMessage
         });
 
@@ -156,7 +157,7 @@
         //Return true on confirm message
         spyOn(window, 'confirm').and.returnValue(true);
 
-        $httpBackend.expectDELETE(/api\/executives\/([0-9a-fA-F]{24})$/).respond(204);
+        $httpBackend.expectDELETE('api/executives/' + mockExecutive._id).respond(204);
 
         $scope.vm.remove();
         $httpBackend.flush();
