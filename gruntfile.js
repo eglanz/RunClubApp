@@ -177,6 +177,7 @@ module.exports = function (grunt) {
           print: 'detail',
           coverage: true,
           require: 'test.js',
+          excludes: ['modules/users/server/models/user.server.model.js'],
           coverageFolder: 'coverage/server',
           reportFormats: ['cobertura','lcovonly'],
           check: {

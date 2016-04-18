@@ -24,8 +24,8 @@ module.exports = function (karmaConfig) {
       'modules/*/client/views/**/*.html': ['ng-html2js'],
       'modules/core/client/app/config.js': ['coverage'],
       'modules/*/client/*.js': ['coverage'],
-      'modules/*/client/controllers/*.js': ['coverage'],
-      'modules/*/client/services/*.js': ['coverage']
+      'modules/*/client/controllers/!(authentication.client.controller).js': ['coverage'],
+      'modules/*/client/services/!(users.client.service).js': ['coverage']
     },
 
     ngHtml2JsPreprocessor: {
@@ -38,9 +38,9 @@ module.exports = function (karmaConfig) {
 
     // List of files / patterns to load in the browser
     files: _.union(defaultAssets.client.lib.js, defaultAssets.client.lib.tests, defaultAssets.client.js, testAssets.tests.client, defaultAssets.client.views),
-    exclude: [
-      'modules/users/server/controllers/users/users.authentication.server.controller.js'
-    ],
+    /*exclude: [
+      'RunClubApp/modules/users/server/controllers/users/!(users.authentication.server.controller).js'
+    ],*/
     // Test results reporter to use
     // Possible values: 'dots', 'progress', 'junit', 'growl', 'coverage'
     reporters: karmaReporters,
