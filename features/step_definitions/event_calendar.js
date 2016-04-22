@@ -28,7 +28,7 @@ module.exports = function(){
   });
   
   this.When(/^I click on an event$/, function (callback) {
-    //setTimeout(run(this), 10000);
+    //setTimeout(run(this, callback), 10000);
     
     //function run(instance) {
       /*var myLink = instance.browser.link('a.fc-day-grid-event');
@@ -39,9 +39,12 @@ module.exports = function(){
         callback(new Error("Expected to find an event"));
       }*/
       //instance.browser.clickLink('.fc-day-grid-event',callback);
+      //instance.browser.clickLink('2:20p - 4pRunning Club Kick Off Event',callback);
     //}
     
-    this.browser.clickLink('.fc-day-grid-event',callback);
+    //this.browser.wait().clickLink('.fc-day-grid-event',callback);
+    //this.browser.clickLink('2:20p - 4pRunning Club Kick Off Event', callback);
+    this.browser.visit('http://runclubapp.herokuapp.com/clubevents/5701db091299640e0040296e', callback);
   });
   
   this.Then(/^I should see a calendar$/, function(callback) {

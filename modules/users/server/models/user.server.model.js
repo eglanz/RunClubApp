@@ -125,9 +125,25 @@ var UserSchema = new Schema({
   },
   resetPasswordExpires: {
     type: Date
+  },
+  doNotEmail: {
+    type: Boolean, 
+    default: false
+  },
+  graduationYear: {
+    type: Number,
+    default: -1
+  },
+  graduationSem: {
+    type: Number,
+    min: 0,
+    max: 1
+  },
+  inactive: {
+    type: Boolean,
+    default: false
   }
 });
-UserSchema.add({ doNotEmail: { type: Boolean, default: false } });
 
 /**
  * Hook a pre save method to hash the password

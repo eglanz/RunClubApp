@@ -2,6 +2,8 @@
 
 angular.module('users.admin').controller('UserListController', ['$scope', '$filter', 'Admin',
   function ($scope, $filter, Admin) {
+    $scope.sort_grad_date = false;
+    
     Admin.query(function (data) {
       $scope.users = data;
       $scope.buildPager();
@@ -18,6 +20,11 @@ angular.module('users.admin').controller('UserListController', ['$scope', '$filt
       $scope.filteredItems = $filter('filter')($scope.users, {
         $: $scope.search
       });
+      if ($scope.sort_grad_date) {
+        $scope.filteredItems = $filter('orderBy')($scope.filteredItems, 'graduationYear', false);
+        $scope.filteredItems = $filter('orderBy')($scope.filteredItems, 'graduationSem', false);
+      }
+      $scope.filteredItems = $filter('orderBy')($scope.filteredItems, 'inactive', false);
       $scope.filterLength = $scope.filteredItems.length;
       var begin = (($scope.currentPage - 1) * $scope.itemsPerPage);
       var end = begin + $scope.itemsPerPage;

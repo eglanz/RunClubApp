@@ -3,10 +3,19 @@
     <form name="userForm" ng-submit="updateUserOptions(userForm.$valid)" class="signin" novalidate autocomplete="off">
       <fieldset>
         <div class="form-group" show-errors>
-          <label for="isUsingStartPoint">Use Start Point</label>
-          <input type="checkbox" id="isUsingStartPoint" name="isUsingStartPoint" class="form-control" ng-model="user.isUsingStartPoint">
+          <!--<label for="isUsingStartPoint">Use Start Point</label>-->
+          <input type="checkbox" id="isUsingStartPoint" name="isUsingStartPoint" class="" ng-model="user.isUsingStartPoint">
+          Use Start Point
           <div ng-messages="userForm.isUsingStartPoint.$error" role="alert">
             <p class="help-block error-text" ng-message="required">Error setting start point option.</p>
+          </div>
+        </div>
+        <div class="form-group" show-errors>
+          <!--<label for="doNotEmail">Unsubscribe from Running Club Email List</label>-->
+          <input type="checkbox" id="doNotEmail" name="doNotEmail" class="" ng-model="user.doNotEmail">
+            Unsubscribe from Running Club Email List
+          <div ng-messages="userForm.doNotEmail.$error" role="alert">
+            <p class="help-block error-text" ng-message="required">Error setting email subscription option.</p>
           </div>
         </div>
         <div class="text-center form-group">

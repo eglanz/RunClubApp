@@ -17,6 +17,23 @@
           </div>
         </div>
         <div class="form-group" show-errors>
+          <label for="gradYear">Expected Graduation Year</label>
+          <input type="number" min="2016" max="2200" id="gradYear" name="gradYear" class="form-control" ng-model="user.graduationYear" placeholder="Year" style="width:150px" required>
+          <div ng-messages="userForm.gradYear.$error" role="alert">
+            <p class="help-block error-text" ng-message="required">Graduation year is required.</p>
+          </div>
+        </div>
+        <div class="form-group" show-errors>
+          <label for="gradSem">Expected Graduation Semester</label>
+          <select id="gradSem" name="gradSem" class="form-control" ng-model="user.graduationSem" style="width:150px" convert-to-number required>
+            <option value="0">Spring</option>
+            <option value="1">Fall</option>
+          </select>
+          <div ng-messages="userForm.gradSem.$error" role="alert">
+            <p class="help-block error-text" ng-message="required">Graduation semester is required.</p>
+          </div>
+        </div>
+        <div class="form-group" show-errors>
           <label for="email">Email</label>
           <input type="email" id="email" name="email" class="form-control" ng-model="user.email" placeholder="Email" lowercase required>
           <div ng-messages="userForm.email.$error" role="alert">
