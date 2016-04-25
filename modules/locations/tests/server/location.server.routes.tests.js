@@ -581,7 +581,23 @@ describe('Location CRUD tests', function () {
       username: 'temp',
       password: 'M3@n.jsI$Aw3$0m3'
     };
-    agent.post('/api/auth/signin')
+        // Create temporary user
+    var _user = new User({
+      firstName: 'Full',
+      lastName: 'Name',
+      displayName: 'Full Name',
+      email: 'temp@test.com',
+      username: _creds.username,
+      password: _creds.password,
+      provider: 'local'
+    });
+
+    _user.save(function (err, _user) {
+      // Handle save error
+      if (err) {
+        return done(err);
+      }
+      agent.post('/api/auth/signin')
         .send(_creds)
         .expect(200)
         .end(function (signinErr, signinRes) {
@@ -600,10 +616,11 @@ describe('Location CRUD tests', function () {
                // Assert the custom field "isCurrentUserOwner" is set to false for the un-authenticated User
                 res.body.should.be.instanceof(Object).and.have.property('isCurrentUserOwner', false);
                // Call the assertion callback
-              //done();
+                done();
               });
           });
         });
+    });
   });
 
   it('should be able to get single location, that a different user created, if logged in & verify the "isCurrentUserOwner" field is set to "false"', function (done) {
