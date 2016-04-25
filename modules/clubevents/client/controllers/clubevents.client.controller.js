@@ -14,19 +14,11 @@
     vm.locations = LocationsService.query().$promise.then(function (result) {
       vm.locations = result;
       console.log(vm.locations);
-<<<<<<< HEAD
   
       function containsRoute(route) 
       {
         console.log(route._id);
   
-=======
-
-      function containsRoute(route) 
-      {
-        console.log(route._id);
-    
->>>>>>> cd8205b500b1aa6349d984831568245174269718
         var result = false;
         if(vm.clubevent.routes.indexOf(route._id) !== -1)
         {
@@ -34,15 +26,9 @@
         }
         return result;
       }
-<<<<<<< HEAD
   
       vm.clubEventRoutes = vm.locations.filter(containsRoute);
       
-=======
-    
-      vm.clubEventRoutes = vm.locations.filter(containsRoute);
-        
->>>>>>> cd8205b500b1aa6349d984831568245174269718
       console.log(vm.clubEventRoutes);
     });
     vm.authentication = Authentication;
