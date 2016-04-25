@@ -12,25 +12,25 @@
     var vm = this;
     
     vm.locations = LocationsService.query().$promise.then(function (result) {
-        vm.locations = result;
-        console.log(vm.locations);
-
-        function containsRoute(route) 
+      vm.locations = result;
+      console.log(vm.locations);
+  
+      function containsRoute(route) 
+      {
+        console.log(route._id);
+  
+        var result = false;
+        if(vm.clubevent.routes.indexOf(route._id) !== -1)
         {
-          console.log(route._id);
-    
-          var result = false;
-          if(vm.clubevent.routes.indexOf(route._id) !== -1)
-          {
-            result = true;
-          }
-          return result;
+          result = true;
         }
-    
-        vm.clubEventRoutes = vm.locations.filter(containsRoute);
-        
-        console.log(vm.clubEventRoutes);
-      });
+        return result;
+      }
+  
+      vm.clubEventRoutes = vm.locations.filter(containsRoute);
+      
+      console.log(vm.clubEventRoutes);
+    });
     vm.authentication = Authentication;
     vm.clubevent = clubevent;
     vm.error = null;
@@ -51,7 +51,6 @@
     }
 
     function clickview(id){
-      console.log("hello");
 
       $state.go('locations.view', {
         locationId: id
