@@ -263,7 +263,9 @@ exports.jar = function(req, res){
           });
         }
       }).then(function(){
+        /* instanbul ignore next */
         var locations = JSON.stringify(outputJson);
+        /* instanbul ignore next */
         res.json(outputJson);
       });
     });
