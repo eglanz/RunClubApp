@@ -85,7 +85,10 @@
     describe('vm.save() as update', function () {
       beforeEach(function () {
         // Mock Clubevent in $scope
+
         $scope.vm.clubevent = mockClubevent;
+        $httpBackend.whenGET('api/locations').respond(200);
+
       });
 
       it('should set $scope.vm.error if error', inject(function (ClubeventsService) {
@@ -94,10 +97,10 @@
           message: errorMessage
         });
 
-        $scope.vm.save(true);
         $httpBackend.flush();
-
+        $scope.vm.save(true);
         expect($scope.vm.error).toBe(errorMessage);
+
       }));
     });
 
@@ -105,6 +108,8 @@
       beforeEach(function () {
         //Setup Clubevents
         $scope.vm.clubevent = mockClubevent;
+        $httpBackend.whenGET('api/locations').respond(200);
+
       });
 
       it('should delete the Clubevent and redirect to Clubevents', function () {

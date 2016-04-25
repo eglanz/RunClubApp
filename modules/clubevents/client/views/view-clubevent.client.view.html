@@ -39,4 +39,34 @@
       </tr>
     </table>
   </div>
+  <div class="list-group">
+    <a ng-repeat="route in vm.clubEventRoutes"  class="list-group-item">
+      <small class="list-group-item-text">
+        Posted on
+        <span ng-bind="route.created | date:'mediumDate'"></span>
+        by
+        <span ng-if="route.user" ng-bind="route.user.displayName"></span>
+        <span ng-if="!route.user">Deleted User</span>
+      </small>
+      <h2 class="list-group-item-heading" ng-bind="route.name"></h2>
+      <table style="width:100%">
+        <tr>
+          <td class="list-routes"><p>Miles</p>
+          <h4 class="list-group-item-heading" ng-bind="route.length"></h4></td>
+          <td class="list-routes"><p>Hills</p>
+          <h4 class="list-group-item-heading" ng-bind="route.hills"></h4></td>
+          <td class="list-routes"><p>Scenery</p>
+          <h4 class="list-group-item-heading" ng-bind="route.scenic"></h4></td>		
+          <td class="list-routes"><p>Traffic</p>
+          <h4 class="list-group-item-heading" ng-bind="route.traffic"></h4></td>
+          <td class="list-routes"><p>Overall Rating</p>
+          <h4 class="list-group-item-heading" ng-bind="route.overall"></h4></td>
+          <td class="list-routes"><a class="btn btn-primary btn-lg btn-view" ng-click="vm.clickview(route._id)">     
+          View Route
+          </a></td>
+        </tr>
+      </table>
+      
+    </a>
+  </div>
 </section>

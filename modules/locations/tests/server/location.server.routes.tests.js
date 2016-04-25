@@ -575,6 +575,36 @@ describe('Location CRUD tests', function () {
         });
     });
   });
+  it('should be able to find a location by id if logged in', function(done){
+        // Create temporary user creds
+    var _creds = {
+      username: 'temp',
+      password: 'M3@n.jsI$Aw3$0m3'
+    };
+    agent.post('/api/auth/signin')
+        .send(_creds)
+        .expect(200)
+        .end(function (signinErr, signinRes) {
+          // Handle signin error
+          if (signinErr) {
+            return done(signinErr);
+          }
+          var locationObj = new Location(locationGlobal);
+
+          // Save the location
+          locationObj.save(function () {
+            request(app).get('/api/locations/' + locationObj._id)
+              .end(function (req, res) {
+              // Set assertion
+                res.body.should.be.instanceof(Object).and.have.property('name', locationGlobal.name);
+               // Assert the custom field "isCurrentUserOwner" is set to false for the un-authenticated User
+                res.body.should.be.instanceof(Object).and.have.property('isCurrentUserOwner', false);
+               // Call the assertion callback
+              //done();
+              });
+          });
+        });
+  });
 
   it('should be able to get single location, that a different user created, if logged in & verify the "isCurrentUserOwner" field is set to "false"', function (done) {
     // Create temporary user creds

@@ -6,11 +6,45 @@
     .module('clubevents')
     .controller('ClubeventsController', ClubeventsController);
 
-  ClubeventsController.$inject = ['$scope', '$state', 'Authentication', 'clubeventResolve'];
+  ClubeventsController.$inject = ['LocationsService','$scope', '$state', 'Authentication', 'clubeventResolve'];
 
-  function ClubeventsController ($scope, $state, Authentication, clubevent) {
+  function ClubeventsController (LocationsService, $scope, $state, Authentication, clubevent) {
     var vm = this;
     
+    vm.locations = LocationsService.query().$promise.then(function (result) {
+      vm.locations = result;
+      console.log(vm.locations);
+<<<<<<< HEAD
+  
+      function containsRoute(route) 
+      {
+        console.log(route._id);
+  
+=======
+
+      function containsRoute(route) 
+      {
+        console.log(route._id);
+    
+>>>>>>> cd8205b500b1aa6349d984831568245174269718
+        var result = false;
+        if(vm.clubevent.routes.indexOf(route._id) !== -1)
+        {
+          result = true;
+        }
+        return result;
+      }
+<<<<<<< HEAD
+  
+      vm.clubEventRoutes = vm.locations.filter(containsRoute);
+      
+=======
+    
+      vm.clubEventRoutes = vm.locations.filter(containsRoute);
+        
+>>>>>>> cd8205b500b1aa6349d984831568245174269718
+      console.log(vm.clubEventRoutes);
+    });
     vm.authentication = Authentication;
     vm.clubevent = clubevent;
     vm.error = null;
@@ -19,13 +53,21 @@
     vm.save = save;
     vm.toggleParticipation = toggleParticipation;
     vm.isCurrentUserSignedUp = vm.clubevent.isCurrentUserSignedUp;
+    vm.clickview = clickview;
     
     var dummyDate = new Date();
-    
+
+
     if (vm.clubevent._id) {
       vm.clubevent.starttime = new Date(clubevent.start);
       vm.clubevent.endtime = new Date(clubevent.end);
       vm.clubevent.date = new Date(clubevent.start);
+    }
+
+    function clickview(id){
+      $state.go('locations.view', {
+        locationId: id
+      });
     }
 
     // Remove existing Clubevent
@@ -37,6 +79,7 @@
     
     function toggleParticipation() {
       console.log('Calling toggleParticipation()');
+      console.log(vm.locations.length);
       if (vm.authentication.user) {
         vm.clubevent.$toggleParticipation(successCallback,errorCallback);
       }
@@ -61,7 +104,7 @@
         $scope.$broadcast('show-errors-check-validity', 'vm.form.clubeventForm');
         return false;
       }
-      
+
       // karma tests won't run without the if statement, yay bad style
       if (vm.clubevent.date && vm.clubevent.starttime) {
         vm.clubevent.start = new Date(vm.clubevent.date.getFullYear(),vm.clubevent.date.getMonth(),vm.clubevent.date.getDate(),vm.clubevent.starttime.getHours(),vm.clubevent.starttime.getMinutes(), 0, 0);
