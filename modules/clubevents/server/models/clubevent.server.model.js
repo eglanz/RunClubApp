@@ -45,7 +45,11 @@ var ClubeventSchema = new Schema({
   user: {
     type: Schema.ObjectId,
     ref: 'User'
-  }
+  },
+  routes:[{
+    type: Schema.ObjectId,
+    ref: 'Location'
+  }]
   // TODO: route data for events that involve running routes (foreign keys),
   //       default to null, maybe include links to route pages instead?
 });
