@@ -20,6 +20,35 @@
           </div>
         </div>
         <div class="form-group" show-errors>
+          <label for="gradYear">Expected Graduation Year</label>
+          <input type="number" min="2016" max="2200" id="gradYear" name="gradYear" class="form-control" ng-model="user.graduationYear" placeholder="Year" style="width:150px" required>
+          <div ng-messages="userForm.gradYear.$error" role="alert">
+            <p class="help-block error-text" ng-message="required">Graduation year is required.</p>
+          </div>
+        </div>
+        <div class="form-group" show-errors>
+          <label for="gradSem">Expected Graduation Semester</label>
+          <select id="gradSem" name="gradSem" class="form-control" ng-model="user.graduationSem" style="width:150px" convert-to-number required>
+            <option value="0">Spring</option>
+            <option value="1">Fall</option>
+          </select>
+          <div ng-messages="userForm.gradSem.$error" role="alert">
+            <p class="help-block error-text" ng-message="required">Graduation semester is required.</p>
+          </div>
+        </div>
+        <div class="form-group checkbox" show-errors>
+          <label><input type="checkbox" id="doNotEmail" name="doNotEmail" ng-model="user.doNotEmail">Opt User Out of Mass Emails</label>
+          <div ng-messages="userForm.doNotEmail.$error" role="alert">
+            <p class="help-block error-text" ng-message="required">Error setting email subscription option.</p>
+          </div>
+        </div>
+        <div class="form-group checkbox" show-errors>
+          <label><input type="checkbox" id="inactive" name="inactive" ng-model="user.inactive">User Is Inactive</label>
+          <div ng-messages="userForm.inactive.$error" role="alert">
+            <p class="help-block error-text" ng-message="required">Error setting inactive option.</p>
+          </div>
+        </div>
+        <div class="form-group" show-errors>
           <label class="control-label" for="roles">Roles</label>
           <div class="controls">
             <input class="form-control" type="text" name="roles" ng-model="user.roles" id="roles" ng-list required />

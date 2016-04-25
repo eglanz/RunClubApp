@@ -10,10 +10,15 @@
     </div>
   </div>
   <div class="list-group">
+    <div class="checkbox">
+      <label><input type="checkbox" id="sort-grad-date" name="sort-grad-date" ng-model="sort_grad_date" ng-change="pageChanged()">Sort by graduation date</label>
+    </div>
     <a ng-repeat="user in pagedItems" ui-sref="admin.user({userId: user._id})" class="list-group-item">
       <h4 class="list-group-item-heading" ng-bind="user.username"></h4>
-      <p class="list-group-item-text pull-right small" ng-bind="user.roles"></p>
+      <p class="list-group-item-text small" style="float:right" ng-bind="user.roles"></p>
+      <p class="list-group-item-text small" ng-if="user.inactive === true" style="float:right"><span style="color:red">Inactive</span>, </p>
       <p class="list-group-item-text" ng-bind="user.email"></p>
+      <p class="list-group-item-text" ng-if="user.graduationYear !== -1">Graduation Date: {{user.graduationSem === 0 ? 'Spring ' : 'Fall '}}{{user.graduationYear}}</p>
     </a>
   </div>
 
