@@ -37,6 +37,19 @@
           pageTitle : 'locations Create'
         }
       })
+      .state('locations.training_create', {
+        url: '/training/create',
+        templateUrl: 'modules/locations/client/views/form-training.client.view.html',
+        controller: 'TrainingController',
+        controllerAs: 'vm',
+        resolve: {
+          planResolve: newPlan
+        },
+        data: {
+          roles: ['admin'],
+          pageTitle : 'Plan Create'
+        }
+      })
       .state('locations.edit', {
         url: '/:locationId/edit',
         templateUrl: 'modules/locations/client/views/form-location.client.view.html',
@@ -48,6 +61,19 @@
         data: {
           roles: ['user', 'admin'],
           pageTitle: 'Edit location {{ locationResolve.title }}'
+        }
+      })
+      .state('locations.training_edit', {
+        url: '/training/:planId/edit',
+        templateUrl: 'modules/locations/client/views/form-training.client.view.html',
+        controller: 'TrainingController',
+        controllerAs: 'vm',
+        resolve: {
+          planResolve: getPlan
+        },
+        data: {
+          roles: ['admin'],
+          pageTitle: 'Edit plan {{ planResolve.race }}'
         }
       })
       .state('locations.recops', {
@@ -68,6 +94,16 @@
         data: {
           roles: ['user', 'admin'],
           pageTitle: 'Recommendation List'
+        }
+      })
+      .state('locations.training', {
+        url: '/training',
+        templateUrl: 'modules/locations/client/views/training.client.view.html',
+        controller: 'TrainingListController',
+        controllerAs: 'vm',
+        data: {
+          roles: ['user', 'admin'],
+          pageTitle: 'Training Plans'
         }
       })
       .state('locations.view', {
@@ -92,11 +128,25 @@
       locationId: $stateParams.locationId
     }).$promise;
   }
+  
+  getPlan.$inject = ['$stateParams', 'TrainingService'];
+
+  function getPlan($stateParams, TrainingService) {
+    return TrainingService.get({
+      planId: $stateParams.planId
+    }).$promise;
+  }
 
   newLocation.$inject = ['LocationsService'];
 
   function newLocation(LocationsService) {
     return new LocationsService();
+  }
+  
+  newPlan.$inject = ['TrainingService'];
+
+  function newPlan(TrainingService) {
+    return new TrainingService();
   }
 })();
 

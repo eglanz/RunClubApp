@@ -85,9 +85,9 @@ exports.delete = function (req, res) {
 exports.list = function (req, res) {
   Executive.find().sort('-created').exec(function (err, executives) {
     if (err) {
-      return res.status(400).send({
+      /*return res.status(400).send({
         message: errorHandler.getErrorMessage(err)
-      });
+      });*/
     } else {
       res.json(executives);
     }

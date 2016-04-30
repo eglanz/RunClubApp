@@ -35,5 +35,17 @@
       state: 'locations.recops',
       roles: ['*']
     });
+    
+    Menus.addSubMenuItem('topbar', 'locations', {
+      title: 'Training Plans',
+      state: 'locations.training',
+      roles: ['*']
+    });
+    
+    Menus.addSubMenuItem('topbar', 'locations', {
+      title: 'Create Training Plan',
+      state: 'locations.training_create',
+      roles: ['admin']
+    });
   }
 })();

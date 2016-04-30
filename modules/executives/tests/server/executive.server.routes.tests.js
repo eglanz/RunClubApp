@@ -95,8 +95,10 @@ describe('Executive CRUD tests', function () {
                 // Set assertions
                 (executives[0].firstName).should.match('Ham');
 
-                // Call the assertion callback
-                done();
+                request(app).delete('/api/executives/'+executives[0]._id).end(function (req, res){
+                  // Call the assertion callback
+                  done();
+                });
               });
           });
       });
@@ -115,6 +117,7 @@ describe('Executive CRUD tests', function () {
   it('should not be able to save an executive if no firstName is provided', function (done) {
     // Invalidate 
     executive.firstName = '';
+    executive.email = '';
 
     agent.post('/api/auth/signin')
       .send(credentials)
@@ -142,7 +145,22 @@ describe('Executive CRUD tests', function () {
       });
   });
 
- 
+  it('should be able to get a single executive if not signed in', function (done) {
+    // Create new article model instance
+    var executiveObj = new Executive(executive);
+
+    // Save the article
+    executiveObj.save(function () {
+      request(app).get('/api/executives/' + executiveObj._id)
+        .end(function (req, res) {
+          // Set assertion
+          res.body.should.be.instanceof(Object);
+  
+          // Call the assertion callback
+          done();
+        });
+    });
+  });
 
   it('should be able to get a list of executives if not signed in', function (done) {
     // Create new article model instance
@@ -183,8 +201,7 @@ describe('Executive CRUD tests', function () {
       .end(function (req, res) {
         // Set assertion
         res.body.should.be.instanceof(Object).and.have.property('message', 'No leader with that identifier has been found');
-
-        // Call the assertion callback
+        
         done();
       });
   });

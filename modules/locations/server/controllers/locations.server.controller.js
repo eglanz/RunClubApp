@@ -6,6 +6,7 @@
 var path = require('path'),
   mongoose = require('mongoose'),
   Location = mongoose.model('Location'),
+  Plan = mongoose.model('Plan'),
   errorHandler = require(path.resolve('./modules/core/server/controllers/errors.server.controller'));
 
 var fs = require('fs');
@@ -28,6 +29,22 @@ exports.create = function (req, res) {
   });
 };
 
+exports.create_plan = function (req, res) {
+  console.log('create plan');
+  var plan = new Plan(req.body);
+  //location.user = req.user;
+
+  plan.save(function (err) {
+    if (err) {
+      return res.status(400).send({
+        message:  err.message
+      });
+    } else {
+      res.json(plan);
+    }
+  });
+};
+
 /**
  * Show the current location
  */
@@ -40,6 +57,13 @@ exports.read = function (req, res) {
   location.isCurrentUserOwner = req.user && location.user && location.user._id.toString() === req.user._id.toString() ? true : false;
 
   res.json(location);
+};
+
+exports.read_plan = function (req, res) {
+  // convert mongoose document to JSON
+  var plan = req.plan ? req.plan.toJSON() : {};
+
+  res.json(plan);
 };
 
 /**
@@ -62,6 +86,23 @@ exports.update = function (req, res) {
   });
 };
 
+exports.update_plan = function (req, res) {
+  var plan = req.plan;
+
+  plan.race = req.body.race;
+  plan.url = req.body.url;
+
+  plan.save(function (err) {
+    if (err) {
+      return res.status(400).send({
+        message: errorHandler.getErrorMessage(err)
+      });
+    } else {
+      res.json(plan);
+    }
+  });
+};
+
 /**
  * Delete an location
  */
@@ -75,6 +116,20 @@ exports.delete = function (req, res) {
       });
     } else {
       res.json(location);
+    }
+  });
+};
+
+exports.delete_plan = function (req, res) {
+  var plan = req.plan;
+
+  plan.remove(function (err) {
+    if (err) {
+      return res.status(400).send({
+        message: errorHandler.getErrorMessage(err)
+      });
+    } else {
+      res.json(plan);
     }
   });
 };
@@ -112,6 +167,18 @@ exports.list = function (req, res) {
         res.json(mlocations);
       }
     });
+  });
+};
+
+exports.list_plans = function(req,res){
+  Plan.find().sort('-created').exec(function(err, plans){
+    if(err){
+      return res.status(400).send({
+        message: errorHandler.getErrorMessage(err)
+      });
+    } else {
+      res.json(plans);
+    }
   });
 };
 
@@ -291,6 +358,27 @@ exports.locationByID = function (req, res, next, id) {
       });
     }
     req.location = location;
+    next();
+  });
+};
+
+exports.planByID = function (req, res, next, id) {
+
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(400).send({
+      message: 'Plan is invalid'
+    });
+  }
+
+  Plan.findById(id).exec(function (err, plan) {
+    if (err) {
+      return next(err);
+    } else if (!plan) {
+      return res.status(404).send({
+        message: 'plan with that identifier has been found'
+      });
+    }
+    req.plan = plan;
     next();
   });
 };
