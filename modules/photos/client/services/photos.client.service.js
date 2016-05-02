@@ -3,9 +3,16 @@
 
   angular
     .module('photos.services')
-    .factory('PhotosService', PhotosService);
+    .factory('PhotosService', PhotosService)
+    .factory('GetNames', GetNames);
 
   PhotosService.$inject = ['$resource'];
+  GetNames.$inject = ['$resource'];
+  
+    function GetNames($resource){
+    return $resource('/api/photos/', {
+    });
+  }
 
   function PhotosService($resource) {
     return $resource('api/photos/:photoId', {

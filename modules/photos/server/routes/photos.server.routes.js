@@ -17,7 +17,6 @@ module.exports = function (app) {
     .get(photos.read)
     .put(photos.update)
     .delete(photos.delete);
-
   // Finish by binding the photo middleware
   app.param('photoId', photos.photoByID);
 };

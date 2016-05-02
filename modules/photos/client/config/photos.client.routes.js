@@ -20,6 +20,7 @@
         controller: 'PhotosListController',
         controllerAs: 'vm',
         data: {
+          roles: ['user', 'admin'],
           pageTitle: 'Photos List'
         }
       })
@@ -29,7 +30,7 @@
         controller: 'PhotosController',
         controllerAs: 'vm',
         resolve: {
-          photoResolve: newPhoto
+          photoResolve: newPhoto, getNames
         },
         data: {
           roles: ['user', 'admin'],
@@ -42,7 +43,7 @@
         controller: 'PhotosController',
         controllerAs: 'vm',
         resolve: {
-          photoResolve: getPhoto
+          photoResolve: getPhoto, getNames
         },
         data: {
           roles: ['user', 'admin'],
@@ -52,17 +53,24 @@
       .state('photos.view', {
         url: '/:photoId',
         templateUrl: 'modules/photos/client/views/view-photo.client.view.html',
-        controller: 'PhotosController',
+        controller: 'PhotosControllerView',
         controllerAs: 'vm',
         resolve: {
           photoResolve: getPhoto
         },
         data:{
+          roles: ['user', 'admin'],
           pageTitle: 'Photo {{ photoResolve.title }}'
         }
       });
   }
-
+  getNames.$inject = ['$stateParams', 'GetNames'];
+  
+    function getNames($stateParams, GetNames) {
+    return GetNames.query({
+    }).$promise;
+  }
+  
   getPhoto.$inject = ['$stateParams', 'PhotosService'];
 
   function getPhoto($stateParams, PhotosService) {

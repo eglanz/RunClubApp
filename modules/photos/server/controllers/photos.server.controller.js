@@ -5,11 +5,13 @@
  */
 var path = require('path'),
   mongoose = require('mongoose'),
+  multer = require('multer'),
+  config = require(path.resolve('./config/config')),
   Photo = mongoose.model('Photo'),
   errorHandler = require(path.resolve('./modules/core/server/controllers/errors.server.controller'));
 
 /**
- * Create an photo
+ * Create an article
  */
 exports.create = function (req, res) {
   var photo = new Photo(req.body);
@@ -115,3 +117,4 @@ exports.photoByID = function (req, res, next, id) {
     next();
   });
 };
+

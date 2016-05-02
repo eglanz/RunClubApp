@@ -27,6 +27,8 @@ module.exports = {
         
         'https://maps.googleapis.com/maps/api/js?sensor=false&libraries=places,geometry',
         'public/lib/ngmap/build/scripts/ng-map.min.js',
+        //'public/lib/aws-sdk/dist/aws-sdk.min.js',
+        'public/lib/aws-sdk-js/dist/aws-sdk.min.js',
         
         'public/lib/socket.io-client/socket.io.js',
         'public/lib/angular-socket-io/socket.js',
