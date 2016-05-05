@@ -13,7 +13,7 @@
       </small>
       <h4 class="list-group-item-heading" ng-bind="photo.title"></h4>
       <p class="list-group-item-text" ng-bind="photo.content"></p>
-      <img ng-src="{{'https://s3-us-west-2.amazonaws.com/photobucketsoftwareproject/' + photo.ImageURL}}" alt="Photo Not Available" class="img-thumbnail" width="304" height="236" ></img>
+      <img ng-src="{{src + photo.ImageURL}}" alt="Photo Not Available" class="img-thumbnail" width="304" height="236" ></img>
     </a>
   </div>
   <div class="alert alert-warning text-center" ng-if="vm.photos.$resolved && !vm.photos.length">

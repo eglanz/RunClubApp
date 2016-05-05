@@ -12,7 +12,7 @@
       .state('photos', {
         abstract: true,
         url: '/photos',
-        template: '<ui-view/>'
+        template: '<ui-view/>',
       })
       .state('photos.list', {
         url: '',
@@ -30,7 +30,9 @@
         controller: 'PhotosController',
         controllerAs: 'vm',
         resolve: {
-          photoResolve: newPhoto, getNames
+          photoResolve: newPhoto, 
+          nameResolve: getNames, 
+          awsResolve: getAWS
         },
         data: {
           roles: ['user', 'admin'],
@@ -43,7 +45,9 @@
         controller: 'PhotosController',
         controllerAs: 'vm',
         resolve: {
-          photoResolve: getPhoto, getNames
+          nameResolve: getNames,
+          photoResolve: getPhoto,
+          awsResolve: getAWS
         },
         data: {
           roles: ['user', 'admin'],
@@ -56,7 +60,8 @@
         controller: 'PhotosControllerView',
         controllerAs: 'vm',
         resolve: {
-          photoResolve: getPhoto
+          photoResolve: getPhoto,
+          awsResolve: getAWS
         },
         data:{
           roles: ['user', 'admin'],
@@ -66,9 +71,15 @@
   }
   getNames.$inject = ['$stateParams', 'GetNames'];
   
-    function getNames($stateParams, GetNames) {
+  function getNames($stateParams, GetNames) {
     return GetNames.query({
     }).$promise;
+  }
+  
+  getAWS.$inject = ['$stateParams', 'GetAWS'];
+  
+  function getAWS($stateParams, GetAWS) {
+    return GetAWS;
   }
   
   getPhoto.$inject = ['$stateParams', 'PhotosService'];

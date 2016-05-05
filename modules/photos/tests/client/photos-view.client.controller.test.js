@@ -1,15 +1,15 @@
 (function () {
   'use strict';
 
-  describe('Articles Controller Tests', function () {
+  describe('Photos Controller Tests', function () {
     // Initialize global variables
-    var ArticlesController,
+    var PhotosControllerView,
       $scope,
       $httpBackend,
       $state,
       Authentication,
-      ArticlesService,
-      mockArticle;
+      PhotosService,
+      mockPhoto;
 
     // The $resource service augments the response object with methods for updating and deleting the resource.
     // If we were to use the standard toEqual matcher, our tests would fail because the test values would not match
@@ -33,24 +33,41 @@
     // Then we can start by loading the main application module
     beforeEach(module(ApplicationConfiguration.applicationModuleName));
 
+    /*beforeEach(function(){
+      module('photos.services');
+
+      GetAWS = {
+        currentItem : '123'
+      };
+      GetNames = {
+        currentItem : '123'
+      };
+      
+      
+
+    });*/
+    
+
     // The injector ignores leading and trailing underscores here (i.e. _$httpBackend_).
     // This allows us to inject a service but then attach it to a variable
     // with the same name as the service.
-    beforeEach(inject(function ($controller, $rootScope, _$state_, _$httpBackend_, _Authentication_, _ArticlesService_) {
+    beforeEach(inject(function ($controller, $rootScope, _$state_, _$httpBackend_, _Authentication_, _PhotosService_) {
       // Set a new global scope
       $scope = $rootScope.$new();
+
 
       // Point global variables to injected services
       $httpBackend = _$httpBackend_;
       $state = _$state_;
       Authentication = _Authentication_;
-      ArticlesService = _ArticlesService_;
+      PhotosService = _PhotosService_;
 
-      // create mock article
-      mockArticle = new ArticlesService({
+      // create mock photo
+      mockPhoto = new PhotosService({
         _id: '525a8422f6d0f87f0e407a33',
-        title: 'An Article about MEAN',
-        content: 'MEAN rocks!'
+        title: 'An Photo about MEAN',
+        content: 'MEAN rocks!',
+        ImageURL: 'something'
       });
 
       // Mock logged in user
@@ -58,46 +75,54 @@
         roles: ['user']
       };
 
-      // Initialize the Articles controller.
-      ArticlesController = $controller('ArticlesController as vm', {
+      // Initialize the Photos controller.
+      PhotosControllerView = $controller('PhotosControllerView as vm', {
         $scope: $scope,
-        articleResolve: {}
+        photoResolve: {},
+        nameResolve: {},
+        awsResolve: {}
       });
 
       //Spy on state go
       spyOn($state, 'go');
     }));
 
-    describe('vm.save() as create', function () {
-      var sampleArticlePostData;
+    /*describe('vm.save() as create', function () {
+      var samplePhotoPostData;
 
       beforeEach(function () {
-        // Create a sample article object
-        sampleArticlePostData = new ArticlesService({
-          title: 'An Article about MEAN',
-          content: 'MEAN rocks!'
+        // Create a sample photo object
+        samplePhotoPostData = new PhotosService({
+        
+          title: 'An Photo about MEAN',
+          content: 'MEAN rocks!',
+          ImageURL: 'url'
         });
 
-        $scope.vm.article = sampleArticlePostData;
+        $scope.vm.photo = samplePhotoPostData;
       });
 
-      it('should send a POST request with the form input values and then locate to new object URL', inject(function (ArticlesService) {
+      it('should send a POST request with the form input values and then locate to new object URL', inject(function (PhotosService) {
+        var fakeFile = { name: 'example.txt' };
+        $scope.file = fakeFile;
         // Set POST response
-        $httpBackend.expectPOST('api/articles', sampleArticlePostData).respond(mockArticle);
+        $httpBackend.expectPOST('api/photos', samplePhotoPostData).respond(mockPhoto);
 
         // Run controller functionality
         $scope.vm.save(true);
         $httpBackend.flush();
 
-        // Test URL redirection after the article was created
-        expect($state.go).toHaveBeenCalledWith('articles.view', {
-          articleId: mockArticle._id
+        // Test URL redirection after the photo was created
+        expect($state.go).toHaveBeenCalledWith('photos.view', {
+          photoId: mockPhoto._id
         });
       }));
 
       it('should set $scope.vm.error if error', function () {
+        var fakeFile = { name: 'example.txt' };
+        $scope.file = fakeFile;
         var errorMessage = 'this is an error message';
-        $httpBackend.expectPOST('api/articles', sampleArticlePostData).respond(400, {
+        $httpBackend.expectPOST('api/photos', samplePhotoPostData).respond(400, {
           message: errorMessage
         });
 
@@ -106,31 +131,31 @@
 
         expect($scope.vm.error).toBe(errorMessage);
       });
-    });
+    });*/
 
-    describe('vm.save() as update', function () {
+    /*describe('vm.save() as update', function () {
       beforeEach(function () {
-        // Mock article in $scope
-        $scope.vm.article = mockArticle;
+        // Mock photo in $scope
+        $scope.vm.photo = mockPhoto;
       });
 
-      it('should update a valid article', inject(function (ArticlesService) {
+      it('should update a valid photo', inject(function (PhotosService) {
         // Set PUT response
-        $httpBackend.expectPUT(/api\/articles\/([0-9a-fA-F]{24})$/).respond();
+        $httpBackend.expectPUT(/api\/photos\/([0-9a-fA-F]{24})$/).respond();
 
         // Run controller functionality
         $scope.vm.save(true);
         $httpBackend.flush();
 
         // Test URL location to new object
-        expect($state.go).toHaveBeenCalledWith('articles.view', {
-          articleId: mockArticle._id
+        expect($state.go).toHaveBeenCalledWith('photos.view', {
+          photoId: mockPhoto._id
         });
       }));
 
-      it('should set $scope.vm.error if error', inject(function (ArticlesService) {
+      it('should set $scope.vm.error if error', inject(function (PhotosService) {
         var errorMessage = 'error';
-        $httpBackend.expectPUT(/api\/articles\/([0-9a-fA-F]{24})$/).respond(400, {
+        $httpBackend.expectPUT(/api\/photos\/([0-9a-fA-F]{24})$/).respond(400, {
           message: errorMessage
         });
 
@@ -139,27 +164,27 @@
 
         expect($scope.vm.error).toBe(errorMessage);
       }));
-    });
+    });*/
 
     describe('vm.remove()', function () {
       beforeEach(function () {
-        //Setup articles
-        $scope.vm.article = mockArticle;
+        //Setup photos
+        $scope.vm.photo = mockPhoto;
       });
 
-      it('should delete the article and redirect to articles', function () {
+      it('should delete the photo and redirect to photos', function () {
         //Return true on confirm message
         spyOn(window, 'confirm').and.returnValue(true);
 
-        $httpBackend.expectDELETE(/api\/articles\/([0-9a-fA-F]{24})$/).respond(204);
+        $httpBackend.expectDELETE(/api\/photos\/([0-9a-fA-F]{24})$/).respond(204);
 
         $scope.vm.remove();
         $httpBackend.flush();
 
-        expect($state.go).toHaveBeenCalledWith('articles.list');
+        expect($state.go).toHaveBeenCalledWith('photos.list');
       });
 
-      it('should should not delete the article and not redirect', function () {
+      it('should should not delete the photo and not redirect', function () {
         //Return false on confirm message
         spyOn(window, 'confirm').and.returnValue(false);
 

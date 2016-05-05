@@ -1,15 +1,16 @@
 (function () {
   'use strict';
 
-  describe('Articles List Controller Tests', function () {
+  describe('Photos List Controller Tests', function () {
     // Initialize global variables
-    var ArticlesListController,
+    var PhotosListController,
       $scope,
       $httpBackend,
       $state,
       Authentication,
-      ArticlesService,
-      mockArticle;
+      PhotosService,
+      mockPhoto;//,
+      //photoResolve;
 
     // The $resource service augments the response object with methods for updating and deleting the resource.
     // If we were to use the standard toEqual matcher, our tests would fail because the test values would not match
@@ -29,14 +30,19 @@
         }
       });
     });
+    
+    //beforeEach(module('photos.services'));
+
 
     // Then we can start by loading the main application module
     beforeEach(module(ApplicationConfiguration.applicationModuleName));
+    
+    //var mockResolveFactory;
 
     // The injector ignores leading and trailing underscores here (i.e. _$httpBackend_).
     // This allows us to inject a service but then attach it to a variable
     // with the same name as the service.
-    beforeEach(inject(function ($controller, $rootScope, _$state_, _$httpBackend_, _Authentication_, _ArticlesService_) {
+    beforeEach(inject(function ($controller, $rootScope, _$state_, _$httpBackend_, _Authentication_, _PhotosService_/*, _photoResolve_*/) {
       // Set a new global scope
       $scope = $rootScope.$new();
 
@@ -44,12 +50,14 @@
       $httpBackend = _$httpBackend_;
       $state = _$state_;
       Authentication = _Authentication_;
-      ArticlesService = _ArticlesService_;
+      PhotosService = _PhotosService_;
+      //photoResolve = _photoResolve_;
+      //$scope.vm.photoResolve = 'asldfj;lk';
 
-      // create mock article
-      mockArticle = new ArticlesService({
+      // create mock photo
+      mockPhoto = new PhotosService({
         _id: '525a8422f6d0f87f0e407a33',
-        title: 'An Article about MEAN',
+        title: 'An Photo about MEAN',
         content: 'MEAN rocks!'
       });
 
@@ -57,34 +65,53 @@
       Authentication.user = {
         roles: ['user']
       };
+      
+      /*PhotosListController.factory('photoResolve', function () {
+        return {
+          title: "StarCraft"
+        };
+      });*/
+      
+      /*module('photos', function($provide) {
+            mockResolveFactory = {
+                get: function() {
+                    id: 16
+                }
+            };
+            $provide.value('photoResolve', mockResolveFactory);
+        });*/
 
-      // Initialize the Articles List controller.
-      ArticlesListController = $controller('ArticlesListController as vm', {
-        $scope: $scope
+      // Initialize the Photos List controller.
+      PhotosListController = $controller('PhotosListController as vm', {
+        $scope: $scope//,
+        //photoResolve: 'anything'
       });
+      
+
 
       //Spy on state go
       spyOn($state, 'go');
     }));
 
     describe('Instantiate', function () {
-      var mockArticleList;
+      var mockPhotoList;
 
       beforeEach(function () {
-        mockArticleList = [mockArticle, mockArticle];
+        mockPhotoList = [mockPhoto, mockPhoto];
       });
 
-      it('should send a GET request and return all articles', inject(function (ArticlesService) {
+      it('should send a GET request and return all photos', inject(function (PhotosService) {
         // Set POST response
-        $httpBackend.expectGET('api/articles').respond(mockArticleList);
+
+        $httpBackend.expectGET('api/photos').respond(mockPhotoList);
 
 
         $httpBackend.flush();
 
         // Test form inputs are reset
-        expect($scope.vm.articles.length).toEqual(2);
-        expect($scope.vm.articles[0]).toEqual(mockArticle);
-        expect($scope.vm.articles[1]).toEqual(mockArticle);
+        expect($scope.vm.photos.length).toEqual(2);
+        expect($scope.vm.photos[0]).toEqual(mockPhoto);
+        expect($scope.vm.photos[1]).toEqual(mockPhoto);
 
       }));
     });

@@ -9,7 +9,7 @@
   PhotosService.$inject = ['$resource'];
   GetNames.$inject = ['$resource'];
   
-    function GetNames($resource){
+  function GetNames($resource){
     return $resource('/api/photos/', {
     });
   }
