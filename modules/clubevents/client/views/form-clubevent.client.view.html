@@ -25,8 +25,8 @@
           <input type="time" ng-model="vm.clubevent.endtime" name"endtime" style="width: 175px" id="endtime" class="form-control" ng-model-options="{ timezone: '-600' }" required>
         </div>
         <div class="form-group">
-          <label class="control-label" for="routes"> Routes: </label><br>
-          <select name="routesSelect" id="routesSelect" ng-model="vm.clubevent.routes" 
+          <label class="control-label" for="routes"> Routes </label><br>
+          <select name="routesSelect" id="routesSelect" ng-attr-size="{{vm.locations.length}}" ng-model="vm.clubevent.routes" 
               ng-options="l.name for l in vm.locations" multiple>
               <option value="l._id">--Routes--</option>
           </select><br>
