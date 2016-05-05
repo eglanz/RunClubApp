@@ -1,0 +1,32 @@
+
+<section>
+  <div class="page-header"  ng-if="vm.plans.$resolved">
+    <div class="jumbotron text-center recroutes">
+    <h1 class="routes">Training Plans</h1>
+    </div>
+  </div>
+  
+  <div class="list-group">
+    <a ng-repeat="plan in vm.plans" class="list-group-item">
+      
+      <h2 class="list-group-item-heading" ng-bind="plan.name"></h2>
+      <table style="width:100%">
+        <tr>
+          <td><p>Race</p>
+          <h4 class="list-group-item-heading race" ng-bind="plan.race"></h4></td>
+          <td><p>URL</p>
+          <a ng-click="vm.follow(plan.url)" class="btn btn-primary btn-lg btn-view">Go To Site</a></td>
+          <td ng-if="vm.isAdmin"><p>Options</p><a ng-click="vm.remove(plan)" class="btn btn-primary btn-lg btn-view">Remove</a></td>
+        </tr>
+      </table>
+      
+    </a>
+  </div>
+  <div class="alert alert-warning text-center" ng-if="vm.plans.$resolved && !vm.plans.length">
+    No plans yet
+  </div>
+  <div id="hey" ng-if="!vm.plans.$resolved">
+  </div>
+</section>
+
+
