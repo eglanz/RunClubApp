@@ -35,7 +35,11 @@ exports.read = function (req, res) {
 
   // Add a custom field to the Article, for determining if the current User is the "owner".
   // NOTE: This field is NOT persisted to the database, since it doesn't exist in the Article model.
-  executive.isAdmin = req.user.roles.indexOf('admin') !== -1 ? true : false;
+  if(req.user){
+    executive.isAdmin = req.user.roles.indexOf('admin') !== -1 ? true : false;
+  }else{
+    executive.isAdmin = false;
+  }
 
   res.json(executive);
 };
