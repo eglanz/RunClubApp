@@ -16,7 +16,8 @@
     "google": true,
     "angular": true,
     "io": true,
-    "ApplicationConfiguration": true
+    "ApplicationConfiguration": true,
+    "AWS": false
   },
   "predef": [ // Extra globals.
     "inject",

@@ -1,0 +1,39 @@
+<section>
+  <script src="https://sdk.amazonaws.com/js/aws-sdk-2.0.0-rc.14.min.js"></script>
+<script src="scripts/services/ngAws.js"></script>
+  <div class="page-header">
+    <h1>{{vm.photo._id ? 'Edit Photo' : 'New Photo'}}</h1>
+  </div>
+  <div class="col-md-12">
+    <textarea id="message" disable="true" readonly="true" rows="1" style="border: none; outline: none; overflow: auto; -webkit-box-shadow: none; -moz-box-shadow: none;  box-shadow: none; font-size: 40px"></textarea>
+    <form name="vm.form.photoForm" class="form-horizontal" ng-submit="vm.upload(vm.form.photoForm.$valid)" novalidate>
+      <fieldset>
+        <div class="form-group" show-errors>
+          <label class="control-label" for="title">Title</label>
+          <input name="title" type="text" ng-model="vm.photo.title" id="title" class="form-control" placeholder="Title" required>
+          <div ng-messages="vm.form.photoForm.title.$error" role="alert">
+            <p class="help-block error-text" ng-message="required">Photo title is required.</p>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="control-label" for="description">Description</label>
+          <textarea name="description" data-ng-model="vm.photo.content" id="content" class="form-control" cols="30" rows="10" placeholder="Description"></textarea>
+        </div>
+        <div ng-show='getState()'>
+          <input name="file" type="file" ng-model="myFile" file/>
+          <label for="file" ng-show="myForm.myFile.$error.validFile">File is required</label>
+        </div>
+        <div ng-show="error" class="text-center text-danger">
+          <strong ng-bind="error"></strong>
+        </div >
+        <div class="form-group">
+          <button type="submit" id="submitbtn" class="btn btn-default">{{vm.photo._id ? 'Update' : 'Create'}}</button>
+        </div>
+        <div ng-show="vm.error" class="text-danger">
+          <strong ng-bind="vm.error"></strong>
+        </div>
+      </fieldset>
+    </form>
+    
+  </div>
+</section>

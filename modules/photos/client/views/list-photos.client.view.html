@@ -1,0 +1,22 @@
+<section>
+  <div class="page-header">
+    <h1>Club Photos</h1>
+  </div>
+  <div class="list-group">
+    <a ng-repeat="photo in vm.photos" ui-sref="photos.view({ photoId: photo._id })" class="list-group-item">
+      <small class="list-group-item-text">
+        Posted on
+        <span ng-bind="photo.created | date:'mediumDate'"></span>
+        by
+        <span ng-if="photo.user" ng-bind="photo.user.displayName"></span>
+        <span ng-if="!article.user">Deleted User</span>
+      </small>
+      <h4 class="list-group-item-heading" ng-bind="photo.title"></h4>
+      <p class="list-group-item-text" ng-bind="photo.content"></p>
+      <img ng-src="{{src + photo.ImageURL}}" alt="Photo Not Available" class="img-thumbnail" width="304" height="236" ></img>
+    </a>
+  </div>
+  <div class="alert alert-warning text-center" ng-if="vm.photos.$resolved && !vm.photos.length">
+    No Photos Yet
+  </div>
+</section>
