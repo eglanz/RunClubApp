@@ -175,7 +175,7 @@
       it('should delete the photo and redirect to photos', function () {
         //Return true on confirm message
         spyOn(window, 'confirm').and.returnValue(true);
-
+        $httpBackend.expectGET(/api\/photo\/key$/).respond({ KEY: 'asldfajsld', SECRET: 'asldkj' });
         $httpBackend.expectDELETE(/api\/photos\/([0-9a-fA-F]{24})$/).respond(204);
 
         $scope.vm.remove();

@@ -15,7 +15,6 @@
     vm.error = null;
     vm.form = {};
 
-    //vm.remove = remove;
     vm.save = save;
    // vm.getNames = nameResolve;
     vm.edit = true;
@@ -52,7 +51,6 @@
           access_key: data.KEY,
           secret_key: data.SECRET
         };
-        alert(data.KEY + 'keys ' + data.SECRET);
       
         if (!isValid) {
           $scope.$broadcast('show-errors-check-validity', 'vm.form.photoForm');
@@ -126,14 +124,6 @@
       });
     };
 
-    
-    /*// Remove existing Photo
-    function remove() {
-      if (confirm('Are you sure you want to delete?')) {
-        vm.photo.$remove($state.go('photos.list'));
-      }
-    }*/
-    
     
     function successCallback(res) {
       $state.go('photos.view', {
