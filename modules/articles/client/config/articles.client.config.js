@@ -9,7 +9,7 @@
 
   function menuConfig(Menus) {
     Menus.addMenuItem('topbar', {
-      title: 'Announcements',
+      title: 'News',
       state: 'articles',
       type: 'dropdown',
       roles: ['*']
@@ -17,7 +17,7 @@
 
     // Add the dropdown list item
     Menus.addSubMenuItem('topbar', 'articles', {
-      title: 'Announcements',
+      title: 'News',
       state: 'articles.list'
     });
 
