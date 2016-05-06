@@ -31,17 +31,6 @@
       secret_key: ''
     };
 
-    $http.get('/api/photo/key').success(function(data) {
-      $scope.creds = {
-        bucket: 'photobucketsoftwareproject',
-        access_key: data.KEY,
-        secret_key: data.SECRET
-      };
-      alert(data.KEY + 'keys ' + data.SECRET);
-    });
-
-
-    
     $scope.getState = function()
     {
       if(typeof vm.photo._id !== 'undefined')
