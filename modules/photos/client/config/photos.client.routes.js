@@ -30,9 +30,9 @@
         controller: 'PhotosController',
         controllerAs: 'vm',
         resolve: {
-          photoResolve: newPhoto, 
-          nameResolve: getNames, 
-          awsResolve: getAWS
+          photoResolve: newPhoto//, 
+          //nameResolve: getNames, 
+          //awsResolve: getAWS
         },
         data: {
           roles: ['user', 'admin'],

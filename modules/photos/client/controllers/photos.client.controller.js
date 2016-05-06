@@ -4,9 +4,9 @@
     .module('photos')
     .controller('PhotosController', PhotosController);
  
-  PhotosController.$inject = ['$scope', '$state', 'photoResolve', 'Authentication','FileUploader','$timeout', '$window', 'PhotosService', 'nameResolve', 'awsResolve'];
+  PhotosController.$inject = ['$scope', '$http', '$state', 'photoResolve', 'Authentication','FileUploader','$timeout', '$window', 'PhotosService'/*, 'nameResolve', 'awsResolve'*/];
 
-  function PhotosController($scope, $state, photoResolve, Authentication, FileUploader, $timeout, $window, PhotosService, nameResolve, awsResolve) {
+  function PhotosController($scope, $http, $state, photoResolve, Authentication, FileUploader, $timeout, $window, PhotosService/*, nameResolve, awsResolve*/) {
 
     var vm = this;
     
@@ -14,9 +14,10 @@
     vm.authentication = Authentication;
     vm.error = null;
     vm.form = {};
+
     //vm.remove = remove;
     vm.save = save;
-    vm.getNames = nameResolve;
+   // vm.getNames = nameResolve;
     vm.edit = true;
     
     $scope.user = Authentication.user;
@@ -24,12 +25,21 @@
     $scope.message = document.getElementById('message');
     $scope.submit = document.getElementById('submitbtn');
     
-
     $scope.creds = {
-      bucket: awsResolve.bucket,
-      access_key: awsResolve.key,
-      secret_key: awsResolve.secret
+      bucket: 'photobucketsoftwareproject',
+      access_key: '',
+      secret_key: ''
     };
+
+    $http.get( "/api/photo/key").success(function( data ) {
+      $scope.creds = {
+        bucket: 'photobucketsoftwareproject',
+        access_key: data.KEY,
+        secret_key: data.SECRET_KEY
+      };
+    });
+
+
     
     $scope.getState = function()
     {
@@ -77,7 +87,7 @@
           {
             // Configure The S3 Object 
             AWS.config.update({ accessKeyId: $scope.creds.access_key, secretAccessKey: $scope.creds.secret_key });
-            AWS.config.region = awsResolve.region;
+            AWS.config.region = 'us-west-2';
             var bucket = new AWS.S3({ params: { Bucket: $scope.creds.bucket } });
             if($scope.file) {
               var params = { Key: $scope.file.name, ContentType: $scope.file.type, Body: $scope.file, ServerSideEncryption: 'AES256' };
