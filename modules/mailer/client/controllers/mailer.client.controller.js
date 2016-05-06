@@ -16,6 +16,8 @@
     vm.form = {};
     vm.send = send;
     
+    $scope.onlyAdminsToggle = false;
+    
     var Mailer = $resource('api/massmailer', {}, {
       massMailer: { method: 'POST' }
     });
@@ -26,7 +28,7 @@
         return false;
       }
       else {
-        Mailer.massMailer({},{ content: vm.message.content, subject: vm.message.subject },successCallback,errorCallback);
+        Mailer.massMailer({},{ onlyAdminsToggle: $scope.onlyAdminsToggle, content: vm.message.content, subject: vm.message.subject },successCallback,errorCallback);
       }
       
       function successCallback(res) {

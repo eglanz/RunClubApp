@@ -19,6 +19,12 @@
             <p class="help-block error-text" ng-message="required">Message must have content.</p>
           </div>
         </div>
+        <div class="form-group checkbox" show-errors>
+          <label><input type="checkbox" id="onlyAdminsToggle" name="onlyAdminsToggle" ng-model="onlyAdminsToggle">Only Send Email to Admins</label>
+          <div ng-messages="userForm.onlyAdminsToggle.$error" role="alert">
+            <p class="help-block error-text" ng-message="required">Error setting option.</p>
+          </div>
+        </div>
         <div class="form-group">
           <button type="submit" class="btn btn-default">Send</button>
         </div>
