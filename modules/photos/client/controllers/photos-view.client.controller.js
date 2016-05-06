@@ -39,8 +39,9 @@
           bucket.deleteObject(params, function(err, data) {
             /*if (err) alert('not deleted');  // error
             else     alert('deleted'); // deleted*/
+            vm.photo.$remove($state.go('photos.list'));
           });
-          vm.photo.$remove($state.go('photos.list'));
+          
         });
       }
     }

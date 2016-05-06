@@ -12,7 +12,7 @@
       .state('photos', {
         abstract: true,
         url: '/photos',
-        template: '<ui-view/>',
+        template: '<ui-view></ui-view>',
       })
       .state('photos.list', {
         url: '',
