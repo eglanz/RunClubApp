@@ -15,7 +15,7 @@ module.exports = function (app) {
   app.get('/api/photo/key',function(req, res){
     return res.json({ KEY: process.env.KEY, SECRET: process.env.SECRET_KEY });
   });
-
+  
   // Single article routes
   app.route('/api/photos/:photoId').all(photosPolicy.isAllowed)
     .get(photos.read)

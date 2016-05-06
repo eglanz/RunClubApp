@@ -31,8 +31,8 @@
         controllerAs: 'vm',
         resolve: {
           photoResolve: newPhoto, 
-          nameResolve: getNames, 
-          awsResolve: getAWS
+          nameResolve: getNames//, 
+          //awsResolve: getAWS
         },
         data: {
           roles: ['user', 'admin'],
@@ -46,8 +46,8 @@
         controllerAs: 'vm',
         resolve: {
           nameResolve: getNames,
-          photoResolve: getPhoto,
-          awsResolve: getAWS
+          photoResolve: getPhoto//,
+          //awsResolve: getAWS
         },
         data: {
           roles: ['user', 'admin'],
@@ -60,8 +60,8 @@
         controller: 'PhotosControllerView',
         controllerAs: 'vm',
         resolve: {
-          photoResolve: getPhoto,
-          awsResolve: getAWS
+          photoResolve: getPhoto//,
+          //awsResolve: getAWS
         },
         data:{
           roles: ['user', 'admin'],
@@ -76,12 +76,14 @@
     }).$promise;
   }
   
-  getAWS.$inject = ['$stateParams', 'GetAWS'];
+ /* getAWS.$inject = ['$stateParams', 'GetAWS'];
   
   function getAWS($stateParams, GetAWS) {
-    return GetAWS.query({
-    }).$promise;
-  }
+    alert('here');
+    console.log('val ' + GetAWS);
+    return GetAWS;//.query({
+    //}).$promise;
+  }*/
   
   getPhoto.$inject = ['$stateParams', 'PhotosService'];
 
