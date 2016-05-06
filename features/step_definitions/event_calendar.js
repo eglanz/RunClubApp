@@ -1,18 +1,19 @@
 module.exports = function(){
   this.World = require("../support/world.js").World;
   
-  /*
-  this.Given(/^an event called "(.*)" has been added to the calendar$/, function(eventName, callback) {
-    var date = new Date();
-    this.browser.fill('#title',eventName);
-    this.browser.fill('#date',date.toString());
-    this.browser.fill('#starttime',date.toString());
-    this.browser.fill('#endtime',date.toString());
-    this.browser.fill('#content','Content');
-    this.browser.click('Create', callback);
-  });
-  */
+  //
+  //this.Given(/^an event called "(.*)" has been added to the calendar$/, function(eventName, callback) {
+    //var date = new Date();
+    //this.browser.fill('#title',eventName);
+    //this.browser.fill('#date',date.toString());
+    //this.browser.fill('#starttime',date.toString());
+    //this.browser.fill('#endtime',date.toString());
+    //this.browser.fill('#content','Content');
+    //this.browser.click('Create', callback);
+  //});
+  //
   this.When(/^I navigate to "(.*)"$/, function (item, callback) {
+    console.log('navigate');
     this.browser.clickLink(item, callback);
   });
   
@@ -31,13 +32,13 @@ module.exports = function(){
     //setTimeout(run(this, callback), 10000);
     
     //function run(instance) {
-      /*var myLink = instance.browser.link('a.fc-day-grid-event');
-      if (myLink != null) {
-        myLink.click();
-        callback();
-      } else {
-        callback(new Error("Expected to find an event"));
-      }*/
+      //var myLink = instance.browser.link('a.fc-day-grid-event');
+      //if (myLink != null) {
+        //myLink.click();
+        //callback();
+      //} else {
+        //callback(new Error("Expected to find an event"));
+     // }
       //instance.browser.clickLink('.fc-day-grid-event',callback);
       //instance.browser.clickLink('2:20p - 4pRunning Club Kick Off Event',callback);
     //}
@@ -78,4 +79,4 @@ module.exports = function(){
       callback(new Error("Should NOT be signed up for event"));
     }
   });
-}
+};

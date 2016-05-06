@@ -6,6 +6,7 @@ Feature: User can get route recommendations
     When I go to the url
     When I go to the sign up url
     When I sign up
+    #When I go to the url
     
   Scenario: User goes to recommendations page
     When I go to the route header

@@ -15,24 +15,22 @@ module.exports = function(){
     });
     
     this.Then(/^I should see a like button$/, function(callback){
-        this.expect("Like Route").exists
+        this.expect("Like Route").exists;
         callback();
     });
     
     this.Then(/^I should see an unlike button$/, function(callback){
-        this.expect("Unlike Route").exists
+        this.expect("Unlike Route").exists;
         callback();
     });
     
     this.When(/^I click like button$/, function(callback){
-        this.browser.clickLink("Like Route", callback)
+        this.browser.clickLink("Like Route", callback);
         //callback();
     });
     
     this.When(/^I click for six or more miles$/, function(callback){
         this.browser.clickLink('6+ miles', callback);
     });
-    
-    
 
-}
+};

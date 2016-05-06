@@ -12,9 +12,9 @@ module.exports = function(){
     
     this.When(/^I sign up$/, function(callback){
       var email = "zener" + Math.random() + "@email.com";
-      console.log(email);
+      //console.log(email);
       var username = "user" + Math.random();
-      console.log(username);
+      //console.log(username);
       this.browser.fill('input#username', username);
       this.browser.fill('input#firstName', 'Zener');
       this.browser.fill('input#lastName', 'Diode');
@@ -24,8 +24,9 @@ module.exports = function(){
     });
     
     this.Then(/^I should see "(.*)"$/, function(title, callback){
+        //console.log(title + '   ' + callback);
         var pageTitle = this.browser.text('h1');
         this.expect(pageTitle).to.equal(title);
         callback();
     });
-}
+};

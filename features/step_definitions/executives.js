@@ -9,4 +9,4 @@ module.exports = function(){
         this.browser.clickLink('Run Club Leadership',callback);
     });
 
-}
+};

@@ -5,4 +5,4 @@ module.exports = function(){
         this.browser.clickLink('Training Plans', callback);
     });
     
-}
+};

@@ -6,6 +6,7 @@ Feature: User can get their milelog and add miles
     When I go to the url
     When I go to the sign up url
     When I sign up
+    When I go to the url
     When I go to the milelog header
     When I go to the Add Miles page
     Then I should see the Add Miles title
@@ -14,6 +15,7 @@ Feature: User can get their milelog and add miles
     When I go to the url
     When I go to the sign up url
     When I sign up
+    When I go to the url
     When I go to the milelog header
     When I go to the Mile Log page
     Then I should see the Mile Log title
@@ -22,6 +24,7 @@ Feature: User can get their milelog and add miles
     When I go to the url
     When I go to the sign up url
     When I sign up
+    When I go to the url
     When I go to the milelog header
     When I go to the Add Miles page
     Then I should see the Add Miles title
@@ -32,6 +35,7 @@ Feature: User can get their milelog and add miles
     When I go to the url
     When I go to the sign up url
     When I sign up
+    When I go to the url
     When I go to the milelog header
     When I go to the Add Miles page
     Then I should see the Add Miles title

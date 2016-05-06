@@ -3,7 +3,7 @@ module.exports = function(){
 
     
     this.Then(/^I should see a view route button$/, function(callback){
-        this.expect("View Route").exists
+        this.expect("View Route").exists;
         callback();
     });
     
@@ -14,7 +14,7 @@ module.exports = function(){
     });
     
     this.When(/^I click view route button$/, function(callback){
-        this.browser.clickLink("View Route", callback)
+        this.browser.clickLink("View Route", callback);
         //callback();
     });
     
@@ -23,8 +23,8 @@ module.exports = function(){
     });
 
     this.Then(/^I should see a create route button$/, function(callback){
-        this.expect("Create").exists
+        this.expect("Create").exists;
         callback();
     });
 
-}
+};

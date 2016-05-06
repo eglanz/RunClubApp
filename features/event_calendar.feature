@@ -3,6 +3,9 @@ Feature: User can view a calendar of events and sign up for the events, admin ca
     When I go to the url
     When I go to the sign up url
     When I sign up
+    When I go to the url
+    When I go to the event header
+    #When I navigate to "Events"
     #When I navigate to "Create Event"
     #Given an event called "My Event" has been added to the calendar
     #When I go to the url
