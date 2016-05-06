@@ -35,9 +35,9 @@
       $scope.creds = {
         bucket: 'photobucketsoftwareproject',
         access_key: data.KEY,
-        secret_key: data.SECRET_KEY
+        secret_key: data.SECRET
       };
-      alert(data.KEY + 'keys ' + data.SECRET_KEY);
+      alert(data.KEY + 'keys ' + data.SECRET);
     });
 
 
