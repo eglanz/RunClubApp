@@ -8,9 +8,15 @@
 
   PhotosService.$inject = ['$resource'];
   GetNames.$inject = ['$resource'];
+  GetAWS.$inject = ['$resource'];
   
   function GetNames($resource){
     return $resource('/api/photos/', {
+    });
+  }
+  
+  function GetAWS($resource){
+    return $resource('/api/photo/key',{
     });
   }
 

@@ -4,12 +4,12 @@
     .module('photos')
     .controller('PhotosController', PhotosController);
  
-  PhotosController.$inject = ['$scope', '$http', '$state', 'photoResolve', 'Authentication','FileUploader','$timeout', '$window', 'PhotosService'/*, 'nameResolve', 'awsResolve'*/];
+  PhotosController.$inject = ['$scope', '$http', '$state', 'photoResolve', 'Authentication','FileUploader','$timeout', '$window', 'PhotosService', 'nameResolve', 'awsResolve'];
 
-  function PhotosController($scope, $http, $state, photoResolve, Authentication, FileUploader, $timeout, $window, PhotosService/*, nameResolve, awsResolve*/) {
+  function PhotosController($scope, $http, $state, photoResolve, Authentication, FileUploader, $timeout, $window, PhotosService, nameResolve, awsResolve) {
 
     var vm = this;
-    
+    console.log(awsResolve);
     vm.photo = photoResolve;
     vm.authentication = Authentication;
     vm.error = null;
