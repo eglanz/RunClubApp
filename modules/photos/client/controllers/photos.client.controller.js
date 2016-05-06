@@ -31,7 +31,7 @@
       secret_key: ''
     };
 
-    $http.get( "/api/photo/key").success(function( data ) {
+    $http.get('/api/photo/key').success(function(data) {
       $scope.creds = {
         bucket: 'photobucketsoftwareproject',
         access_key: data.KEY,

@@ -12,9 +12,9 @@ module.exports = function (app) {
     .get(photos.list)
     .post(photos.create);
     
-    app.get('/api/photo/key',function(req, res){
-        return res.json({ KEY: process.env.KEY|| '1', SECRET: process.env.SECRET_KEY ||'2'  });
-    });
+  app.get('/api/photo/key',function(req, res){
+    return res.json({ KEY: process.env.KEY|| '1', SECRET: process.env.SECRET_KEY ||'2' });
+  });
 
   // Single article routes
   app.route('/api/photos/:photoId').all(photosPolicy.isAllowed)
