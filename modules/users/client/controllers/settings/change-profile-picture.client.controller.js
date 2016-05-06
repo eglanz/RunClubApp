@@ -22,7 +22,6 @@ angular.module('users').controller('ChangeProfilePictureController', ['$scope', 
 
     // Called after the user selected a new picture file
     $scope.uploader.onAfterAddingFile = function (fileItem) {
-      console.log("client onAfterAddingFile");
       if ($window.FileReader) {
         var fileReader = new FileReader();
         fileReader.readAsDataURL(fileItem._file);
@@ -37,7 +36,6 @@ angular.module('users').controller('ChangeProfilePictureController', ['$scope', 
 
     // Called after the user has successfully uploaded a new picture
     $scope.uploader.onSuccessItem = function (fileItem, response, status, headers) {
-      console.log("client onSuccessItem");
       // Show success message
       $scope.success = true;
 
@@ -50,7 +48,6 @@ angular.module('users').controller('ChangeProfilePictureController', ['$scope', 
 
     // Called after the user has failed to uploaded a new picture
     $scope.uploader.onErrorItem = function (fileItem, response, status, headers) {
-      console.log("client onErrorItem");
       // Clear upload buttons
       $scope.cancelUpload();
 
@@ -60,7 +57,6 @@ angular.module('users').controller('ChangeProfilePictureController', ['$scope', 
 
     // Change user profile picture
     $scope.uploadProfilePicture = function () {
-      console.log("client uploadProfilePicture");
       // Clear messages
       $scope.success = $scope.error = null;
 
@@ -70,7 +66,6 @@ angular.module('users').controller('ChangeProfilePictureController', ['$scope', 
 
     // Cancel the upload process
     $scope.cancelUpload = function () {
-      console.log("client cancelUpload");
       $scope.uploader.clearQueue();
       $scope.imageURL = $scope.user.profileImageURL;
     };
