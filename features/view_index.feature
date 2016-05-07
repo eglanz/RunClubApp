@@ -10,6 +10,6 @@ Feature: User can view index page and login
     When I go to the url
     When I go to the sign up url
     When I sign up
-    When I go to the url  # should this be here?
+    When I go to the url
     Then I should see "Welcome to RunNet"
     

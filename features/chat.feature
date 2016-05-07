@@ -7,6 +7,6 @@ Feature: User can access group chat
     When I go to the sign up url
     When I sign up
     When I go to the url
-    When I go to the chat url
+    When I go to the chat header
     Then I should see "Group Chat"
     
